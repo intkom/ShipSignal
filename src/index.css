@@ -1,0 +1,478 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-sticker-yellow: #ce9a08;
+  --color-sticker-pink: #ec4899;
+  --color-sticker-purple: #8b5cf6;
+  --color-sticker-green: #22c55e;
+  --color-sticker-blue: #0ea5e9;
+  --color-sticker-orange: #f97316;
+  --color-sticker-black: #1f2937;
+
+  --color-twitter: #1da1f2;
+  --color-twitter-soft: #e8f6fe;
+  --color-twitter-border: #1da1f2;
+
+  --color-linkedin: #0a66c2;
+  --color-linkedin-soft: #e6f0f9;
+  --color-linkedin-border: #0a66c2;
+
+  --color-reddit: #ff4500;
+  --color-reddit-soft: #fff0eb;
+  --color-reddit-border: #ff4500;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+  --radius-pill: 50px;
+
+  --font-sans: Nunito, system-ui, sans-serif;
+  --font-display: Nunito, system-ui, sans-serif;
+  --font-mono: JetBrains Mono, SF Mono, monospace;
+
+  --shadow-sticker: 4px 4px 0 hsl(var(--border));
+  --shadow-sticker-sm: 3px 3px 0 hsl(var(--border));
+  --shadow-sticker-hover: 2px 2px 0 hsl(var(--border));
+
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-slide-in: slide-in 0.3s ease-out;
+  --animate-bounce-in: bounce-in 0.3s ease-out;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slide-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* Sticker utility classes */
+@utility sticker-card {
+  @apply bg-card border-[3px] border-border rounded-lg;
+  box-shadow: 4px 4px 0 hsl(var(--border));
+}
+@utility sticker-card-hover {
+  @apply sticker-card transition-all duration-200;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 hsl(var(--border));
+  }
+}
+@utility sticker-button {
+  @apply border-[3px] border-border rounded-md font-bold;
+  box-shadow: 3px 3px 0 hsl(var(--border));
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 4px 4px 0 hsl(var(--border));
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 2px 2px 0 hsl(var(--border));
+  }
+}
+@utility sticker-input {
+  @apply border-[3px] border-border rounded-md bg-card;
+  box-shadow: 3px 3px 0 hsl(var(--border));
+
+  &:focus {
+    @apply ring-2 ring-primary ring-offset-2;
+    box-shadow: 2px 2px 0 hsl(var(--border));
+  }
+}
+@utility sticker-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-pill font-bold text-sm border-2 border-border;
+}
+@utility gradient-bar {
+  background: linear-gradient(90deg, #ce9a08, #ec4899, #8b5cf6, #22c55e, #0ea5e9, #f97316);
+}
+
+@layer base {
+  /* Light mode - Sticker Bomb Theme */
+  :root {
+    /* Warm yellow-tinted background */
+    --background: 48 100% 96%;
+    --foreground: 220 20% 15%;
+    /* Clean white card surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 15%;
+    /* Deep amber primary — improved WCAG contrast on cream background */
+    --primary: 35 95% 34%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 20% 15%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 10% 45%;
+    /* Pink accent */
+    --accent: 330 80% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    /* Strong black borders */
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 35 95% 34%;
+    --radius: 12px;
+    --gold: 35 95% 34%;
+    --gold-dark: 30 95% 24%;
+  }
+
+  /* Dark mode - Sticker Bomb Dark */
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 0 0% 95%;
+    --card: 220 18% 14%;
+    --card-foreground: 0 0% 95%;
+    --popover: 220 18% 14%;
+    --popover-foreground: 0 0% 95%;
+    /* Vibrant gold — visible on dark backgrounds, white text readable */
+    --primary: 43 96% 50%;
+    --primary-foreground: 220 20% 10%;
+    --secondary: 220 18% 20%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 220 18% 18%;
+    --muted-foreground: 220 10% 60%;
+    /* Pink accent */
+    --accent: 330 80% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    /* Lighter borders for dark mode */
+    --border: 220 15% 35%;
+    --input: 220 15% 35%;
+    --ring: 43 96% 50%;
+    --gold: 43 96% 50%;
+    --gold-dark: 36 92% 30%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-weight: 500;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-full border-2 border-muted;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-foreground/50;
+}
+
+/* Selection - Pink highlight */
+::selection {
+  @apply bg-sticker-pink text-white;
+}
+
+/* Focus visible - Yellow ring */
+:focus-visible {
+  @apply outline-hidden ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+
+/* FullCalendar overrides - Sticker style */
+.fc {
+  --fc-border-color: hsl(var(--border));
+  --fc-page-bg-color: transparent;
+  --fc-neutral-bg-color: hsl(var(--muted));
+  --fc-list-event-hover-bg-color: hsl(var(--primary) / 0.2);
+  --fc-today-bg-color: hsl(var(--primary) / 0.15);
+}
+
+.fc .fc-button-primary {
+  @apply bg-card text-foreground border-[3px] border-border font-bold rounded-md;
+  box-shadow: 3px 3px 0 hsl(var(--border));
+}
+
+.fc .fc-button-primary:hover {
+  @apply bg-primary text-primary-foreground;
+  transform: translateY(-1px);
+}
+
+.fc .fc-button-primary:disabled {
+  @apply opacity-50;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  @apply bg-primary text-primary-foreground;
+  box-shadow: 2px 2px 0 hsl(var(--border));
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  @apply border-border border-2;
+}
+
+.fc .fc-daygrid-day-number {
+  @apply text-foreground p-2 font-bold;
+}
+
+.fc .fc-col-header-cell-cushion {
+  @apply text-foreground uppercase text-xs tracking-wider py-3 font-extrabold;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+  @apply bg-primary/20;
+}
+
+.fc .fc-daygrid-day:hover {
+  @apply bg-primary/10;
+}
+
+/* Date and time input styling */
+input[type='date'],
+input[type='time'] {
+  color-scheme: light dark;
+  /* iOS Safari fix: ensure inputs are tappable */
+  min-height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+}
+
+/* iOS Safari: make the entire input area tappable */
+@supports (-webkit-touch-callout: none) {
+  input[type='date'],
+  input[type='time'] {
+    /* On iOS, the input needs to cover the full tap area */
+    min-width: 100%;
+    padding-right: 2rem;
+  }
+}
+
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  filter: invert(0);
+  /* iOS Safari fix: make picker indicator larger and easier to tap */
+  padding: 0.5rem;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+}
+
+.dark input[type='date']::-webkit-calendar-picker-indicator,
+.dark input[type='time']::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.8;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator:hover,
+input[type='time']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Safe area utilities for iOS */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Mobile scroll snap for calendar */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-start {
+  scroll-snap-align: start;
+}
+
+/* Markdown preview typography */
+.markdown-preview h1 {
+  @apply text-2xl font-display font-bold mt-6 mb-3 pb-2 border-b border-border;
+}
+
+.markdown-preview h2 {
+  @apply text-xl font-display font-bold mt-5 mb-2 pb-1 border-b border-border;
+}
+
+.markdown-preview h3 {
+  @apply text-lg font-display font-semibold mt-4 mb-2;
+}
+
+.markdown-preview h4 {
+  @apply text-base font-display font-semibold mt-3 mb-1;
+}
+
+.markdown-preview p {
+  @apply mb-3 leading-relaxed;
+}
+
+.markdown-preview ul {
+  @apply list-disc pl-6 mb-3 space-y-1;
+}
+
+.markdown-preview ol {
+  @apply list-decimal pl-6 mb-3 space-y-1;
+}
+
+.markdown-preview li > ul,
+.markdown-preview li > ol {
+  @apply mt-1 mb-0;
+}
+
+.markdown-preview blockquote {
+  @apply border-l-4 border-[hsl(var(--gold))] pl-4 py-1 my-3 text-muted-foreground italic bg-muted/30 rounded-r-md;
+}
+
+.markdown-preview code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-[hsl(var(--accent))];
+}
+
+.markdown-preview pre {
+  @apply bg-muted rounded-lg p-4 my-3 overflow-x-auto;
+}
+
+.markdown-preview pre code {
+  @apply bg-transparent px-0 py-0 text-foreground;
+}
+
+.markdown-preview a {
+  @apply text-[hsl(var(--gold))] underline underline-offset-2 hover:text-[hsl(var(--gold-dark))] transition-colors;
+}
+
+.markdown-preview hr {
+  @apply my-6 border-border;
+}
+
+.markdown-preview img {
+  @apply max-w-full rounded-lg my-3;
+}
+
+.markdown-preview table {
+  @apply w-full border-collapse my-3;
+}
+
+.markdown-preview th {
+  @apply border-2 border-border bg-muted px-3 py-2 text-left font-bold text-sm;
+}
+
+.markdown-preview td {
+  @apply border-2 border-border px-3 py-2 text-sm;
+}
+
+.markdown-preview strong {
+  @apply font-bold;
+}
+
+.markdown-preview em {
+  @apply italic;
+}
+
+.markdown-preview del {
+  @apply line-through text-muted-foreground;
+}
+
+.markdown-preview input[type='checkbox'] {
+  @apply mr-2;
+}

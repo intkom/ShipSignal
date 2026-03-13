@@ -1,0 +1,100 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build
+dist
+dist-ssr
+*.local
+tsconfig.tsbuildinfo
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Local config (user overrides)
+config.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+coverage
+bleep/
+playwright-report/
+test-results/
+.next
+.vercel
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Workflow testing screenshots (generated during iOS/browser testing)
+workflows/screenshots/
+.env*.local
+
+# Root-level screenshots (debug/temp artifacts)
+/*.png
+
+# Claude session plans and internal thinking (ephemeral)
+.claude/plans/
+.claude/thinking/
+
+# Temp scripts
+scripts/seed-*.ts
+
+# Apple signing keys and certificates
+*.p8
+*.pem
+*.p12
+*.cer
+*.mobileprovision
+
+# iOS build artifacts
+*.ipa
+*.dSYM.zip
+ios/App/build/
+
+# Fastlane artifacts
+ios/App/fastlane/report.xml
+ios/App/fastlane/README.md
+
+# App Store Connect config
+.asc/
+
+# Screenshots (debug/temp)
+screenshots/
+
+# Deployment config (private)
+DEPLOY.md
+
+# MCP config (contains project-specific identifiers)
+.mcp.json
+
+# Internal planning docs (references private repos)
+docs/plans/cross-repo-setup.md
+docs/plans/plan-refine-tracking.md
+
+# Tool config (user-specific)
+.xcodebuildmcp/
+
+# Internal plans
+plans/
+
+# Marketing assets (separate repo)
+marketing/

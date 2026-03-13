@@ -1,0 +1,40 @@
+{
+  "name": "@mean-weasel/bullhorn-mcp",
+  "version": "0.3.0",
+  "description": "MCP server for Bullhorn — manage posts, campaigns, projects, and more",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "bullhorn-mcp": "dist/index.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "start": "node dist/index.js",
+    "dev": "CI=true tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "smoke-test": "node smoke-test.mjs"
+  },
+  "keywords": ["mcp", "bullhorn", "social-media", "scheduler", "claude"],
+  "license": "AGPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mean-weasel/bullhorn",
+    "directory": "mcp-server"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.16"
+  }
+}

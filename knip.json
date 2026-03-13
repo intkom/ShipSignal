@@ -1,0 +1,35 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "src/app/**/page.tsx",
+    "src/app/**/layout.tsx",
+    "src/app/**/route.ts"
+  ],
+  "project": ["src/**/*.{ts,tsx}"],
+  "ignore": [
+    "src/app/**/*"
+  ],
+  "ignoreDependencies": [
+    "@capacitor/ios",
+    "@capacitor/assets",
+    "@capacitor/keyboard",
+    "@capacitor/splash-screen",
+    "@capacitor/status-bar",
+    "@octokit/rest",
+    "gh-pages",
+    "tsx",
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/github"
+  ],
+  "rules": {
+    "exports": "off",
+    "types": "off"
+  },
+  "playwright": {
+    "entry": ["e2e/**/*.spec.ts", "playwright.config.ts"]
+  },
+  "vitest": {
+    "entry": ["src/test/**/*.ts", "vitest.config.ts"]
+  }
+}
