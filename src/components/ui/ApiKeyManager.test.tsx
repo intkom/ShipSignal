@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { ApiKeyManager } from './ApiKeyManager'
 
@@ -62,11 +62,7 @@ const mockRevokedKey = {
   createdAt: '2025-12-01T00:00:00Z',
 }
 
-describe('ApiKeyManager', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
+describe('ApiKeyManager (1/5)', () => {
   it('renders empty state when no keys exist', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValueOnce(
       new Response(JSON.stringify({ apiKeys: [] }), { status: 200 })
@@ -105,7 +101,9 @@ describe('ApiKeyManager', () => {
     expect(screen.getByText(/bh_abc/)).toBeInTheDocument()
     expect(screen.getByText(/bh_def/)).toBeInTheDocument()
   })
+})
 
+describe('ApiKeyManager (2/5)', () => {
   it('shows revoked key count', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValueOnce(
       new Response(JSON.stringify({ apiKeys: [...mockKeys, mockRevokedKey] }), { status: 200 })
@@ -134,7 +132,9 @@ describe('ApiKeyManager', () => {
     expect(screen.getByPlaceholderText('e.g. MCP Server')).toBeInTheDocument()
     expect(screen.getByText('Create')).toBeInTheDocument()
   })
+})
 
+describe('ApiKeyManager (3/5)', () => {
   it('creates a new key and shows raw key', async () => {
     const fetchSpy = vi.spyOn(global, 'fetch')
     // Initial fetch
@@ -167,7 +167,9 @@ describe('ApiKeyManager', () => {
       expect(screen.getByText(/Copy your API key now/)).toBeInTheDocument()
     })
   })
+})
 
+describe('ApiKeyManager (4/5)', () => {
   it('opens revoke confirmation dialog when clicking trash icon', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValueOnce(
       new Response(JSON.stringify({ apiKeys: mockKeys }), { status: 200 })
@@ -188,7 +190,9 @@ describe('ApiKeyManager', () => {
       expect(screen.getByText('Revoke API Key')).toBeInTheDocument()
     })
   })
+})
 
+describe('ApiKeyManager (5/5)', () => {
   it('calls revoke API when confirmed', async () => {
     const fetchSpy = vi.spyOn(global, 'fetch')
     // Initial fetch

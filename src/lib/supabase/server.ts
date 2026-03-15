@@ -3,6 +3,7 @@ import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { getApiKeyFromHeaders } from '../auth'
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function createClient() {
   // In E2E test mode, use service role key to bypass RLS
   // SECURITY: Requires CI=true + E2E_TEST_MODE=true + non-production

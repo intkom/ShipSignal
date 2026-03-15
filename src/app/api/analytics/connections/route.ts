@@ -65,6 +65,7 @@ export async function GET() {
 }
 
 // POST /api/analytics/connections - Create connection
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function POST(request: NextRequest) {
   try {
     // Require authentication

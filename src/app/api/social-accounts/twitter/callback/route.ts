@@ -6,6 +6,7 @@ import { cookies } from 'next/headers'
 export const dynamic = 'force-dynamic'
 
 // GET /api/social-accounts/twitter/callback - Handle Twitter OAuth 2.0 redirect
+// eslint-disable-next-line max-lines-per-function
 export async function GET(request: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 

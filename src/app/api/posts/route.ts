@@ -23,6 +23,7 @@ const createPostSchema = z.object({
 })
 
 // GET /api/posts - List posts with optional filters
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     // Require authentication
@@ -92,6 +93,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/posts - Create new post
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest) {
   try {
     // Require authentication - throws if not authenticated

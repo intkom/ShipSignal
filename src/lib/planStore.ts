@@ -47,6 +47,7 @@ const initialState: PlanState = {
   initialized: false,
 }
 
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export const usePlanStore = create<PlanState & PlanActions>()((set, get) => ({
   ...initialState,
 

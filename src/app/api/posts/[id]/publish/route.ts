@@ -11,6 +11,7 @@ export const dynamic = 'force-dynamic'
 const PUBLISHABLE_STATUSES = ['draft', 'scheduled', 'failed']
 
 // POST /api/posts/[id]/publish - Immediately publish a post
+// eslint-disable-next-line max-lines-per-function
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const auth = await requireAuth()

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // ---------------------------------------------------------------------------
@@ -123,6 +124,7 @@ describe('getUserPlan', () => {
 // enforceResourceLimit
 // ---------------------------------------------------------------------------
 
+// eslint-disable-next-line max-lines-per-function
 describe('enforceResourceLimit', () => {
   const resources = ['posts', 'campaigns', 'projects', 'blogDrafts', 'launchPosts'] as const
 
@@ -350,6 +352,7 @@ describe('enforceResourceLimit with pre-fetched plan', () => {
 // enforceStorageLimit
 // ---------------------------------------------------------------------------
 
+// eslint-disable-next-line max-lines-per-function
 describe('enforceStorageLimit', () => {
   it('allows upload when under storage limit', async () => {
     const usedBytes = 10 * 1024 * 1024 // 10 MB used

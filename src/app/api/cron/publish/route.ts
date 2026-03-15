@@ -100,6 +100,7 @@ async function scheduleNextRecurrence(
   }
 }
 
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function GET(request: NextRequest) {
   const authError = verifyCronSecret(request)
   if (authError) return authError

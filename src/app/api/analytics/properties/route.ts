@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 const GA_ADMIN_API = 'https://analyticsadmin.googleapis.com/v1beta'
 
 // GET /api/analytics/properties - List available GA4 properties
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function GET(request: NextRequest) {
   try {
     // Require authentication

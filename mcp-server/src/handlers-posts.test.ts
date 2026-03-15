@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const mockGet = vi.fn()
@@ -153,7 +154,9 @@ async function handleSearchPosts(args: { query?: string; limit?: number }): Prom
   return ok({ count: posts.length, posts })
 }
 
+// eslint-disable-next-line max-lines-per-function
 describe('Post Tool Handlers', () => {
+   
   beforeEach(() => {
     mockGet.mockReset()
     mockPost.mockReset()
@@ -162,7 +165,9 @@ describe('Post Tool Handlers', () => {
     _resetClient()
   })
 
+  // eslint-disable-next-line max-lines-per-function
   describe('create_post', () => {
+     
     it('should create a twitter post with valid content', async () => {
       const mockPostData = {
         id: 'post-1',
@@ -182,6 +187,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post).toEqual(mockPostData)
     })
 
+     
     it('should create a linkedin post with valid content', async () => {
       const mockPostData = {
         id: 'post-2',
@@ -201,6 +207,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post).toEqual(mockPostData)
     })
 
+     
     it('should create a reddit post with valid content', async () => {
       const mockPostData = {
         id: 'post-3',
@@ -220,6 +227,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post).toEqual(mockPostData)
     })
 
+     
     it('should return error for invalid platform', async () => {
       const result = await handleCreatePost({
         platform: 'instagram',
@@ -231,6 +239,7 @@ describe('Post Tool Handlers', () => {
       )
     })
 
+     
     it('should return error for missing platform', async () => {
       const result = await handleCreatePost({
         content: { text: 'hello' },
@@ -239,6 +248,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('platform is required')
     })
 
+     
     it('should return error for missing content', async () => {
       const result = await handleCreatePost({
         platform: 'twitter',
@@ -247,6 +257,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('content is required')
     })
 
+     
     it('should return error for twitter content without text', async () => {
       const result = await handleCreatePost({
         platform: 'twitter',
@@ -256,6 +267,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Twitter content requires a non-empty "text" field')
     })
 
+     
     it('should return error for reddit content without subreddit', async () => {
       const result = await handleCreatePost({
         platform: 'reddit',
@@ -265,6 +277,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Reddit content requires: subreddit')
     })
 
+     
     it('should return error for reddit content without title', async () => {
       const result = await handleCreatePost({
         platform: 'reddit',
@@ -274,6 +287,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Reddit content requires: title')
     })
 
+     
     it('should return error for linkedin content with invalid visibility', async () => {
       const result = await handleCreatePost({
         platform: 'linkedin',
@@ -283,6 +297,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('LinkedIn visibility must be')
     })
 
+     
     it('should pass scheduledAt, status, notes, and campaignId', async () => {
       const mockPostData = { id: 'post-4', platform: 'twitter', status: 'scheduled' }
       mockPost.mockResolvedValueOnce({ post: mockPostData })
@@ -309,7 +324,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('get_post', () => {
+     
     it('should return post when found', async () => {
       const mockPostData = { id: 'post-1', platform: 'twitter', content: { text: 'Hello' } }
       mockGet.mockResolvedValueOnce({ post: mockPostData })
@@ -321,6 +338,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post).toEqual(mockPostData)
     })
 
+     
     it('should return error when post not found', async () => {
       mockGet.mockRejectedValueOnce(new Error('Not found'))
 
@@ -330,7 +348,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('update_post', () => {
+     
     it('should update post with valid data', async () => {
       const mockPostData = { id: 'post-1', platform: 'twitter', status: 'scheduled' }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })
@@ -342,6 +362,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post).toEqual(mockPostData)
     })
 
+     
     it('should return error when post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -350,6 +371,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Post with ID nonexistent not found')
     })
 
+     
     it('should validate content when both platform and content are provided', async () => {
       const result = await handleUpdatePost({
         id: 'post-1',
@@ -360,6 +382,7 @@ describe('Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Twitter content requires a non-empty "text" field')
     })
 
+     
     it('should skip validation when only content is provided without platform', async () => {
       const mockPostData = { id: 'post-1', content: { text: 'Updated' } }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })
@@ -369,7 +392,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('delete_post', () => {
+     
     it('should delete post when confirmed', async () => {
       mockDelete.mockResolvedValueOnce({})
 
@@ -380,12 +405,14 @@ describe('Post Tool Handlers', () => {
       expect(response.message).toContain('Post post-1 permanently deleted')
     })
 
+     
     it('should return error when not confirmed', async () => {
       const result = await handleDeletePost({ id: 'post-1', confirmed: false })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Deletion not confirmed')
     })
 
+     
     it('should return error when post not found', async () => {
       mockDelete.mockRejectedValueOnce(new Error('Not found'))
 
@@ -395,7 +422,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('archive_post', () => {
+     
     it('should archive post when confirmed', async () => {
       const mockPostData = { id: 'post-1', status: 'archived' }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })
@@ -407,12 +436,14 @@ describe('Post Tool Handlers', () => {
       expect(response.post.status).toBe('archived')
     })
 
+     
     it('should return error when not confirmed', async () => {
       const result = await handleArchivePost({ id: 'post-1', confirmed: false })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Archive not confirmed')
     })
 
+     
     it('should return error when post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -422,7 +453,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('restore_post', () => {
+     
     it('should restore archived post', async () => {
       const mockPostData = { id: 'post-1', status: 'draft' }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })
@@ -434,6 +467,7 @@ describe('Post Tool Handlers', () => {
       expect(response.post.status).toBe('draft')
     })
 
+     
     it('should return error when post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -443,7 +477,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('list_posts', () => {
+     
     it('should list posts with no filters', async () => {
       const mockPosts = [{ id: 'p1' }, { id: 'p2' }]
       mockGet.mockResolvedValueOnce({ posts: mockPosts })
@@ -455,6 +491,7 @@ describe('Post Tool Handlers', () => {
       expect(response.posts).toEqual(mockPosts)
     })
 
+     
     it('should pass status filter', async () => {
       mockGet.mockResolvedValueOnce({ posts: [] })
 
@@ -462,6 +499,7 @@ describe('Post Tool Handlers', () => {
       expect(mockGet).toHaveBeenCalledWith('/posts', expect.objectContaining({ status: 'draft' }))
     })
 
+     
     it('should pass platform filter', async () => {
       mockGet.mockResolvedValueOnce({ posts: [] })
 
@@ -472,6 +510,7 @@ describe('Post Tool Handlers', () => {
       )
     })
 
+     
     it('should use default limit of 50', async () => {
       mockGet.mockResolvedValueOnce({ posts: [] })
 
@@ -480,7 +519,9 @@ describe('Post Tool Handlers', () => {
     })
   })
 
+   
   describe('search_posts', () => {
+     
     it('should return matching posts', async () => {
       const mockPosts = [{ id: 'p1', content: { text: 'hello world' } }]
       mockGet.mockResolvedValueOnce({ posts: mockPosts })
@@ -492,6 +533,7 @@ describe('Post Tool Handlers', () => {
       expect(response.posts).toEqual(mockPosts)
     })
 
+     
     it('should return empty results', async () => {
       mockGet.mockResolvedValueOnce({ posts: [] })
 
@@ -502,12 +544,14 @@ describe('Post Tool Handlers', () => {
       expect(response.posts).toEqual([])
     })
 
+     
     it('should return error when query is empty', async () => {
       const result = await handleSearchPosts({ query: '' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('search query is required')
     })
 
+     
     it('should return error when query is whitespace', async () => {
       const result = await handleSearchPosts({ query: '   ' })
       expect(result.isError).toBe(true)

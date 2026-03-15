@@ -29,6 +29,7 @@ const importSchema = z.object({
 
 export const dynamic = 'force-dynamic'
 
+// eslint-disable-next-line max-lines-per-function
 export async function POST(request: NextRequest) {
   try {
     let userId: string

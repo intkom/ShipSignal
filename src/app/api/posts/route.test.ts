@@ -63,7 +63,7 @@ beforeEach(() => {
 // GET /api/posts
 // ---------------------------------------------------------------------------
 
-describe('GET /api/posts', () => {
+describe('GET /api/posts (1/2)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/posts')
@@ -110,7 +110,9 @@ describe('GET /api/posts', () => {
     // Verify .eq was called with status filter (the query chain includes status eq)
     expect(mockQueryEq).toHaveBeenCalled()
   })
+})
 
+describe('GET /api/posts (2/2)', () => {
   it('returns 500 when database query fails', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockLimit.mockResolvedValue({ data: null, error: { message: 'DB error' } })
@@ -126,7 +128,7 @@ describe('GET /api/posts', () => {
 // POST /api/posts
 // ---------------------------------------------------------------------------
 
-describe('POST /api/posts', () => {
+describe('POST /api/posts (1/2)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/posts', {
@@ -161,7 +163,9 @@ describe('POST /api/posts', () => {
     const body = await res.json()
     expect(body.error).toBe('Invalid input')
   })
+})
 
+describe('POST /api/posts (2/2)', () => {
   it('creates post successfully and returns 201', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const createdPost = {

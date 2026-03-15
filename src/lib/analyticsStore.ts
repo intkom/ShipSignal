@@ -47,6 +47,7 @@ const initialState: AnalyticsState = {
   initialized: false,
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const useAnalyticsStore = create<AnalyticsState & AnalyticsActions>()((set, get) => ({
   ...initialState,
 

@@ -108,6 +108,7 @@ function getDateRangeFromPreset(preset: string): { startDate: string; endDate: s
 }
 
 // GET /api/analytics/connections/[id]/report - Fetch metrics from GA4
+// eslint-disable-next-line max-lines-per-function
 export async function GET(request: NextRequest, context: RouteContext) {
   try {
     // Require authentication

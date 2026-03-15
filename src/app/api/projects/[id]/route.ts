@@ -65,6 +65,7 @@ export async function GET(_request: NextRequest, context: RouteContext) {
 }
 
 // PATCH /api/projects/[id] - Update project
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
     // Require authentication

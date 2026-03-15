@@ -5,6 +5,7 @@ import { requireAuth, validateScopes, type ApiKeyScope } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/posts/upcoming - Get posts scheduled within the next N hours
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     let userId: string

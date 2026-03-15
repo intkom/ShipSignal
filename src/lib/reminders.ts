@@ -176,6 +176,7 @@ interface RemindersActions {
   getUpcomingReminders: (limit?: number) => Reminder[]
 }
 
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export const useRemindersStore = create<RemindersState & RemindersActions>()((set, get) => ({
   reminders: [],
   loading: false,

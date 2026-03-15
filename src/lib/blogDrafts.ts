@@ -52,6 +52,7 @@ interface BlogDraftsActions {
   searchDrafts: (query: string) => Promise<BlogDraft[]>
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const useBlogDraftsStore = create<BlogDraftsState & BlogDraftsActions>()((set, get) => ({
   drafts: [],
   loading: false,

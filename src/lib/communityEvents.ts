@@ -118,6 +118,7 @@ interface CommunityEventsActions {
 }
 
 export const useCommunityEventsStore = create<CommunityEventsState & CommunityEventsActions>()(
+  // eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
   (set) => ({
     events: [],
     subscriptions: [],

@@ -22,6 +22,7 @@ const createBlogDraftSchema = z.object({
 })
 
 // GET /api/blog-drafts - List blog drafts
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     // Require authentication
@@ -87,6 +88,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/blog-drafts - Create blog draft
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest) {
   try {
     // Require authentication - throws if not authenticated

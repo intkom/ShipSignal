@@ -68,6 +68,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 }
 
 // POST /api/campaigns/[id]/posts - Add post to campaign
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Require authentication

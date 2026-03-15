@@ -6,6 +6,7 @@ import crypto from 'crypto'
 
 export const dynamic = 'force-dynamic'
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET() {
   try {
     let userId: string

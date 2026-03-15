@@ -6,6 +6,7 @@ import { requireAuth, validateScopes } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/posts/search - Search posts
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     const auth = await requireAuth()

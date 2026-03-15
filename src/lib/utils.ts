@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- large page component with extracted sub-components */
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import type {

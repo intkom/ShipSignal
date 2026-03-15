@@ -58,6 +58,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 }
 
 // POST /api/blog-drafts/[id]/images - Add image to blog draft
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Require authentication

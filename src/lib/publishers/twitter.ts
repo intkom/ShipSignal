@@ -33,6 +33,7 @@ export function splitIntoThread(text: string, maxLength = 280): string[] {
   return chunks
 }
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function publishToTwitter(input: PublishInput): Promise<PublishOutput> {
   const content = input.post.content as TwitterContent
   const { accessToken } = input

@@ -25,6 +25,7 @@ interface PostsActions {
   getPostsByStatus: (status?: PostStatus) => Post[]
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const usePostsStore = create<PostsState & PostsActions>()((set, get) => ({
   posts: [],
   loading: false,

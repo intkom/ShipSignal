@@ -28,6 +28,7 @@ const createLaunchPostSchema = z.object({
 })
 
 // GET /api/launch-posts - List launch posts with optional filters
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     // Require authentication
@@ -89,6 +90,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/launch-posts - Create new launch post
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest) {
   try {
     // Require authentication

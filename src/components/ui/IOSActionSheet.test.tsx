@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { IOSActionSheet, type ActionSheetOption } from './IOSActionSheet'
 
@@ -15,12 +15,7 @@ const defaultProps = {
   options: mockOptions,
 }
 
-describe('IOSActionSheet', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-    document.body.style.overflow = ''
-  })
-
+describe('IOSActionSheet (1/3)', () => {
   it('renders nothing when not open', () => {
     const { container } = render(<IOSActionSheet {...defaultProps} open={false} />)
     expect(container.firstChild).toBeNull()
@@ -68,7 +63,9 @@ describe('IOSActionSheet', () => {
     expect(screen.getByText('Dismiss')).toBeInTheDocument()
     expect(screen.queryByText('Cancel')).not.toBeInTheDocument()
   })
+})
 
+describe('IOSActionSheet (2/3)', () => {
   it('calls onClose when backdrop is clicked', () => {
     const onClose = vi.fn()
     const { container } = render(<IOSActionSheet {...defaultProps} onClose={onClose} />)
@@ -112,7 +109,9 @@ describe('IOSActionSheet', () => {
     render(<IOSActionSheet {...defaultProps} />)
     expect(document.body.style.overflow).toBe('hidden')
   })
+})
 
+describe('IOSActionSheet (3/3)', () => {
   it('restores body scroll when closed', () => {
     const { unmount } = render(<IOSActionSheet {...defaultProps} />)
     expect(document.body.style.overflow).toBe('hidden')

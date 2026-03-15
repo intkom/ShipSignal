@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const mockGet = vi.fn()
@@ -120,7 +121,9 @@ async function handleListLaunchPosts(args: {
   return ok({ count: launchPosts.length, launchPosts })
 }
 
+// eslint-disable-next-line max-lines-per-function
 describe('Launch Post Tool Handlers', () => {
+   
   beforeEach(() => {
     mockGet.mockReset()
     mockPost.mockReset()
@@ -129,7 +132,9 @@ describe('Launch Post Tool Handlers', () => {
     _resetClient()
   })
 
+  // eslint-disable-next-line max-lines-per-function
   describe('create_launch_post', () => {
+     
     it('should create a launch post with valid platform and title', async () => {
       const mockLaunchPost = {
         id: 'lp-1',
@@ -149,6 +154,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.launchPost).toEqual(mockLaunchPost)
     })
 
+     
     it('should create a launch post with all fields', async () => {
       const mockLaunchPost = {
         id: 'lp-2',
@@ -183,24 +189,28 @@ describe('Launch Post Tool Handlers', () => {
       })
     })
 
+     
     it('should return error when platform is missing', async () => {
       const result = await handleCreateLaunchPost({ title: 'My Launch' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('platform and title are required')
     })
 
+     
     it('should return error when title is missing', async () => {
       const result = await handleCreateLaunchPost({ platform: 'product_hunt' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('platform and title are required')
     })
 
+     
     it('should return error when both platform and title are missing', async () => {
       const result = await handleCreateLaunchPost({})
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('platform and title are required')
     })
 
+     
     it('should create launch posts for different platforms', async () => {
       const platforms = [
         'hacker_news_show',
@@ -226,7 +236,9 @@ describe('Launch Post Tool Handlers', () => {
     })
   })
 
+   
   describe('get_launch_post', () => {
+     
     it('should return launch post when found', async () => {
       const mockLaunchPost = {
         id: 'lp-1',
@@ -243,6 +255,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.launchPost).toEqual(mockLaunchPost)
     })
 
+     
     it('should return error when launch post not found', async () => {
       mockGet.mockRejectedValueOnce(new Error('Not found'))
 
@@ -252,7 +265,9 @@ describe('Launch Post Tool Handlers', () => {
     })
   })
 
+  // eslint-disable-next-line max-lines-per-function
   describe('update_launch_post', () => {
+     
     it('should update launch post with valid data', async () => {
       const mockLaunchPost = {
         id: 'lp-1',
@@ -273,6 +288,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.launchPost).toEqual(mockLaunchPost)
     })
 
+     
     it('should return error when launch post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -281,6 +297,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(result.content[0].text).toContain('Launch post with ID nonexistent not found')
     })
 
+     
     it('should update platform fields', async () => {
       const mockLaunchPost = {
         id: 'lp-1',
@@ -298,6 +315,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.launchPost.platformFields).toEqual({ tagline: 'New tagline' })
     })
 
+     
     it('should update url and description', async () => {
       const mockLaunchPost = {
         id: 'lp-1',
@@ -318,7 +336,9 @@ describe('Launch Post Tool Handlers', () => {
     })
   })
 
+   
   describe('delete_launch_post', () => {
+     
     it('should delete launch post when confirmed', async () => {
       mockDelete.mockResolvedValueOnce({})
 
@@ -329,18 +349,21 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.message).toContain('Launch post lp-1 deleted')
     })
 
+     
     it('should return error when not confirmed', async () => {
       const result = await handleDeleteLaunchPost({ id: 'lp-1', confirmed: false })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Deletion not confirmed')
     })
 
+     
     it('should return error when confirmed is missing', async () => {
       const result = await handleDeleteLaunchPost({ id: 'lp-1' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Deletion not confirmed')
     })
 
+     
     it('should return error when launch post not found', async () => {
       mockDelete.mockRejectedValueOnce(new Error('Not found'))
 
@@ -350,7 +373,9 @@ describe('Launch Post Tool Handlers', () => {
     })
   })
 
+  // eslint-disable-next-line max-lines-per-function
   describe('list_launch_posts', () => {
+     
     it('should list launch posts with no filters', async () => {
       const mockLaunchPosts = [
         { id: 'lp1', platform: 'product_hunt', title: 'Launch 1' },
@@ -365,6 +390,7 @@ describe('Launch Post Tool Handlers', () => {
       expect(response.launchPosts).toEqual(mockLaunchPosts)
     })
 
+     
     it('should pass platform filter', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 
@@ -375,6 +401,7 @@ describe('Launch Post Tool Handlers', () => {
       )
     })
 
+     
     it('should pass status filter', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 
@@ -385,6 +412,7 @@ describe('Launch Post Tool Handlers', () => {
       )
     })
 
+     
     it('should pass campaignId filter', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 
@@ -395,6 +423,7 @@ describe('Launch Post Tool Handlers', () => {
       )
     })
 
+     
     it('should use default limit of 50', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 
@@ -405,6 +434,7 @@ describe('Launch Post Tool Handlers', () => {
       )
     })
 
+     
     it('should pass custom limit', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 
@@ -415,6 +445,7 @@ describe('Launch Post Tool Handlers', () => {
       )
     })
 
+     
     it('should return empty results', async () => {
       mockGet.mockResolvedValueOnce({ launchPosts: [] })
 

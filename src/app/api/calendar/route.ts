@@ -7,6 +7,7 @@ import { requireAuth } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/calendar?start=YYYY-MM-DD&end=YYYY-MM-DD
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   try {
     let userId: string

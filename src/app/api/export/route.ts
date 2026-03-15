@@ -61,6 +61,7 @@ function csvEscape(value: string): string {
   return value
 }
 
+// eslint-disable-next-line max-lines-per-function
 export async function GET(request: NextRequest) {
   try {
     let userId: string

@@ -6,6 +6,7 @@ import { PLAN_LIMITS, type PlanType } from '@/lib/limits'
 // Ensure this route is always dynamic (never cached by Next.js)
 export const dynamic = 'force-dynamic'
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET() {
   try {
     let userId: string

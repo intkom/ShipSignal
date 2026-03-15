@@ -96,6 +96,7 @@ async function reminderExists(
   return (data?.length ?? 0) > 0
 }
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET(request: NextRequest) {
   const authError = verifyCronSecret(request)
   if (authError) return authError

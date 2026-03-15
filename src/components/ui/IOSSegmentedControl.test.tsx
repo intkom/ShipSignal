@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { IOSSegmentedControl } from './IOSSegmentedControl'
 
@@ -14,13 +14,7 @@ const defaultProps = {
   onChange: vi.fn(),
 }
 
-describe('IOSSegmentedControl', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
-  // --- Rendering ---
-
+describe('IOSSegmentedControl (1/5)', () => {
   it('renders all visible options as tabs', () => {
     render(<IOSSegmentedControl {...defaultProps} />)
 
@@ -47,8 +41,6 @@ describe('IOSSegmentedControl', () => {
     expect(screen.queryAllByRole('tab')).toHaveLength(0)
   })
 
-  // --- Active state ---
-
   it('marks the active option with aria-selected=true', () => {
     render(<IOSSegmentedControl {...defaultProps} value="active" />)
     const tabs = screen.getAllByRole('tab')
@@ -67,9 +59,9 @@ describe('IOSSegmentedControl', () => {
     const archivedTab = tabs.find((t) => t.textContent?.includes('Archived'))!
     expect(archivedTab).toHaveAttribute('aria-selected', 'false')
   })
+})
 
-  // --- Interaction ---
-
+describe('IOSSegmentedControl (2/5)', () => {
   it('calls onChange with the clicked option value', () => {
     const onChange = vi.fn()
     render(<IOSSegmentedControl {...defaultProps} onChange={onChange} />)
@@ -87,8 +79,6 @@ describe('IOSSegmentedControl', () => {
     expect(onChange).toHaveBeenCalledWith('all')
   })
 
-  // --- Hidden options ---
-
   it('does not render hidden options', () => {
     const optionsWithHidden = [
       { value: 'all', label: 'All' },
@@ -104,8 +94,6 @@ describe('IOSSegmentedControl', () => {
     expect(screen.getAllByRole('tab')).toHaveLength(2)
   })
 
-  // --- Count badges ---
-
   it('renders count badges when showCounts is true (default)', () => {
     const optionsWithCounts = [
       { value: 'all', label: 'All', count: 10 },
@@ -119,7 +107,9 @@ describe('IOSSegmentedControl', () => {
     expect(screen.getByText('5')).toBeInTheDocument()
     expect(screen.getByText('0')).toBeInTheDocument()
   })
+})
 
+describe('IOSSegmentedControl (3/5)', () => {
   it('does not render count badges when showCounts is false', () => {
     const optionsWithCounts = [
       { value: 'all', label: 'All', count: 10 },
@@ -154,8 +144,6 @@ describe('IOSSegmentedControl', () => {
     expect(activeTab.querySelectorAll('span')).toHaveLength(1) // just the label span
   })
 
-  // --- Icons ---
-
   it('renders icons when provided in options', () => {
     const optionsWithIcons = [
       { value: 'all', label: 'All', icon: <span data-testid="icon-all">*</span> },
@@ -167,9 +155,9 @@ describe('IOSSegmentedControl', () => {
     expect(screen.getByTestId('icon-all')).toBeInTheDocument()
     expect(screen.getByTestId('icon-active')).toBeInTheDocument()
   })
+})
 
-  // --- Disabled state ---
-
+describe('IOSSegmentedControl (4/5)', () => {
   it('applies disabled state to all buttons', () => {
     render(<IOSSegmentedControl {...defaultProps} disabled />)
 
@@ -193,8 +181,6 @@ describe('IOSSegmentedControl', () => {
     expect(tablist.className).toContain('opacity-50')
   })
 
-  // --- Sizes ---
-
   it('renders with small size classes', () => {
     render(<IOSSegmentedControl {...defaultProps} size="sm" />)
     const tabs = screen.getAllByRole('tab')
@@ -216,14 +202,14 @@ describe('IOSSegmentedControl', () => {
     expect(tabs[0].className).toContain('text-base')
   })
 
-  // --- fullWidth ---
-
   it('applies full-width class to container when fullWidth is true', () => {
     render(<IOSSegmentedControl {...defaultProps} fullWidth />)
     const tablist = screen.getByRole('tablist')
     expect(tablist.className).toContain('w-full')
   })
+})
 
+describe('IOSSegmentedControl (5/5)', () => {
   it('applies flex-1 to tabs when fullWidth is true', () => {
     render(<IOSSegmentedControl {...defaultProps} fullWidth />)
     const tabs = screen.getAllByRole('tab')
@@ -232,15 +218,11 @@ describe('IOSSegmentedControl', () => {
     })
   })
 
-  // --- className ---
-
   it('applies custom className to the container', () => {
     render(<IOSSegmentedControl {...defaultProps} className="custom-class" />)
     const tablist = screen.getByRole('tablist')
     expect(tablist.className).toContain('custom-class')
   })
-
-  // --- Accessibility ---
 
   it('has aria-label on the tablist', () => {
     render(<IOSSegmentedControl {...defaultProps} />)

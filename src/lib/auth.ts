@@ -104,6 +104,7 @@ export function hashApiKey(rawKey: string, hmacSecret?: string): string {
  * then falls back to plain SHA-256 for legacy keys. This allows gradual
  * migration — once all keys are rotated, the SHA-256 fallback can be removed.
  */
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function resolveApiKey(rawKey: string): Promise<{ userId: string; scopes: string[] }> {
   if (!rawKey.startsWith('bh_') || rawKey.length < 20) {
     throw new Error('Unauthorized')

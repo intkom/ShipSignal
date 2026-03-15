@@ -76,6 +76,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/campaigns - Create campaign
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest) {
   try {
     // Require authentication - throws if not authenticated

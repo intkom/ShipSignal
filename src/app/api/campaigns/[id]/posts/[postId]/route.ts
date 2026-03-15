@@ -5,6 +5,7 @@ import { requireAuth, validateScopes } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // DELETE /api/campaigns/[id]/posts/[postId] - Remove post from campaign
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string; postId: string }> }

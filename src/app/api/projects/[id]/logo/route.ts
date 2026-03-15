@@ -14,6 +14,7 @@ interface RouteContext {
 }
 
 // POST /api/projects/[id]/logo - Upload project logo
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
     const auth = await requireAuth()

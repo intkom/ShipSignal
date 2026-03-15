@@ -33,6 +33,7 @@ interface CampaignsActions {
   moveCampaignToProject: (campaignId: string, projectId: string | null) => Promise<void>
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const useCampaignsStore = create<CampaignsState & CampaignsActions>()((set, get) => ({
   campaigns: [],
   loading: false,

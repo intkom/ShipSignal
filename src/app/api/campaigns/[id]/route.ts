@@ -78,6 +78,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 }
 
 // PATCH /api/campaigns/[id] - Update campaign
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Require authentication

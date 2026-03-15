@@ -85,7 +85,7 @@ beforeEach(() => {
 // PATCH /api/reminders/[id]
 // ---------------------------------------------------------------------------
 
-describe('PATCH /api/reminders/[id]', () => {
+describe('PATCH /api/reminders/[id] (1/3)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/reminders/rem-1', {
@@ -128,7 +128,9 @@ describe('PATCH /api/reminders/[id]', () => {
     const body = await res.json()
     expect(body.error).toBe('Invalid input')
   })
+})
 
+describe('PATCH /api/reminders/[id] (2/3)', () => {
   it('returns 404 when reminder not found (PGRST116)', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockUpdateSingle.mockResolvedValue({
@@ -160,7 +162,9 @@ describe('PATCH /api/reminders/[id]', () => {
     const body = await res.json()
     expect(body.error).toBe('Internal server error')
   })
+})
 
+describe('PATCH /api/reminders/[id] (3/3)', () => {
   it('updates isCompleted field', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const completedReminder = {

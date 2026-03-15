@@ -20,6 +20,7 @@ vi.mock('next/headers', () => ({
 
 import { GET } from './route'
 
+// eslint-disable-next-line max-lines-per-function
 describe('GET /api/social-accounts/linkedin/auth', () => {
   beforeEach(() => {
     vi.clearAllMocks()

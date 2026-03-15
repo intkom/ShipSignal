@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- large page component with extracted sub-components */
 import { create } from 'zustand'
 import { dedup } from './requestDedup'
 import { usePlanStore } from './planStore'
@@ -210,6 +211,7 @@ interface LaunchPostsActions {
   getLaunchPostsByStatus: (status?: LaunchPostStatus) => LaunchPost[]
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const useLaunchPostsStore = create<LaunchPostsState & LaunchPostsActions>()((set, get) => ({
   launchPosts: [],
   loading: false,

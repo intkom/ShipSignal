@@ -25,6 +25,7 @@ function getClientIp(request: NextRequest): string {
   return 'unknown'
 }
 
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function updateSession(request: NextRequest) {
   // Skip auth in E2E test mode
   if (process.env.E2E_TEST_MODE === 'true') {

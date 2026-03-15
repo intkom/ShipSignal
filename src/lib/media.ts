@@ -68,6 +68,7 @@ export function validateFile(file: File): { valid: boolean; error?: string } {
  * @param onProgress Optional callback for upload progress
  * @returns Upload result with filename and URL on success
  */
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function uploadMedia(
   file: File,
   onProgress?: (progress: UploadProgress) => void

@@ -5,6 +5,7 @@ const REDDIT_API_URL = 'https://oauth.reddit.com/api/submit'
 const REDDIT_USER_AGENT =
   process.env.REDDIT_USER_AGENT || 'web:bullhorn-scheduler:v1.0.0 (by /u/unknown)'
 
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function publishToReddit(input: PublishInput): Promise<PublishOutput> {
   const content = input.post.content as RedditContent
   const { accessToken } = input

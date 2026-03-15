@@ -49,7 +49,7 @@ beforeEach(() => {
   vi.clearAllMocks()
 })
 
-describe('GET /api/blog-drafts/search', () => {
+describe('GET /api/blog-drafts/search (1/5)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/blog-drafts/search?q=hello')
@@ -89,7 +89,9 @@ describe('GET /api/blog-drafts/search', () => {
     const body = await res.json()
     expect(body.error).toBe('Search query is required')
   })
+})
 
+describe('GET /api/blog-drafts/search (2/5)', () => {
   it('returns matching drafts using q param', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const dbDrafts = [
@@ -120,7 +122,9 @@ describe('GET /api/blog-drafts/search', () => {
     expect(body.drafts[0].createdAt).toBe('2024-05-01T00:00:00Z')
     expect(body.drafts[0].wordCount).toBe(3)
   })
+})
 
+describe('GET /api/blog-drafts/search (3/5)', () => {
   it('returns matching drafts using query param', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const dbDrafts = [
@@ -168,7 +172,9 @@ describe('GET /api/blog-drafts/search', () => {
     const body = await res.json()
     expect(body.drafts).toEqual([])
   })
+})
 
+describe('GET /api/blog-drafts/search (4/5)', () => {
   it('returns 500 when database query fails', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockLimit.mockResolvedValue({
@@ -205,7 +211,9 @@ describe('GET /api/blog-drafts/search', () => {
     await GET(req)
     expect(mockLimit).toHaveBeenCalledWith(50)
   })
+})
 
+describe('GET /api/blog-drafts/search (5/5)', () => {
   it('transforms images field correctly with default empty array', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const dbDrafts = [

@@ -47,6 +47,7 @@ const initialState: ProjectsState = {
   initialized: false,
 }
 
+// eslint-disable-next-line max-lines-per-function
 export const useProjectsStore = create<ProjectsState & ProjectsActions>()((set, get) => ({
   ...initialState,
 

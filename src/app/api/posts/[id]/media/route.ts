@@ -5,6 +5,7 @@ import { requireAuth, validateScopes, type ApiKeyScope } from '@/lib/auth'
 export const dynamic = 'force-dynamic'
 
 // GET /api/posts/[id]/media - Get signed download URLs for post media
+// eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     let userId: string

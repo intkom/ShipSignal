@@ -75,6 +75,7 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
 }
 
 // PATCH /api/blog-drafts/[id] - Update blog draft
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Require authentication

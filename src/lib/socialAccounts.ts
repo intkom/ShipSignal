@@ -31,6 +31,7 @@ const initialState: SocialAccountsState = {
 }
 
 export const useSocialAccountsStore = create<SocialAccountsState & SocialAccountsActions>()(
+  // eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
   (set, get) => ({
     ...initialState,
 

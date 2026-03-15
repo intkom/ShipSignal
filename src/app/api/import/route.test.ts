@@ -69,6 +69,7 @@ vi.mock('@/lib/supabase/server', () => ({
   }),
 }))
 
+// eslint-disable-next-line max-lines-per-function
 describe('POST /api/import', () => {
   beforeEach(() => {
     vi.clearAllMocks()

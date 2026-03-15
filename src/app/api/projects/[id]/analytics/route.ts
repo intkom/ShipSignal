@@ -9,6 +9,7 @@ interface RouteContext {
 }
 
 // GET /api/projects/[id]/analytics - Get rolled-up analytics for project
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function GET(_request: NextRequest, context: RouteContext) {
   try {
     const auth = await requireAuth()

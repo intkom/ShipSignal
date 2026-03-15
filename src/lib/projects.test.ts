@@ -35,7 +35,9 @@ const makeProject = (overrides: Record<string, unknown> = {}) => ({
 // fetchProjects
 // ---------------------------------------------------------------------------
 
+// eslint-disable-next-line max-lines-per-function
 describe('useProjectsStore', () => {
+  // eslint-disable-next-line max-lines-per-function
   describe('fetchProjects', () => {
     it('should set loading true while fetching', async () => {
       let capturedLoading = false
@@ -116,6 +118,7 @@ describe('useProjectsStore', () => {
   // createProject
   // ---------------------------------------------------------------------------
 
+  // eslint-disable-next-line max-lines-per-function
   describe('createProject', () => {
     it('should POST to /api/projects and add to items', async () => {
       const newProject = makeProject()

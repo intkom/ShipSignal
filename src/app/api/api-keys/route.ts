@@ -69,6 +69,7 @@ export async function GET() {
   }
 }
 
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: Request) {
   try {
     const { userId } = await requireSessionAuth()

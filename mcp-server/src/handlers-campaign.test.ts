@@ -27,7 +27,9 @@ import {
 
 const s = storage
 
+// eslint-disable-next-line max-lines-per-function
 describe('Campaign Tool Handlers', () => {
+   
   beforeEach(() => {
     mockGet.mockReset()
     mockPost.mockReset()
@@ -36,19 +38,23 @@ describe('Campaign Tool Handlers', () => {
     _resetClient()
   })
 
+   
   describe('create_campaign', () => {
+     
     it('should return error when name is empty', async () => {
       const result = await handleCreateCampaign(s, { name: '' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Campaign name is required')
     })
 
+     
     it('should return error when name is whitespace only', async () => {
       const result = await handleCreateCampaign(s, { name: '   ' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Campaign name is required')
     })
 
+     
     it('should create campaign with trimmed name', async () => {
       const mockCampaign = { id: 'campaign-1', name: 'Test', status: 'draft' }
       mockPost.mockResolvedValueOnce({ campaign: mockCampaign })
@@ -66,6 +72,7 @@ describe('Campaign Tool Handlers', () => {
       })
     })
 
+     
     it('should pass description and status when provided', async () => {
       const mockCampaign = { id: 'campaign-1', name: 'Test', description: 'Desc', status: 'active' }
       mockPost.mockResolvedValueOnce({ campaign: mockCampaign })
@@ -79,7 +86,9 @@ describe('Campaign Tool Handlers', () => {
     })
   })
 
+   
   describe('list_campaigns', () => {
+     
     it('should return campaigns list', async () => {
       const mockCampaigns = [{ id: 'c1' }, { id: 'c2' }]
       mockGet.mockResolvedValueOnce({ campaigns: mockCampaigns })
@@ -91,12 +100,14 @@ describe('Campaign Tool Handlers', () => {
       expect(response.campaigns).toEqual(mockCampaigns)
     })
 
+     
     it('should use default limit of 50', async () => {
       mockGet.mockResolvedValueOnce({ campaigns: [] })
       await handleListCampaigns(s, {})
       expect(mockGet).toHaveBeenCalledWith('/campaigns', { limit: '50' })
     })
 
+     
     it('should pass custom limit', async () => {
       mockGet.mockResolvedValueOnce({ campaigns: [] })
       await handleListCampaigns(s, { limit: 10 })
@@ -104,7 +115,9 @@ describe('Campaign Tool Handlers', () => {
     })
   })
 
+   
   describe('get_campaign', () => {
+     
     it('should return error when campaign not found', async () => {
       mockGet.mockRejectedValueOnce(new Error('Not found'))
       const result = await handleGetCampaign(s, { id: 'nonexistent' })
@@ -112,6 +125,7 @@ describe('Campaign Tool Handlers', () => {
       expect(result.content[0].text).toContain('Campaign with ID nonexistent not found')
     })
 
+     
     it('should return campaign with posts when found', async () => {
       const mockResult = { campaign: { id: 'c1', name: 'Test' }, posts: [{ id: 'p1' }] }
       mockGet.mockResolvedValueOnce(mockResult)
@@ -124,7 +138,9 @@ describe('Campaign Tool Handlers', () => {
     })
   })
 
+   
   describe('delete_campaign', () => {
+     
     it('should return error when campaign not found', async () => {
       mockDelete.mockRejectedValueOnce(new Error('Not found'))
       const result = await handleDeleteCampaign(s, { id: 'nonexistent' })
@@ -132,6 +148,7 @@ describe('Campaign Tool Handlers', () => {
       expect(result.content[0].text).toContain('Campaign with ID nonexistent not found')
     })
 
+     
     it('should return success message when deleted', async () => {
       mockDelete.mockResolvedValueOnce({})
       const result = await handleDeleteCampaign(s, { id: 'c1' })
@@ -141,7 +158,9 @@ describe('Campaign Tool Handlers', () => {
     })
   })
 
+   
   describe('add_post_to_campaign', () => {
+     
     it('should return error when campaign or post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
       const result = await handleAddPostToCampaign(s, { campaignId: 'c1', postId: 'p1' })
@@ -149,6 +168,7 @@ describe('Campaign Tool Handlers', () => {
       expect(result.content[0].text).toContain('Campaign or post not found')
     })
 
+     
     it('should return updated post when successful', async () => {
       const mockPostData = { id: 'p1', campaignId: 'c1' }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })
@@ -160,7 +180,9 @@ describe('Campaign Tool Handlers', () => {
     })
   })
 
+   
   describe('remove_post_from_campaign', () => {
+     
     it('should return error when post not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
       const result = await handleRemovePostFromCampaign(s, { campaignId: 'c1', postId: 'p1' })
@@ -168,6 +190,7 @@ describe('Campaign Tool Handlers', () => {
       expect(result.content[0].text).toContain('Post not found')
     })
 
+     
     it('should return updated post when successful', async () => {
       const mockPostData = { id: 'p1', campaignId: undefined }
       mockPatch.mockResolvedValueOnce({ post: mockPostData })

@@ -114,7 +114,7 @@ describe('GET /api/reminders', () => {
 // POST /api/reminders
 // ---------------------------------------------------------------------------
 
-describe('POST /api/reminders', () => {
+describe('POST /api/reminders (1/3)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/reminders', {
@@ -148,7 +148,9 @@ describe('POST /api/reminders', () => {
     expect(body.reminder.title).toBe('Ship feature')
     expect(body.reminder.description).toBe('Deploy the new dashboard')
   })
+})
 
+describe('POST /api/reminders (2/3)', () => {
   it('validates required fields — missing title', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const req = createRequest('/api/reminders', {
@@ -192,7 +194,9 @@ describe('POST /api/reminders', () => {
     const body = await res.json()
     expect(body.error).toBe('Invalid input')
   })
+})
 
+describe('POST /api/reminders (3/3)', () => {
   it('returns 500 when insert fails', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockInsertSingle.mockResolvedValue({

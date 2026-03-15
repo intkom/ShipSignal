@@ -10,8 +10,11 @@ import {
   confirmDeleteAccount,
 } from './helpers'
 
+// eslint-disable-next-line max-lines-per-function
 test.describe('User Profile Page', () => {
+   
   test.describe('Profile Page Access', () => {
+     
     test('should display profile page with all sections', async ({ page }) => {
       await goToProfile(page)
 
@@ -33,6 +36,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByRole('button', { name: /delete account/i })).toBeVisible()
     })
 
+     
     test('should display avatar with initials', async ({ page }) => {
       await goToProfile(page)
 
@@ -43,6 +47,7 @@ test.describe('User Profile Page', () => {
       await expect(avatar).toContainText('T')
     })
 
+     
     test('should display user email in read-only field', async ({ page }) => {
       await goToProfile(page)
 
@@ -53,7 +58,9 @@ test.describe('User Profile Page', () => {
     })
   })
 
+   
   test.describe('Display Name Update Flow', () => {
+     
     test('should enable save button when display name changes', async ({ page }) => {
       await goToProfile(page)
 
@@ -70,6 +77,7 @@ test.describe('User Profile Page', () => {
       await expect(saveButton).toBeEnabled()
     })
 
+     
     test('should disable save button when display name reverts', async ({ page }) => {
       await goToProfile(page)
 
@@ -88,6 +96,7 @@ test.describe('User Profile Page', () => {
       await expect(saveButton).toBeDisabled()
     })
 
+     
     test('should show saving state when clicking save', async ({ page }) => {
       await goToProfile(page)
 
@@ -98,6 +107,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByRole('button', { name: 'Saving...' })).toBeVisible()
     })
 
+     
     test('should show success message after saving', async ({ page }) => {
       await goToProfile(page)
 
@@ -108,6 +118,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByText('Profile updated successfully')).toBeVisible({ timeout: 10000 })
     })
 
+     
     test('should clear success message after timeout', async ({ page }) => {
       await goToProfile(page)
 
@@ -124,7 +135,9 @@ test.describe('User Profile Page', () => {
     })
   })
 
+  // eslint-disable-next-line max-lines-per-function
   test.describe('Password Change Flow', () => {
+     
     test('should display password change fields', async ({ page }) => {
       await goToProfile(page)
 
@@ -133,6 +146,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByRole('button', { name: 'Update Password' })).toBeVisible()
     })
 
+     
     test('should have password fields hidden by default', async ({ page }) => {
       await goToProfile(page)
 
@@ -143,6 +157,7 @@ test.describe('User Profile Page', () => {
       await expect(confirmPasswordInput).toHaveAttribute('type', 'password')
     })
 
+     
     test('should toggle password visibility for new password', async ({ page }) => {
       await goToProfile(page)
 
@@ -164,6 +179,7 @@ test.describe('User Profile Page', () => {
       await expect(newPasswordInput).toHaveAttribute('type', 'password')
     })
 
+     
     test('should toggle password visibility for confirm password', async ({ page }) => {
       await goToProfile(page)
 
@@ -176,6 +192,7 @@ test.describe('User Profile Page', () => {
       await expect(confirmPasswordInput).toHaveAttribute('type', 'text')
     })
 
+     
     test('should disable update button when fields are empty', async ({ page }) => {
       await goToProfile(page)
 
@@ -183,6 +200,7 @@ test.describe('User Profile Page', () => {
       await expect(updateButton).toBeDisabled()
     })
 
+     
     test('should enable update button when both passwords filled', async ({ page }) => {
       await goToProfile(page)
 
@@ -192,6 +210,7 @@ test.describe('User Profile Page', () => {
       await expect(updateButton).toBeEnabled()
     })
 
+     
     test('should show error when password is too short', async ({ page }) => {
       await goToProfile(page)
 
@@ -201,6 +220,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByText('New password must be at least 8 characters')).toBeVisible()
     })
 
+     
     test('should show error when passwords do not match', async ({ page }) => {
       await goToProfile(page)
 
@@ -210,6 +230,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByText('Passwords do not match')).toBeVisible()
     })
 
+     
     test('should show updating state when submitting valid password', async ({ page }) => {
       await goToProfile(page)
 
@@ -220,6 +241,7 @@ test.describe('User Profile Page', () => {
       await expect(page.getByRole('button', { name: 'Updating...' })).toBeVisible()
     })
 
+     
     test('should show password strength indicator when typing new password', async ({ page }) => {
       await goToProfile(page)
 
@@ -242,7 +264,9 @@ test.describe('User Profile Page', () => {
     })
   })
 
+   
   test.describe('Account Deletion Flow', () => {
+     
     test('should show delete account button in danger zone', async ({ page }) => {
       await goToProfile(page)
 
@@ -250,6 +274,7 @@ test.describe('User Profile Page', () => {
       await expect(deleteButton).toBeVisible()
     })
 
+     
     test('should open confirmation dialog on delete click', async ({ page }) => {
       await goToProfile(page)
 
@@ -263,6 +288,7 @@ test.describe('User Profile Page', () => {
       await expect(dialog.getByText(/permanently deleted/i)).toBeVisible()
     })
 
+     
     test('should have cancel and confirm buttons in delete dialog', async ({ page }) => {
       await goToProfile(page)
 
@@ -273,6 +299,7 @@ test.describe('User Profile Page', () => {
       await expect(dialog.getByRole('button', { name: /delete account/i })).toBeVisible()
     })
 
+     
     test('should close dialog on cancel', async ({ page }) => {
       await goToProfile(page)
 
@@ -286,6 +313,7 @@ test.describe('User Profile Page', () => {
       await expect(dialog).not.toBeVisible()
     })
 
+     
     test('should close dialog on escape key', async ({ page }) => {
       await goToProfile(page)
 
@@ -299,6 +327,7 @@ test.describe('User Profile Page', () => {
       await expect(dialog).not.toBeVisible()
     })
 
+     
     test('should show deleting state when confirming delete', async ({ page }) => {
       await goToProfile(page)
 
@@ -310,7 +339,9 @@ test.describe('User Profile Page', () => {
     })
   })
 
+   
   test.describe('Error Handling', () => {
+     
     test('should display error message styling correctly', async ({ page }) => {
       await goToProfile(page)
 

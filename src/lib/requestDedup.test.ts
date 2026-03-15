@@ -9,7 +9,7 @@ beforeEach(() => {
 // dedup
 // ---------------------------------------------------------------------------
 
-describe('dedup', () => {
+describe('dedup (1/2)', () => {
   it('executes the function and returns its result', async () => {
     const fn = vi.fn().mockResolvedValue('result')
     const result = await dedup('test-key', fn)
@@ -55,7 +55,9 @@ describe('dedup', () => {
     expect(result1).toBe('result-1')
     expect(result2).toBe('result-2')
   })
+})
 
+describe('dedup (2/2)', () => {
   it('allows re-execution after the first call resolves', async () => {
     let callCount = 0
     const fn = vi.fn(async () => {

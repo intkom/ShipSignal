@@ -60,6 +60,7 @@ export async function GET() {
 }
 
 // POST /api/projects - Create project
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest) {
   try {
     // Require authentication

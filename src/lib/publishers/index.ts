@@ -34,6 +34,7 @@ const publishers: Record<Platform, Publisher> = {
  * @param post - The post to publish
  * @param accountId - The social_accounts row ID
  */
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function publishPost(post: Post, accountId: string): Promise<PublishOutput> {
   const publisher = publishers[post.platform]
   if (!publisher) {

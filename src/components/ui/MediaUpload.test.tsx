@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { MediaUpload } from './MediaUpload'
@@ -30,6 +31,7 @@ const defaultProps = {
   onMediaChange: vi.fn(),
 }
 
+// eslint-disable-next-line max-lines-per-function
 describe('MediaUpload', () => {
   beforeEach(() => {
     vi.clearAllMocks()

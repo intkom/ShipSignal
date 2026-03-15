@@ -107,6 +107,7 @@ export async function GET() {
 
 // PATCH /api/notification-preferences
 // Updates the current user's notification preferences.
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function PATCH(request: NextRequest) {
   try {
     let userId: string

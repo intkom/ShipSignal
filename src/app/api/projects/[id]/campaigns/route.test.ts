@@ -81,7 +81,7 @@ beforeEach(() => {
   mockCampaignsData = { data: [], error: null }
 })
 
-describe('GET /api/projects/[id]/campaigns', () => {
+describe('GET /api/projects/[id]/campaigns (1/3)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/projects/proj-1/campaigns')
@@ -109,7 +109,9 @@ describe('GET /api/projects/[id]/campaigns', () => {
     const body = await res.json()
     expect(body.error).toBe('Project not found')
   })
+})
 
+describe('GET /api/projects/[id]/campaigns (2/3)', () => {
   it('returns campaigns for a project', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockProjectResult = { data: { id: 'proj-1' }, error: null }
@@ -147,7 +149,9 @@ describe('GET /api/projects/[id]/campaigns', () => {
     expect(body.campaigns[0].name).toBe('Launch Campaign')
     expect(body.campaigns[1].id).toBe('camp-2')
   })
+})
 
+describe('GET /api/projects/[id]/campaigns (3/3)', () => {
   it('returns empty array when project has no campaigns', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockProjectResult = { data: { id: 'proj-1' }, error: null }

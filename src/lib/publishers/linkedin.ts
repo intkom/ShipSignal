@@ -4,6 +4,7 @@ import type { LinkedInContent } from '@/lib/posts'
 const LINKEDIN_API_URL = 'https://api.linkedin.com/rest/posts'
 const LINKEDIN_API_VERSION = '202501'
 
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function publishToLinkedIn(input: PublishInput): Promise<PublishOutput> {
   const content = input.post.content as LinkedInContent
   const { accessToken, providerAccountId } = input

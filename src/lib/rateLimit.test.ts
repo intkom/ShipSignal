@@ -23,6 +23,7 @@ vi.mock('@upstash/redis', () => {
   return { Redis: MockRedis }
 })
 
+// eslint-disable-next-line max-lines-per-function
 describe('rateLimit', () => {
   beforeEach(() => {
     vi.resetModules()

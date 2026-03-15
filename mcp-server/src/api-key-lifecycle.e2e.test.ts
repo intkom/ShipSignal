@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
@@ -196,6 +197,7 @@ const ALL_SCOPES = [
 // Test suite
 // ---------------------------------------------------------------------------
 
+// eslint-disable-next-line max-lines-per-function
 describe('API Key Lifecycle E2E', () => {
   let accessToken: string
   let testUserId: string
@@ -205,6 +207,7 @@ describe('API Key Lifecycle E2E', () => {
   const createdKeyHashes: string[] = []
   const createdPostIds: string[] = []
 
+  // eslint-disable-next-line max-lines-per-function
   beforeAll(async () => {
     // 1. Validate required env vars
     const sbAccessToken = process.env.SUPABASE_ACCESS_TOKEN
@@ -289,6 +292,7 @@ describe('API Key Lifecycle E2E', () => {
     await waitForServer(`${API_URL}/api/health`, 60000)
   }, 120000)
 
+   
   afterAll(async () => {
     // Clean up test posts via Management API SQL
     for (const postId of createdPostIds) {
@@ -328,7 +332,9 @@ describe('API Key Lifecycle E2E', () => {
   // -------------------------------------------------------------------------
   // Full-scope key
   // -------------------------------------------------------------------------
+   
   describe('Full-scope key', () => {
+     
     it('MCP operations succeed with a valid all-scope key', async () => {
       const key = generateTestKey()
       createdKeyHashes.push(key.keyHash)
@@ -368,6 +374,7 @@ describe('API Key Lifecycle E2E', () => {
       }
     })
 
+     
     it('MCP operations fail after key revocation', async () => {
       const key = generateTestKey()
       createdKeyHashes.push(key.keyHash)
@@ -395,7 +402,9 @@ describe('API Key Lifecycle E2E', () => {
   // -------------------------------------------------------------------------
   // Scope enforcement
   // -------------------------------------------------------------------------
+   
   describe('Scope enforcement', () => {
+     
     it('Read-only key allows reads but blocks writes', async () => {
       const key = generateTestKey()
       createdKeyHashes.push(key.keyHash)
@@ -424,6 +433,7 @@ describe('API Key Lifecycle E2E', () => {
       }
     })
 
+     
     it('Posts-only key blocks campaign operations', async () => {
       const key = generateTestKey()
       createdKeyHashes.push(key.keyHash)
@@ -465,7 +475,9 @@ describe('API Key Lifecycle E2E', () => {
   // -------------------------------------------------------------------------
   // Key expiration
   // -------------------------------------------------------------------------
+   
   describe('Key expiration', () => {
+     
     it('Expired key is rejected', async () => {
       const key = generateTestKey()
       createdKeyHashes.push(key.keyHash)

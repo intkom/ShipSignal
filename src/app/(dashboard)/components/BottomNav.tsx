@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable max-lines-per-function -- inner arrow functions in JSX map() callbacks */
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -20,6 +21,7 @@ const navItems: NavItem[] = [
   { icon: Settings, label: 'More', path: '/settings' },
 ]
 
+ 
 export function BottomNav() {
   const pathname = usePathname()
 

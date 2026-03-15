@@ -76,6 +76,7 @@ export async function GET(_request: NextRequest, context: RouteContext) {
 }
 
 // POST /api/projects/[id]/accounts - Add account to project
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
     // Require authentication

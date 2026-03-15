@@ -9,6 +9,7 @@ export const dynamic = 'force-dynamic'
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token'
 
 // GET /api/analytics/auth/callback - Handle OAuth callback from Google
+// eslint-disable-next-line max-lines-per-function -- API handler requires auth+db in single try/catch
 export async function GET(request: NextRequest) {
   try {
     // Require authentication

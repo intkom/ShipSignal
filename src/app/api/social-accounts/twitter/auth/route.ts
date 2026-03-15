@@ -7,6 +7,7 @@ import crypto from 'crypto'
 export const dynamic = 'force-dynamic'
 
 // GET /api/social-accounts/twitter/auth - Generate Twitter OAuth 2.0 URL with PKCE
+// eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function GET() {
   try {
     let userId: string

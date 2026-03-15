@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { IOSToggleSwitch } from './IOSToggleSwitch'
 
@@ -7,13 +7,7 @@ const defaultProps = {
   onChange: vi.fn(),
 }
 
-describe('IOSToggleSwitch', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
-  // --- Basic rendering ---
-
+describe('IOSToggleSwitch (1/4)', () => {
   it('renders a switch role element', () => {
     render(<IOSToggleSwitch {...defaultProps} />)
     expect(screen.getByRole('switch')).toBeInTheDocument()
@@ -28,8 +22,6 @@ describe('IOSToggleSwitch', () => {
     render(<IOSToggleSwitch {...defaultProps} checked={true} />)
     expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'true')
   })
-
-  // --- Interaction ---
 
   it('calls onChange with true when clicking an unchecked toggle', () => {
     const onChange = vi.fn()
@@ -49,8 +41,6 @@ describe('IOSToggleSwitch', () => {
     expect(onChange).toHaveBeenCalledTimes(1)
   })
 
-  // --- Disabled state ---
-
   it('renders as disabled when disabled prop is true', () => {
     render(<IOSToggleSwitch {...defaultProps} disabled />)
     expect(screen.getByRole('switch')).toBeDisabled()
@@ -69,9 +59,9 @@ describe('IOSToggleSwitch', () => {
     const switchEl = screen.getByRole('switch')
     expect(switchEl.className).toContain('opacity-50')
   })
+})
 
-  // --- Label and description ---
-
+describe('IOSToggleSwitch (2/4)', () => {
   it('renders label text when provided', () => {
     render(<IOSToggleSwitch {...defaultProps} label="Enable notifications" />)
     expect(screen.getByText('Enable notifications')).toBeInTheDocument()
@@ -119,7 +109,9 @@ describe('IOSToggleSwitch', () => {
     fireEvent.click(wrapper)
     expect(onChange).toHaveBeenCalledWith(true)
   })
+})
 
+describe('IOSToggleSwitch (3/4)', () => {
   it('does not call onChange on wrapper click when disabled', () => {
     const onChange = vi.fn()
     const { container } = render(
@@ -130,8 +122,6 @@ describe('IOSToggleSwitch', () => {
     fireEvent.click(wrapper)
     expect(onChange).not.toHaveBeenCalled()
   })
-
-  // --- Aria label ---
 
   it('uses label as aria-label for the inner switch (no label wrapper)', () => {
     // Without label prop, the switch button has role="switch" and uses aria-label
@@ -162,15 +152,15 @@ describe('IOSToggleSwitch', () => {
     expect(trackDiv).toBeInTheDocument()
   })
 
-  // --- Sizes ---
-
   it('renders with small size', () => {
     render(<IOSToggleSwitch {...defaultProps} size="sm" />)
     const switchEl = screen.getByRole('switch')
     expect(switchEl.className).toContain('w-9')
     expect(switchEl.className).toContain('h-5')
   })
+})
 
+describe('IOSToggleSwitch (4/4)', () => {
   it('renders with medium size (default)', () => {
     render(<IOSToggleSwitch {...defaultProps} />)
     const switchEl = screen.getByRole('switch')
@@ -185,8 +175,6 @@ describe('IOSToggleSwitch', () => {
     expect(switchEl.className).toContain('h-8')
   })
 
-  // --- Visual states ---
-
   it('applies green background when checked', () => {
     render(<IOSToggleSwitch {...defaultProps} checked={true} />)
     const switchEl = screen.getByRole('switch')
@@ -198,8 +186,6 @@ describe('IOSToggleSwitch', () => {
     const switchEl = screen.getByRole('switch')
     expect(switchEl.className).toContain('bg-muted')
   })
-
-  // --- className ---
 
   it('applies custom className when no label or description', () => {
     render(<IOSToggleSwitch {...defaultProps} className="custom-class" />)
@@ -214,8 +200,6 @@ describe('IOSToggleSwitch', () => {
     const wrapper = container.firstElementChild!
     expect(wrapper.className).toContain('custom-wrapper')
   })
-
-  // --- Thumb element ---
 
   it('renders a thumb element with aria-hidden', () => {
     const { container } = render(<IOSToggleSwitch {...defaultProps} />)

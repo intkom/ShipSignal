@@ -81,7 +81,7 @@ beforeEach(() => {
 // GET /api/campaigns
 // ---------------------------------------------------------------------------
 
-describe('GET /api/campaigns', () => {
+describe('GET /api/campaigns (1/2)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/campaigns')
@@ -125,7 +125,9 @@ describe('GET /api/campaigns', () => {
     const body = await res.json()
     expect(body.campaigns).toEqual([])
   })
+})
 
+describe('GET /api/campaigns (2/2)', () => {
   it('returns 500 when database query fails', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     mockQueryData = { data: null, error: { message: 'DB error' } }
@@ -150,7 +152,7 @@ describe('GET /api/campaigns', () => {
 // POST /api/campaigns
 // ---------------------------------------------------------------------------
 
-describe('POST /api/campaigns', () => {
+describe('POST /api/campaigns (1/3)', () => {
   it('returns 401 when not authenticated', async () => {
     mockRequireAuth.mockRejectedValue(new Error('Unauthorized'))
     const req = createRequest('/api/campaigns', {
@@ -183,7 +185,9 @@ describe('POST /api/campaigns', () => {
     const res = await POST(req)
     expect(res.status).toBe(400)
   })
+})
 
+describe('POST /api/campaigns (2/3)', () => {
   it('creates campaign successfully and returns 201', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const createdCampaign = {
@@ -208,7 +212,9 @@ describe('POST /api/campaigns', () => {
     expect(body.campaign.name).toBe('Winter Campaign')
     expect(body.campaign.status).toBe('active')
   })
+})
 
+describe('POST /api/campaigns (3/3)', () => {
   it('creates campaign with optional fields', async () => {
     mockRequireAuth.mockResolvedValue({ userId: 'user-1' })
     const projectUuid = 'a1b2c3d4-e5f6-4a7b-8c9d-e0f1a2b3c4d5'
