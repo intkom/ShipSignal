@@ -196,6 +196,20 @@ export function getPostPreviewText(post: Post): string {
   return ''
 }
 
+// Extract the main text content from platform-specific content JSON
+export function getTextFromContent(content: PlatformContent, platform: Platform): string {
+  if (platform === 'reddit' && isRedditContent(content)) {
+    return content.body || ''
+  }
+  if (
+    (platform === 'twitter' && isTwitterContent(content)) ||
+    (platform === 'linkedin' && isLinkedInContent(content))
+  ) {
+    return (content as TwitterContent | LinkedInContent).text
+  }
+  return ''
+}
+
 // Check if a post is due for publishing
 export function isDue(post: Post): boolean {
   if (post.status !== 'scheduled' || !post.scheduledAt) {
