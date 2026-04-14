@@ -1,6 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { AppHeader, FloatingActionButton } from './components/AppHeader'
+
+// Dashboard pages are session-authenticated — never statically generate.
+// eslint-disable-next-line react-refresh/only-export-components
+export const dynamic = 'force-dynamic'
 import { BottomNav } from './components/BottomNav'
 import { EmailVerificationBanner } from './components/EmailVerificationBanner'
 import { VerificationSuccessBanner } from './components/VerificationSuccessBanner'
@@ -18,11 +22,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
   let isEmailVerified = true
   let isOAuthUser = false
 
-  // Skip auth check in E2E test mode (requires CI=true + E2E_TEST_MODE=true + non-production)
+  // Skip auth check in E2E test mode. Gated on CI=true + E2E_TEST_MODE=true + not on Vercel.
+  // VERCEL=1 is set by Vercel at build and runtime; it is never set on GitHub Actions runners,
+  // so this rejects any production (or preview) deploy regardless of NODE_ENV. We can't use
+  // NODE_ENV !== 'production' here because `next start` forces NODE_ENV=production in CI.
   const isTestMode =
-    process.env.E2E_TEST_MODE === 'true' &&
-    process.env.CI === 'true' &&
-    process.env.NODE_ENV !== 'production'
+    process.env.E2E_TEST_MODE === 'true' && process.env.CI === 'true' && process.env.VERCEL !== '1'
   if (!isTestMode) {
     const supabase = await createClient()
     const {
