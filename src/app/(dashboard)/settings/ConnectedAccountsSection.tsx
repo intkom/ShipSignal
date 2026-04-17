@@ -204,9 +204,20 @@ export function ConnectedAccountsSection({
       setConnecting(provider)
       const res = await fetch(`/api/social-accounts/${provider}/auth`)
       if (!res.ok) throw new Error('Failed to get auth URL')
-      const { url } = await res.json()
-      window.location.href = url
-    } catch {
+      const data = await res.json()
+
+      if (data.connected) {
+        // Script auth completed server-side (self-hosted Reddit)
+        _onConnect(provider)
+        setConnecting(null)
+      } else if (data.url) {
+        // OAuth flow — redirect to provider
+        window.location.href = data.url
+      } else {
+        throw new Error('Unexpected auth response')
+      }
+    } catch (err) {
+      console.error(`Failed to connect ${provider}:`, err)
       setConnecting(null)
     }
   }

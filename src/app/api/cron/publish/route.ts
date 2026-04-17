@@ -6,6 +6,8 @@ import { sendApnsToUser } from '@/lib/apnsSender'
 import { sendPostsReadyEmail } from '@/lib/emailSender'
 import { verifyCronSecret } from '@/lib/cronAuth'
 import { PLAN_LIMITS, PLAN_FEATURES, type PlanType } from '@/lib/limits'
+import { getUserPlan } from '@/lib/planEnforcement'
+import { isSelfHosted } from '@/lib/selfHosted'
 import { publishPost } from '@/lib/publishers'
 import { transformPostFromDb } from '@/lib/utils'
 
@@ -14,9 +16,10 @@ export const dynamic = 'force-dynamic'
 /**
  * Cron: publish-due-posts
  *
- * Runs every 5 minutes. For Pro users with linked social accounts,
- * auto-publishes directly. For Free users (or Reddit posts), transitions
- * to "ready" status and sends notifications for manual publishing.
+ * Runs every 5 minutes. In self-hosted mode, auto-publishes all posts with
+ * linked social accounts (including Reddit). In SaaS mode, auto-publishes
+ * for Pro users (excluding Reddit), and transitions other posts to "ready"
+ * status with notifications for manual publishing.
  */
 
 function createServiceClient() {
@@ -65,24 +68,28 @@ async function scheduleNextRecurrence(
   const nextDate = getNextOccurrence(post.recurrence_rule, new Date(post.scheduled_at))
   if (!nextDate) return
 
-  // Enforce plan limit before creating the next recurrence
-  const { data: profile } = await supabase
-    .from('user_profiles')
-    .select('plan')
-    .eq('id', post.user_id)
-    .single()
-  const plan = (profile?.plan as PlanType) || 'free'
-  const limit = PLAN_LIMITS[plan].posts
+  // In self-hosted mode, skip plan limit check (limits are unlimited)
+  if (isSelfHosted()) {
+    // No resource limits in self-hosted mode; proceed to create next recurrence
+  } else {
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('plan')
+      .eq('id', post.user_id)
+      .single()
+    const plan = (profile?.plan as PlanType) || 'free'
+    const limit = PLAN_LIMITS[plan].posts
 
-  const { count } = await supabase
-    .from('posts')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', post.user_id)
-  if ((count || 0) >= limit) {
-    console.warn(
-      `[publish] Skipping recurrence for ${post.id}: user ${post.user_id} at post limit (${count}/${limit})`
-    )
-    return
+    const { count } = await supabase
+      .from('posts')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', post.user_id)
+    if ((count || 0) >= limit) {
+      console.warn(
+        `[publish] Skipping recurrence for ${post.id}: user ${post.user_id} at post limit (${count}/${limit})`
+      )
+      return
+    }
   }
 
   const { error } = await supabase.from('posts').insert({
@@ -207,12 +214,8 @@ export async function GET(request: NextRequest) {
     const uniqueUserIds = [...new Set(posts.map((p: DbPostRow) => p.user_id))]
     const userPlans = new Map<string, PlanType>()
     for (const uid of uniqueUserIds) {
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('plan')
-        .eq('id', uid)
-        .single()
-      userPlans.set(uid, (profile?.plan as PlanType) || 'free')
+      const plan = await getUserPlan(uid)
+      userPlans.set(uid, plan)
     }
 
     // Split posts into auto-publish candidates and notify-only
@@ -221,8 +224,11 @@ export async function GET(request: NextRequest) {
     for (const post of posts) {
       const dbPost = post as DbPostRow
       const plan = userPlans.get(dbPost.user_id) || 'free'
-      const canAutoPublish =
-        dbPost.social_account_id && dbPost.platform !== 'reddit' && PLAN_FEATURES[plan].autoPublish
+      const canAutoPublish = isSelfHosted()
+        ? !!dbPost.social_account_id
+        : dbPost.social_account_id &&
+          dbPost.platform !== 'reddit' &&
+          PLAN_FEATURES[plan].autoPublish
       if (canAutoPublish) {
         autoPublishCandidates.push(dbPost)
       } else {

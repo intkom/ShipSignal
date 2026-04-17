@@ -49,7 +49,7 @@ const ENV_CHECKS: EnvCheck[] = [
     description: 'Sentry DSN for error monitoring',
   },
 
-  // Platform OAuth (optional - platform features disabled without these)
+  // Platform credentials (optional - platform features disabled without these)
   {
     name: 'TWITTER_CLIENT_ID',
     required: false,
@@ -63,7 +63,7 @@ const ENV_CHECKS: EnvCheck[] = [
   {
     name: 'REDDIT_CLIENT_ID',
     required: false,
-    description: 'Reddit OAuth client ID for posting',
+    description: 'Reddit client ID for posting',
   },
 ]
 
@@ -111,6 +111,26 @@ export function validateEnv(): void {
       console.warn(`  - ${m.name}: ${m.description}`)
     })
     console.warn('[envValidation] ⚠️  Some features may be degraded. See docs for configuration.')
+  }
+
+  // Self-hosted mode validation
+  if (process.env.SELF_HOSTED === 'true') {
+    console.log('[envValidation] ℹ️  Self-hosted mode enabled')
+
+    // Check Reddit script auth configuration
+    if (process.env.REDDIT_CLIENT_ID && !process.env.REDDIT_USERNAME) {
+      console.warn('[envValidation] ⚠️  REDDIT_CLIENT_ID is set but REDDIT_USERNAME is missing')
+    }
+    if (process.env.REDDIT_CLIENT_ID && !process.env.REDDIT_PASSWORD) {
+      console.warn('[envValidation] ⚠️  REDDIT_CLIENT_ID is set but REDDIT_PASSWORD is missing')
+    }
+
+    // Check cron scheduler
+    if (!process.env.CRON_SECRET) {
+      console.warn(
+        '[envValidation] ⚠️  CRON_SECRET is not set. Internal cron scheduler will be disabled.'
+      )
+    }
   }
 }
 

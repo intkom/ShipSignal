@@ -6,6 +6,7 @@ import {
   type ResourceType,
   type FeatureType,
 } from './limits'
+import { isSelfHosted } from './selfHosted'
 
 /**
  * Check if a Supabase error is a plan limit violation from the DB trigger.
@@ -31,6 +32,7 @@ const TABLE_MAP: Record<GenericResource, { table: string; countCol: string }> = 
 }
 
 export async function getUserPlan(userId: string): Promise<PlanType> {
+  if (isSelfHosted()) return 'selfHosted'
   const supabase = await createClient()
   const { data: profile } = await supabase
     .from('user_profiles')
@@ -47,17 +49,7 @@ export async function enforceResourceLimit(
 ): Promise<{ allowed: boolean; current: number; limit: number; plan: PlanType }> {
   const supabase = await createClient()
 
-  let plan: PlanType
-  if (preloadedPlan) {
-    plan = preloadedPlan
-  } else {
-    const { data: profile } = await supabase
-      .from('user_profiles')
-      .select('plan')
-      .eq('id', userId)
-      .single()
-    plan = (profile?.plan as PlanType) || 'free'
-  }
+  const plan = preloadedPlan || (await getUserPlan(userId))
 
   const limit = PLAN_LIMITS[plan][resource]
   const { table, countCol } = TABLE_MAP[resource]
@@ -100,13 +92,12 @@ export async function enforceStorageLimit(
 }> {
   const supabase = await createClient()
 
+  const plan = await getUserPlan(userId)
   const { data: profile } = await supabase
     .from('user_profiles')
-    .select('plan, storage_used_bytes')
+    .select('storage_used_bytes')
     .eq('id', userId)
     .single()
-
-  const plan = (profile?.plan as PlanType) || 'free'
   const currentBytes = profile?.storage_used_bytes || 0
   const limitBytes = PLAN_LIMITS[plan].storageBytes
 
