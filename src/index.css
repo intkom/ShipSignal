@@ -259,17 +259,23 @@
 }
 
 @utility btn-primary {
-  @apply inline-flex items-center justify-center rounded-[8px] bg-black px-4 py-2 text-sm font-medium text-white;
+  @apply inline-flex items-center justify-center rounded-[6px] bg-black px-4 py-2 text-sm font-medium text-white transition-all duration-150 hover:-translate-y-px hover:opacity-90;
 }
 
 @utility btn-focus {
-  @apply inline-flex items-center justify-center rounded-[8px] px-4 py-2 text-sm font-bold text-white;
+  @apply inline-flex items-center justify-center rounded-[6px] px-4 py-2 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-px hover:opacity-90;
+  background-color: #ff4f00;
+}
+
+@utility btn-accent {
+  @apply inline-flex items-center justify-center rounded-[6px] px-4 py-2 text-sm font-semibold text-white transition-all duration-150 hover:-translate-y-px hover:opacity-90;
   background-color: #ff4f00;
 }
 
 @utility card-clean {
-  @apply rounded-[12px] border bg-white shadow-sm;
+  @apply rounded-[8px] border bg-white shadow-sm;
   border-color: #e5e5e5;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
 }
 
 /* ─── Section rhythm ─────────────────────────────────────────────────────── */
@@ -353,8 +359,8 @@
     font-weight: 400;
     /* Subtle light gray grid — technical blueprint aesthetic */
     background-image:
-      linear-gradient(to right, rgba(18, 18, 18, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(18, 18, 18, 0.03) 1px, transparent 1px);
+      linear-gradient(to right, rgba(18, 18, 18, 0.032) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(18, 18, 18, 0.032) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 

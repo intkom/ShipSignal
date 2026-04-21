@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { isNativePlatform } from '@/lib/capacitor'
@@ -48,14 +48,29 @@ function getCookie(name: string): string | null {
 }
 
 export function CookieConsent() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === 'undefined') return false
-    if (isNativePlatform()) return false
-    if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === 'true') return false
+  const [mounted, setMounted] = useState(false)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+
+    if (isNativePlatform()) {
+      setVisible(false)
+      return
+    }
+    if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === 'true') {
+      setVisible(false)
+      return
+    }
+
     const country = getCookie('user_country')
-    if (country && !GDPR_COUNTRIES.has(country)) return false
-    return !localStorage.getItem('cookie_consent')
-  })
+    if (country && !GDPR_COUNTRIES.has(country)) {
+      setVisible(false)
+      return
+    }
+
+    setVisible(!localStorage.getItem('cookie_consent'))
+  }, [])
 
   const handleAccept = () => {
     localStorage.setItem('cookie_consent', 'accepted')
@@ -63,7 +78,7 @@ export function CookieConsent() {
     setVisible(false)
   }
 
-  if (!visible) return null
+  if (!mounted || !visible) return null
 
   return (
     <div

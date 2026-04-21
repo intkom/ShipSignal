@@ -257,80 +257,132 @@ export function LandingPage() {
           </p>
 
           <div className="mt-14 sm:mt-16">
-            <div className="card-clean mx-auto max-w-5xl overflow-hidden px-6 py-8 text-left sm:px-10 sm:py-10 lg:px-14 lg:py-14">
-              <div className="flex flex-col gap-10 lg:gap-12">
-                <div className="flex flex-col gap-6 border-b border-[#e5e5e5] pb-8 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
-                      <Radio className="h-5 w-5 text-black" strokeWidth={1.75} />
-                    </div>
-                    <div className="space-y-2">
-                      <div className="h-3 w-28 rounded-full bg-neutral-900" />
-                      <div className="h-2.5 w-40 rounded-full bg-neutral-200" />
-                    </div>
+            <div className="card-clean mx-auto grid max-w-5xl gap-10 px-6 py-8 text-left sm:px-10 sm:py-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-12 lg:px-12 lg:py-12">
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-[8px] border border-neutral-200 bg-white">
+                    <Radio className="h-4 w-4 text-black" strokeWidth={1.75} />
                   </div>
-                  <div className="flex items-center gap-3 self-start sm:self-auto">
-                    <div className="h-9 w-24 rounded-[8px] bg-[#ff4f00]" />
-                    <div className="h-9 w-9 rounded-[8px] border border-neutral-200 bg-white" />
-                  </div>
+                  <span className="text-sm font-semibold text-neutral-900">Interface Preview</span>
                 </div>
 
-                <div className="grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:gap-10">
-                  <div className="space-y-5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <FileText className="h-4 w-4 text-black" strokeWidth={1.75} />
-                        <div className="h-2.5 w-28 rounded-full bg-neutral-900" />
-                      </div>
-                      <div className="h-7 w-20 rounded-[8px] bg-[#ff4f00]" />
-                    </div>
+                <h3 className="mt-6 max-w-md text-2xl font-extrabold tracking-tight text-black sm:text-3xl">
+                  Structured publishing for teams that want clarity, not clutter.
+                </h3>
+                <p className="mt-4 max-w-md text-sm leading-6 text-neutral-600 sm:text-base">
+                  Keep drafts, campaigns, and launch work in one focused dashboard with clear
+                  actions and clean status visibility.
+                </p>
 
-                    {[
-                      { title: 'w-[92%]', meta: 'w-24' },
-                      { title: 'w-[86%]', meta: 'w-20' },
-                      { title: 'w-full', meta: 'w-16' },
-                    ].map((row, index) => (
-                      <div
-                        key={`interface-row-${index}`}
-                        className="rounded-[12px] border border-[#e5e5e5] bg-white p-5"
-                      >
-                        <div className="flex items-start justify-between gap-5">
-                          <div className="min-w-0 flex-1 space-y-3">
-                            <div className={`h-2.5 rounded-full bg-neutral-300 ${row.title}`} />
-                            <div className={`h-2 rounded-full bg-neutral-200 ${row.meta}`} />
-                          </div>
-                          <div className="h-6 w-16 rounded-full bg-[#ff4f00]" />
-                        </div>
+                <div className="mt-6 space-y-3">
+                  {[
+                    'A simple post queue with visible actions',
+                    'Clean campaign context without dashboard noise',
+                    'Fast scheduling flows built for repeat use',
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <div className="h-2.5 w-2.5 rounded-full bg-[#ff4f00]" />
+                      <span className="text-sm text-neutral-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Link href="/signup" className="btn-accent px-5 py-3">
+                    Start free
+                  </Link>
+                  <Link href="/docs/mcp" className="btn-primary px-5 py-3">
+                    Explore docs
+                  </Link>
+                </div>
+              </div>
+
+              <div className="rounded-[8px] border border-[#e5e5e5] bg-white p-5 sm:p-6">
+                <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-5 border-b border-[#e5e5e5] pb-6 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-neutral-200 bg-white">
+                        <Radio className="h-5 w-5 text-black" strokeWidth={1.75} />
                       </div>
-                    ))}
+                      <div className="space-y-2">
+                        <div className="h-3 w-28 rounded-full bg-neutral-900" />
+                        <div className="h-2.5 w-36 rounded-full bg-neutral-200" />
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="h-9 w-24 rounded-[6px] bg-[#ff4f00]" />
+                      <div className="h-9 w-9 rounded-[6px] border border-neutral-200 bg-white" />
+                    </div>
                   </div>
 
-                  <div className="space-y-5">
-                    <div className="rounded-[12px] border border-[#e5e5e5] bg-white p-5">
-                      <div className="mb-4 flex items-center justify-between">
+                  <div className="grid gap-5 md:grid-cols-[1.45fr_0.95fr]">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <FolderKanban className="h-4 w-4 text-black" strokeWidth={1.75} />
-                          <div className="h-2.5 w-20 rounded-full bg-neutral-900" />
+                          <FileText className="h-4 w-4 text-black" strokeWidth={1.75} />
+                          <div className="h-2.5 w-28 rounded-full bg-neutral-900" />
                         </div>
-                        <div className="h-2.5 w-12 rounded-full bg-[#ff4f00]" />
+                        <div className="h-7 w-20 rounded-[6px] bg-[#ff4f00]" />
                       </div>
-                      <div className="space-y-3">
-                        <div className="h-2 rounded-full bg-neutral-200" />
-                        <div className="h-2 w-[82%] rounded-full bg-neutral-200" />
-                        <div className="h-2 w-[70%] rounded-full bg-neutral-200" />
-                      </div>
+
+                      {[
+                        { title: 'w-[92%]', meta: 'w-20', action: 'w-14' },
+                        { title: 'w-[84%]', meta: 'w-24', action: 'w-16' },
+                        { title: 'w-full', meta: 'w-16', action: 'w-12' },
+                      ].map((row, index) => (
+                        <div
+                          key={`interface-row-${index}`}
+                          className="rounded-[8px] border border-[#e5e5e5] bg-white p-4"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="min-w-0 flex-1 space-y-3">
+                              <div className={`h-2.5 rounded-full bg-neutral-300 ${row.title}`} />
+                              <div className={`h-2 rounded-full bg-neutral-200 ${row.meta}`} />
+                            </div>
+                            <div className={`h-6 rounded-full bg-[#ff4f00] ${row.action}`} />
+                          </div>
+                        </div>
+                      ))}
                     </div>
 
-                    <div className="rounded-[12px] border border-[#e5e5e5] bg-white p-5">
-                      <div className="mb-5 flex items-center gap-3">
-                        <TrendingUp className="h-4 w-4 text-black" strokeWidth={1.75} />
-                        <div className="h-2.5 w-[4.5rem] rounded-full bg-neutral-900" />
+                    <div className="space-y-4">
+                      <div className="rounded-[8px] border border-[#e5e5e5] bg-white p-4">
+                        <div className="mb-4 flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <FolderKanban className="h-4 w-4 text-black" strokeWidth={1.75} />
+                            <div className="h-2.5 w-20 rounded-full bg-neutral-900" />
+                          </div>
+                          <div className="h-2.5 w-12 rounded-full bg-[#ff4f00]" />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="h-2 rounded-full bg-neutral-200" />
+                          <div className="h-2 w-[82%] rounded-full bg-neutral-200" />
+                          <div className="h-2 w-[68%] rounded-full bg-neutral-200" />
+                        </div>
                       </div>
-                      <div className="flex items-end gap-3">
-                        <div className="h-10 w-8 rounded-t-[8px] bg-neutral-200" />
-                        <div className="h-14 w-8 rounded-t-[8px] bg-neutral-300" />
-                        <div className="h-20 w-8 rounded-t-[8px] bg-[#ff4f00]" />
-                        <div className="h-12 w-8 rounded-t-[8px] bg-neutral-200" />
+
+                      <div className="rounded-[8px] border border-[#e5e5e5] bg-white p-4">
+                        <div className="mb-5 flex items-center gap-3">
+                          <TrendingUp className="h-4 w-4 text-black" strokeWidth={1.75} />
+                          <div className="h-2.5 w-[4.5rem] rounded-full bg-neutral-900" />
+                        </div>
+                        <div className="flex items-end gap-3">
+                          <div className="h-10 w-8 rounded-t-[8px] bg-neutral-200" />
+                          <div className="h-14 w-8 rounded-t-[8px] bg-neutral-300" />
+                          <div className="h-20 w-8 rounded-t-[8px] bg-[#ff4f00]" />
+                          <div className="h-12 w-8 rounded-t-[8px] bg-neutral-200" />
+                        </div>
+                      </div>
+
+                      <div className="rounded-[8px] border border-[#e5e5e5] bg-white p-4">
+                        <div className="mb-4 flex items-center justify-between">
+                          <div className="h-2.5 w-16 rounded-full bg-neutral-900" />
+                          <div className="h-7 w-[4.5rem] rounded-[6px] bg-[#ff4f00]" />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="h-2 rounded-full bg-neutral-200" />
+                          <div className="h-2 w-[88%] rounded-full bg-neutral-200" />
+                        </div>
                       </div>
                     </div>
                   </div>
