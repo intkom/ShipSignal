@@ -9,6 +9,7 @@ Generate an API route file with standard boilerplate following Bullhorn conventi
 ## Arguments
 
 `$ARGUMENTS` should be `<path> <methods>` where:
+
 - `<path>` is the route path (e.g., `tags`, `projects/[id]/members`)
 - `<methods>` is a comma-separated list of HTTP methods (e.g., `GET,POST,PUT,DELETE`)
 
@@ -23,16 +24,14 @@ If arguments are missing or unclear, ask the user for the route path and methods
 3. **Generate route file** — Create `src/app/api/<path>/route.ts` with handlers for each method. Use this template per method:
 
    **GET** (list):
+
    ```typescript
    export async function GET() {
      try {
        const { userId } = await requireAuth()
        const supabase = await createClient()
 
-       const { data, error } = await supabase
-         .from('TABLE_NAME')
-         .select('*')
-         .eq('user_id', userId)
+       const { data, error } = await supabase.from('TABLE_NAME').select('*').eq('user_id', userId)
 
        if (error) throw error
 
@@ -47,6 +46,7 @@ If arguments are missing or unclear, ask the user for the route path and methods
    ```
 
    **POST** (create):
+
    ```typescript
    export async function POST(request: Request) {
      try {
@@ -73,6 +73,7 @@ If arguments are missing or unclear, ask the user for the route path and methods
    ```
 
    **PUT** (update):
+
    ```typescript
    export async function PUT(request: Request) {
      try {
@@ -102,6 +103,7 @@ If arguments are missing or unclear, ask the user for the route path and methods
    ```
 
    **DELETE**:
+
    ```typescript
    export async function DELETE(request: Request) {
      try {
@@ -133,6 +135,7 @@ If arguments are missing or unclear, ask the user for the route path and methods
    ```
 
 4. **Add imports** — Include at the top of the file:
+
    ```typescript
    import { requireAuth } from '@/lib/auth'
    import { createClient } from '@/lib/supabase/server'

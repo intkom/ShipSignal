@@ -2,7 +2,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Bullhorn — Social Media Post Scheduler'
+export const alt = 'ShipSignal — GitHub to social proof'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -62,7 +62,7 @@ export default function Image() {
             letterSpacing: -2,
           }}
         >
-          Bullhorn
+          ShipSignal
         </div>
       </div>
       <div
@@ -73,7 +73,7 @@ export default function Image() {
           marginBottom: 12,
         }}
       >
-        Social Media Post Scheduler
+        GitHub activity → X & LinkedIn
       </div>
       <div
         style={{

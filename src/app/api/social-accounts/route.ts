@@ -28,6 +28,7 @@ export async function GET() {
       .from('social_accounts')
       .select(SAFE_COLUMNS)
       .eq('user_id', userId)
+      .neq('provider', 'reddit')
       .order('created_at', { ascending: false })
       .limit(100)
 

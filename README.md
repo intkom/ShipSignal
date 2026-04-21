@@ -32,15 +32,15 @@ See the [Self-Hosting Guide](docs/self-hosting.md) for detailed setup instructio
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 15 (App Router) |
-| Database | Supabase (PostgreSQL + Auth + Storage) |
-| State | Zustand |
-| Styling | Tailwind CSS |
-| Hosting | Vercel |
-| iOS | Capacitor 8 |
-| Monitoring | Sentry |
+| Layer      | Technology                             |
+| ---------- | -------------------------------------- |
+| Framework  | Next.js 15 (App Router)                |
+| Database   | Supabase (PostgreSQL + Auth + Storage) |
+| State      | Zustand                                |
+| Styling    | Tailwind CSS                           |
+| Hosting    | Vercel                                 |
+| iOS        | Capacitor 8                            |
+| Monitoring | Sentry                                 |
 
 ## Getting Started
 

@@ -7,6 +7,7 @@
 **Mode:** Strict (`"strict": true` in `tsconfig.json`)
 
 **Additional strictness flags:**
+
 - `noUnusedLocals: true`
 - `noUnusedParameters: true`
 - `noFallthroughCasesInSwitch: true`
@@ -49,6 +50,7 @@ export function MyComponent({ title, isActive = false, onClose }: MyComponentPro
 ```
 
 **Rules:**
+
 - Always declare a named `interface` for component props — never use inline object types in function signatures
 - Use `cn()` from `@/lib/utils` for all conditional class merging (wraps `clsx` + `tailwind-merge`)
 - Prefer named exports over default exports for components (except Next.js page/layout files which require default exports)
@@ -89,10 +91,7 @@ export async function GET(request: NextRequest) {
     const { userId } = await requireAuth()
     const supabase = await createClient()
 
-    const { data, error } = await supabase
-      .from('table_name')
-      .select('*')
-      .eq('user_id', userId)
+    const { data, error } = await supabase.from('table_name').select('*').eq('user_id', userId)
 
     if (error) throw error
 
@@ -107,6 +106,7 @@ export async function GET(request: NextRequest) {
 ```
 
 **Mandatory rules:**
+
 - Call `requireAuth()` first — returns `{ userId }` or throws `'Unauthorized'`
 - Always filter Supabase queries by `.eq('user_id', userId)` — RLS-equivalent ownership check
 - Apply the appropriate `transformXFromDb()` function from `src/lib/utils.ts` to all DB results
@@ -159,6 +159,7 @@ export const useXStore = create<XState & XActions>()((set, get) => ({
 ```
 
 **Mandatory rules:**
+
 - State shape always includes `{ items, loading, error, initialized }` (or resource-specific equivalents)
 - Use `dedup()` with `createDedupKey()` from `src/lib/requestDedup.ts` on all fetch actions to prevent duplicate concurrent API calls
 - Implement optimistic updates for mutations (`addItem`, `updateItem`, `deleteItem`) — set local state immediately, rollback on error
@@ -202,15 +203,16 @@ if (isSelfHosted()) {
 
 **Utility classes (always use instead of raw Tailwind equivalents):**
 
-| Class | Use for |
-|-------|---------|
-| `.sticker-card` | Cards and panels |
-| `.sticker-card-hover` | Clickable cards |
-| `.sticker-button` | Primary action buttons |
-| `.sticker-input` | Form inputs |
-| `.sticker-badge` | Status/label pills |
+| Class                 | Use for                |
+| --------------------- | ---------------------- |
+| `.sticker-card`       | Cards and panels       |
+| `.sticker-card-hover` | Clickable cards        |
+| `.sticker-button`     | Primary action buttons |
+| `.sticker-input`      | Form inputs            |
+| `.sticker-badge`      | Status/label pills     |
 
 **Platform colors (Tailwind custom tokens):**
+
 - Twitter: `bg-twitter`, `text-twitter`, `border-twitter-border`, `bg-twitter-soft`
 - LinkedIn: `bg-linkedin`, `text-linkedin`, `border-linkedin-border`, `bg-linkedin-soft`
 - Reddit: `bg-reddit`, `text-reddit`, `border-reddit-border`, `bg-reddit-soft`
@@ -222,6 +224,7 @@ if (isSelfHosted()) {
 ## Code Style (Prettier)
 
 Config at `.prettierrc`:
+
 - No semicolons (`"semi": false`)
 - Single quotes (`"singleQuote": true`)
 - 2-space indent
@@ -243,18 +246,18 @@ File: `eslint.config.js`
 
 Format: `<type>: <description>` (50-char max subject line, imperative mood)
 
-| Type | Version bump | When |
-|------|-------------|------|
-| `feat` | Minor | New user-facing capability |
-| `fix` | Patch | Bug fix |
-| `perf` | Patch | Performance improvement |
-| `security` | Patch | Security fix |
-| `docs` | None | Docs only |
-| `test` | None | Adding/updating tests |
-| `chore` | None | Maintenance, deps, config |
-| `refactor` | None | Code restructure only |
-| `ci` | None | CI/CD changes |
-| `style` | None | Formatting only |
+| Type       | Version bump | When                       |
+| ---------- | ------------ | -------------------------- |
+| `feat`     | Minor        | New user-facing capability |
+| `fix`      | Patch        | Bug fix                    |
+| `perf`     | Patch        | Performance improvement    |
+| `security` | Patch        | Security fix               |
+| `docs`     | None         | Docs only                  |
+| `test`     | None         | Adding/updating tests      |
+| `chore`    | None         | Maintenance, deps, config  |
+| `refactor` | None         | Code restructure only      |
+| `ci`       | None         | CI/CD changes              |
+| `style`    | None         | Formatting only            |
 
 Breaking changes: `feat!: ...` — triggers major version bump.
 

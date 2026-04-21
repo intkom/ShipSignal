@@ -7,7 +7,11 @@
   "bin": {
     "bullhorn-mcp": "dist/index.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublishOnly": "npm run build",
@@ -18,7 +22,13 @@
     "test:e2e": "vitest run --config vitest.e2e.config.ts",
     "smoke-test": "node smoke-test.mjs"
   },
-  "keywords": ["mcp", "bullhorn", "social-media", "scheduler", "claude"],
+  "keywords": [
+    "mcp",
+    "bullhorn",
+    "social-media",
+    "scheduler",
+    "claude"
+  ],
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",

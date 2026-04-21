@@ -7,29 +7,29 @@ import '@/lib/envValidation' // Validate env vars on startup
 import { CookieConsent } from '@/components/ui/CookieConsent'
 import { PostHogProvider } from '@/lib/posthog'
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bullhorn.to'
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://shipsignal.app'
 
 // eslint-disable-next-line react-refresh/only-export-components -- metadata export is required by Next.js App Router
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl),
   title: {
-    default: 'Bullhorn — Social Media Post Scheduler',
-    template: '%s | Bullhorn',
+    default: 'ShipSignal — GitHub to social proof',
+    template: '%s | ShipSignal',
   },
   description:
-    'Schedule and manage social media posts for Twitter, LinkedIn, and Reddit. Organize with campaigns and projects.',
+    'Turn your GitHub activity into polished X and LinkedIn posts. Schedule and manage posts with campaigns and projects.',
   openGraph: {
     type: 'website',
-    siteName: 'Bullhorn',
-    title: 'Bullhorn — Social Media Post Scheduler',
+    siteName: 'ShipSignal',
+    title: 'ShipSignal — GitHub to social proof',
     description:
-      'Schedule and manage social media posts for Twitter, LinkedIn, and Reddit. Organize with campaigns and projects.',
+      'Turn your GitHub activity into polished X and LinkedIn posts. Schedule and manage posts with campaigns and projects.',
     url: appUrl,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bullhorn — Social Media Post Scheduler',
-    description: 'Schedule and manage social media posts for Twitter, LinkedIn, and Reddit.',
+    title: 'ShipSignal — GitHub to social proof',
+    description: 'Turn your GitHub activity into polished X and LinkedIn posts.',
   },
   icons: {
     icon: [
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
         />
       </head>

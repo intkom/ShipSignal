@@ -76,7 +76,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
     }
 
     await sendLocalNotification(
-      'Bullhorn Test',
+      'ShipSignal Test',
       'Push notifications are working! You will be notified when posts are due.',
       '/dashboard'
     )

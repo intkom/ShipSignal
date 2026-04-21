@@ -8,7 +8,7 @@ import { z } from 'zod'
 export const dynamic = 'force-dynamic'
 
 const createPostSchema = z.object({
-  platform: z.enum(['twitter', 'linkedin', 'reddit']),
+  platform: z.enum(['twitter', 'linkedin']),
   content: z.record(z.string(), z.unknown()),
   status: z.enum(['draft', 'scheduled', 'published', 'failed', 'archived']).optional(),
   scheduled_at: z.string().optional().nullable(),
@@ -58,6 +58,7 @@ export async function GET(request: NextRequest) {
       .from('posts')
       .select('*')
       .eq('user_id', userId)
+      .neq('platform', 'reddit')
       .order('updated_at', { ascending: false })
 
     if (status && status !== 'all') {

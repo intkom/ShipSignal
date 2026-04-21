@@ -63,8 +63,11 @@ export function FeatureCarousel({ slides, autoAdvanceMs = 4000 }: FeatureCarouse
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Image container with phone frame look */}
-      <div className="relative mx-auto aspect-9/16 w-full max-w-[280px] overflow-hidden rounded-2xl border-[3px] border-border bg-background shadow-[4px_4px_0px_0px_hsl(var(--border))]">
+      {/* Image container — sharp tactical frame */}
+      <div
+        className="relative mx-auto aspect-9/16 w-full max-w-[280px] overflow-hidden border border-border bg-background"
+        style={{ boxShadow: '3px 3px 0 #000' }}
+      >
         {slides.map((slide, i) => (
           <div
             key={slide.src}
@@ -88,14 +91,14 @@ export function FeatureCarousel({ slides, autoAdvanceMs = 4000 }: FeatureCarouse
           <>
             <button
               onClick={prev}
-              className="absolute left-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border-2 border-border bg-card/90 p-1 shadow-xs backdrop-blur-xs transition-colors hover:bg-card"
+              className="absolute left-1.5 top-1/2 z-10 -translate-y-1/2 border border-border bg-card/90 p-1 transition-colors hover:bg-card"
               aria-label="Previous slide"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
             <button
               onClick={next}
-              className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border-2 border-border bg-card/90 p-1 shadow-xs backdrop-blur-xs transition-colors hover:bg-card"
+              className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 border border-border bg-card/90 p-1 transition-colors hover:bg-card"
               aria-label="Next slide"
             >
               <ChevronRight className="h-4 w-4" />
@@ -114,7 +117,7 @@ export function FeatureCarousel({ slides, autoAdvanceMs = 4000 }: FeatureCarouse
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`h-2 w-2 rounded-full border border-border transition-colors ${
+              className={`h-1.5 w-4 border border-border transition-colors ${
                 i === current ? 'bg-primary' : 'bg-muted'
               }`}
               aria-label={`Go to slide ${i + 1}`}

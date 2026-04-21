@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllArticles } from './(public)/articles/content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bullhorn.to'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://shipsignal.app'
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },

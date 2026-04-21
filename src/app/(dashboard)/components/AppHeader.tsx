@@ -3,7 +3,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Settings, Plus, FolderOpen, FileText, FolderKanban, Rocket, Calendar } from 'lucide-react'
+import {
+  Settings,
+  Plus,
+  FolderOpen,
+  FileText,
+  FolderKanban,
+  Rocket,
+  Calendar,
+  Radio,
+} from 'lucide-react'
 import { UserMenu } from './UserMenu'
 import { UsageBanner } from '@/components/ui/UsageBanner'
 
@@ -23,7 +32,10 @@ export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-xl border-b-[3px] border-border">
+      <header
+        className="sticky top-0 z-50 bg-card backdrop-blur-xl border-b border-border"
+        style={{ boxShadow: '0 1px 0 0 #E5E5E5' }}
+      >
         <div className="flex items-center justify-between h-16 px-6">
           <div className="flex items-center gap-3">
             {isEditorPage && (
@@ -47,10 +59,18 @@ export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
               </Link>
             )}
             <Link href="/dashboard" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center border-[3px] border-border shadow-sticker-sm text-xl">
-                📢
+              <div
+                className="w-9 h-9 bg-primary flex items-center justify-center text-primary-foreground"
+                style={{ borderRadius: '2px', boxShadow: '2px 2px 0 #000' }}
+              >
+                <Radio className="h-4 w-4" strokeWidth={2.5} />
               </div>
-              <span className="font-extrabold text-xl md:text-2xl tracking-tight">Bullhorn</span>
+              <span
+                className="font-bold text-lg md:text-xl tracking-tight uppercase"
+                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.05em' }}
+              >
+                ShipSignal
+              </span>
             </Link>
           </div>
 
@@ -150,8 +170,8 @@ export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
             )}
           </div>
         </div>
-        {/* Colorful gradient bar under header */}
-        <div className="h-1 gradient-bar" />
+        {/* Orange accent line under header */}
+        <div className="gradient-bar" />
       </header>
       <UsageBanner />
     </>
@@ -173,20 +193,20 @@ export function FloatingActionButton() {
       href="/new"
       className={cn(
         'fixed bottom-8 right-8 z-50',
-        'w-14 h-14 rounded-md',
-        'bg-primary',
+        'w-12 h-12',
+        'bg-foreground',
         'flex items-center justify-center',
-        'text-primary-foreground',
-        'border-[3px] border-border',
-        'shadow-sticker',
-        'hover:translate-y-[-2px] hover:shadow-[6px_6px_0_hsl(var(--border))]',
-        'active:translate-y-[2px] active:shadow-sticker-hover',
-        'transition-all duration-200',
+        'text-card',
+        'transition-all duration-150',
         'hidden md:flex'
       )}
+      style={{
+        borderRadius: '2px',
+        boxShadow: '2px 2px 0 #FF4F00',
+      }}
       aria-label="Create new post"
     >
-      <Plus className="w-7 h-7" strokeWidth={3} />
+      <Plus className="w-5 h-5" strokeWidth={2.5} />
     </Link>
   )
 }

@@ -271,14 +271,14 @@ describe('usePushNotifications logic', () => {
 
       if (permission === 'granted') {
         await sendLocalNotification(
-          'Bullhorn Test',
+          'ShipSignal Test',
           'Push notifications are working! You will be notified when posts are due.',
           '/dashboard'
         )
       }
 
       expect(mockSendLocalNotification).toHaveBeenCalledWith(
-        'Bullhorn Test',
+        'ShipSignal Test',
         'Push notifications are working! You will be notified when posts are due.',
         '/dashboard'
       )
@@ -297,7 +297,7 @@ describe('usePushNotifications logic', () => {
         if (!granted) return
       }
 
-      await sendLocalNotification('Bullhorn Test', 'Test notification', '/dashboard')
+      await sendLocalNotification('ShipSignal Test', 'Test notification', '/dashboard')
 
       expect(mockRequestPermission).toHaveBeenCalledTimes(1)
       expect(mockSendLocalNotification).toHaveBeenCalledTimes(1)

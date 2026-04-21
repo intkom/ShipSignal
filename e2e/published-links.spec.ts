@@ -20,9 +20,7 @@ test.describe('Published Links', () => {
     await enterDemoMode(page)
   })
 
-   
   test.describe('UI Display', () => {
-     
     test('should show Published Links section when a platform is selected', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -31,7 +29,6 @@ test.describe('Published Links', () => {
       await expect(page.getByRole('button', { name: /published links/i })).toBeVisible()
     })
 
-     
     test('should expand Published Links section when clicked', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -43,7 +40,6 @@ test.describe('Published Links', () => {
       await expect(page.getByPlaceholder('https://twitter.com/user/status/...')).toBeVisible()
     })
 
-     
     test('should show correct platform field when switching platforms', async ({ page }) => {
       await goToNewPost(page)
 
@@ -60,9 +56,7 @@ test.describe('Published Links', () => {
     })
   })
 
-   
   test.describe('Twitter Launched URL', () => {
-     
     test('should save Twitter launched URL', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -83,7 +77,6 @@ test.describe('Published Links', () => {
       expect(getTwitterContent(posts[0])?.launchedUrl).toBe(twitterUrl)
     })
 
-     
     test('should persist Twitter launched URL on reload', async ({ page }) => {
       // Create post with launched URL
       await goToNewPost(page)
@@ -107,9 +100,7 @@ test.describe('Published Links', () => {
     })
   })
 
-   
   test.describe('LinkedIn Launched URL', () => {
-     
     test('should save LinkedIn launched URL', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')
@@ -130,7 +121,6 @@ test.describe('Published Links', () => {
       expect(getLinkedInContent(posts[0])?.launchedUrl).toBe(linkedInUrl)
     })
 
-     
     test('should persist LinkedIn launched URL on reload', async ({ page }) => {
       // Create post with launched URL
       await goToNewPost(page)
@@ -154,9 +144,7 @@ test.describe('Published Links', () => {
     })
   })
 
-   
   test.describe('Reddit Launched URLs', () => {
-     
     test('should show URL field for Reddit post', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -174,7 +162,6 @@ test.describe('Published Links', () => {
       await expect(page.getByPlaceholder('https://reddit.com/r/...')).toBeVisible()
     })
 
-     
     test('should save Reddit launched URL', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -199,7 +186,6 @@ test.describe('Published Links', () => {
       expect(getRedditContent(posts[0])?.launchedUrl).toBe(redditUrl)
     })
 
-     
     test('should persist Reddit launched URL on reload', async ({ page }) => {
       // Create post with launched URL
       await goToNewPost(page)
@@ -226,9 +212,7 @@ test.describe('Published Links', () => {
     })
   })
 
-   
   test.describe('Auto-expand behavior', () => {
-     
     test('should auto-expand Published Links when loading post with URLs', async ({ page }) => {
       // Create post with launched URL
       await goToNewPost(page)

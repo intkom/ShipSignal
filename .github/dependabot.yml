@@ -9,27 +9,27 @@ updates:
     groups:
       capacitor:
         patterns:
-          - "@capacitor/*"
-          - "@capawesome/*"
-          - "@capgo/*"
+          - '@capacitor/*'
+          - '@capawesome/*'
+          - '@capgo/*'
       testing:
         patterns:
-          - "@testing-library/*"
-          - "@playwright/*"
+          - '@testing-library/*'
+          - '@playwright/*'
           - vitest
-          - "@vitest/*"
+          - '@vitest/*'
           - jsdom
       typescript-eslint:
         patterns:
-          - "@typescript-eslint/*"
+          - '@typescript-eslint/*'
           - eslint
           - eslint-plugin-*
       sentry:
         patterns:
-          - "@sentry/*"
+          - '@sentry/*'
       supabase:
         patterns:
-          - "@supabase/*"
+          - '@supabase/*'
 
   - package-ecosystem: github-actions
     directory: /

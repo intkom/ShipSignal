@@ -21,9 +21,21 @@ vi.mock('@/lib/planEnforcement', () => ({
 }))
 
 const mockLimit = vi.fn()
-const mockOrder = vi.fn(() => ({ limit: mockLimit }))
-const mockQueryEq = vi.fn(() => ({ eq: mockQueryEq, order: mockOrder }))
-const mockSelect = vi.fn(() => ({ eq: mockQueryEq }))
+const mockQueryEq = vi.fn(() => ({
+  eq: mockQueryEq,
+  limit: mockLimit,
+}))
+const mockOrder = vi.fn(() => ({
+  eq: mockQueryEq,
+  limit: mockLimit,
+}))
+const mockNeq = vi.fn(() => ({
+  order: mockOrder,
+}))
+const mockUserIdEq = vi.fn(() => ({
+  neq: mockNeq,
+}))
+const mockSelect = vi.fn(() => ({ eq: mockUserIdEq }))
 const mockInsertSingle = vi.fn()
 const mockInsertSelect = vi.fn(() => ({ single: mockInsertSingle }))
 const mockInsert = vi.fn(() => ({ select: mockInsertSelect }))

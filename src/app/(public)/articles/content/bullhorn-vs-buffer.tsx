@@ -4,12 +4,12 @@ import Link from 'next/link'
 import type { ArticleWithContent } from './index'
 
 export const article: ArticleWithContent = {
-  slug: 'bullhorn-vs-buffer',
-  title: 'Bullhorn vs Buffer: Which Social Media Scheduler Is Right for You?',
+  slug: 'shipsignal-vs-buffer',
+  title: 'ShipSignal vs Buffer: Which Social Media Scheduler Is Right for You?',
   description:
-    'An honest comparison of Bullhorn and Buffer for social media scheduling. Feature differences, pricing, and which tool fits developers vs marketers.',
+    'An honest comparison of ShipSignal and Buffer for social media scheduling. Feature differences, pricing, and which tool fits developers vs marketers.',
   publishedAt: '2026-03-17',
-  keywords: ['buffer alternative', 'bullhorn vs buffer', 'social media scheduler comparison'],
+  keywords: ['buffer alternative', 'ShipSignal vs buffer', 'social media scheduler comparison'],
   content: () => (
     <>
       <p>
@@ -31,7 +31,7 @@ export const article: ArticleWithContent = {
       </p>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         focuses on the three platforms technical audiences actually use: Twitter, LinkedIn, and
         Reddit. Less breadth, but deeper support for the platforms that drive developer engagement.
@@ -44,9 +44,10 @@ export const article: ArticleWithContent = {
         cadence.
       </p>
       <p>
-        Bullhorn organizes content by campaigns and projects. You can group posts by product launch,
-        feature release, or initiative — the same way you organize code. If you are shipping a
-        product and want to coordinate announcements across platforms, campaigns make that natural.
+        ShipSignal organizes content by campaigns and projects. You can group posts by product
+        launch, feature release, or initiative — the same way you organize code. If you are shipping
+        a product and want to coordinate announcements across platforms, campaigns make that
+        natural.
       </p>
 
       <h2>AI Integration</h2>
@@ -55,7 +56,7 @@ export const article: ArticleWithContent = {
         It is useful for polishing copy.
       </p>
       <p>
-        Bullhorn takes a different approach with{' '}
+        ShipSignal takes a different approach with{' '}
         <Link href="/docs/mcp" className="text-[hsl(var(--gold))] font-bold hover:underline">
           MCP (Model Context Protocol)
         </Link>
@@ -71,7 +72,7 @@ export const article: ArticleWithContent = {
         channels.
       </p>
       <p>
-        Bullhorn has dedicated launch post templates for Product Hunt, Hacker News (Show HN, Ask
+        ShipSignal has dedicated launch post templates for Product Hunt, Hacker News (Show HN, Ask
         HN), Dev Hunt, BetaList, and Indie Hackers. If you are launching a product, you can
         coordinate all your launch communications in one place with platform-specific formatting.
       </p>
@@ -82,7 +83,7 @@ export const article: ArticleWithContent = {
         plan starts at $6/month per channel.
       </p>
       <p>
-        Bullhorn&apos;s free plan gives you 50 posts, 5 campaigns, and 3 projects. No per-channel
+        ShipSignal&apos;s free plan gives you 50 posts, 5 campaigns, and 3 projects. No per-channel
         pricing — you get access to Twitter, LinkedIn, and Reddit on the free tier.
       </p>
 
@@ -94,7 +95,7 @@ export const article: ArticleWithContent = {
         <li>You primarily create visual content (photos, reels, stories)</li>
       </ul>
 
-      <h2>When to Choose Bullhorn</h2>
+      <h2>When to Choose ShipSignal</h2>
       <ul>
         <li>You are a developer, indie hacker, or technical founder</li>
         <li>Your audience is on Twitter, LinkedIn, and Reddit</li>
@@ -105,12 +106,13 @@ export const article: ArticleWithContent = {
 
       <h2>The Bottom Line</h2>
       <p>
-        Buffer is a great general-purpose social media scheduler. Bullhorn is a purpose-built tool
+        Buffer is a great general-purpose social media scheduler. ShipSignal is a purpose-built tool
         for people who build software and want to talk about it without social media becoming a
         second job.
       </p>
       <p>
-        If you are reading this article, you are probably the kind of person Bullhorn was built for.{' '}
+        If you are reading this article, you are probably the kind of person ShipSignal was built
+        for.{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
           Try it free
         </Link>{' '}

@@ -33,8 +33,7 @@ export function AddPostModal({
                   className={cn(
                     'w-2 h-2 rounded-full',
                     post.platform === 'twitter' && 'bg-twitter',
-                    post.platform === 'linkedin' && 'bg-linkedin',
-                    post.platform === 'reddit' && 'bg-reddit'
+                    post.platform === 'linkedin' && 'bg-linkedin'
                   )}
                 />
                 <span className="text-xs text-muted-foreground capitalize">{post.status}</span>

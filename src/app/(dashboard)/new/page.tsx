@@ -12,7 +12,6 @@ import { useLocalDraft } from '@/hooks/useLocalDraft'
 import {
   PostDraftData,
   useEditorFormState,
-  useSubredditManagement,
   useDirtyTracking,
   useLoadExistingPost,
   usePlatformContentSync,
@@ -51,18 +50,10 @@ export default function EditorPage() {
   const [showLeaveConfirm, setShowLeaveConfirm] = useState(false)
   const hasShareParams = !!(searchParams.get('text') || searchParams.get('url'))
 
-  const subredditMgmt = useSubredditManagement(
-    state.setSubredditsInput,
-    state.setSubredditTitles,
-    state.setSubredditSchedules,
-    state.setExpandedSubreddits
-  )
-
   const dirtyTracking = useDirtyTracking({
     content: state.content,
     mediaUrls: state.mediaUrls,
     linkedInMediaUrl: state.linkedInMediaUrl,
-    redditUrl: state.redditUrl,
     platform: state.post.platform,
     notes: state.post.notes,
   })
@@ -74,23 +65,12 @@ export default function EditorPage() {
     setContent: state.setContent,
     setMediaUrls: state.setMediaUrls,
     setLinkedInMediaUrl: state.setLinkedInMediaUrl,
-    setRedditUrl: state.setRedditUrl,
-    setSubredditsInput: state.setSubredditsInput,
-    setSubredditTitles: state.setSubredditTitles,
-    setSubredditSchedules: state.setSubredditSchedules,
-    setExpandedSubreddits: state.setExpandedSubreddits,
     setShowNotes: state.setShowNotes,
     setShowPublishedLinks: state.setShowPublishedLinks,
     initialContentRef: dirtyTracking.initialContentRef,
   })
 
-  usePlatformContentSync(
-    state.content,
-    state.mediaUrls,
-    state.linkedInMediaUrl,
-    state.redditUrl,
-    state.setPost
-  )
+  usePlatformContentSync(state.content, state.mediaUrls, state.linkedInMediaUrl, state.setPost)
 
   const platformAccounts = state
     .getAccountsByProvider(state.post.platform)
@@ -108,19 +88,10 @@ export default function EditorPage() {
 
   const saveCtx = useEditorSave({
     isNew: state.isNew,
-    subredditsInput: state.subredditsInput,
-    subredditSchedules: state.subredditSchedules,
-    subredditTitles: state.subredditTitles,
     clearDraft,
   })
 
-  const actions = useEditorActions(
-    state.post,
-    state.content,
-    saveCtx.handleSave,
-    state.subredditsInput,
-    state.subredditSchedules
-  )
+  const actions = useEditorActions(state.post, state.content, saveCtx.handleSave)
 
   const activeAccount = state.getActiveAccount(state.post.platform)
   const hasConnectedAccount = !!activeAccount
@@ -130,7 +101,6 @@ export default function EditorPage() {
     state.content,
     state.isNew,
     hasConnectedAccount,
-    state.subredditsInput,
     actions.isOverLimit
   )
 
@@ -141,13 +111,7 @@ export default function EditorPage() {
     state.content,
     state.mediaUrls,
     state.linkedInMediaUrl,
-    state.redditUrl,
-    state.subredditsInput,
-    state.setPost,
-    state.setSubredditsInput,
-    state.setSubredditTitles,
-    state.setSubredditSchedules,
-    state.setExpandedSubreddits
+    state.setPost
   )
 
   const lifecycle = usePostLifecycle(id)
@@ -158,7 +122,6 @@ export default function EditorPage() {
       content: state.content,
       mediaUrls: state.mediaUrls,
       linkedInMediaUrl: state.linkedInMediaUrl,
-      redditUrl: state.redditUrl,
     },
     onSave: async () => {
       if (saveCtx.isSaving) return
@@ -178,7 +141,6 @@ export default function EditorPage() {
     delay: 2000,
     enabled:
       (state.post.status === 'draft' || state.isNew) &&
-      !(state.isNew && actions.hasMultipleSubreddits) &&
       (process.env.NEXT_PUBLIC_E2E_TEST_MODE !== 'true' || searchParams.get('autosave') === 'true'),
     skipInitialChange: !state.isNew,
   })
@@ -195,10 +157,6 @@ export default function EditorPage() {
       }))
       state.setMediaUrls(d.mediaUrls)
       state.setLinkedInMediaUrl(d.linkedInMediaUrl)
-      state.setRedditUrl(d.redditUrl)
-      state.setSubredditsInput(d.subredditsInput)
-      state.setSubredditTitles(d.subredditTitles)
-      state.setSubredditSchedules(d.subredditSchedules)
       if (d.notes) state.setShowNotes(true)
     },
     [] // eslint-disable-line react-hooks/exhaustive-deps
@@ -249,10 +207,6 @@ export default function EditorPage() {
       notes: state.post.notes || '',
       mediaUrls: state.mediaUrls,
       linkedInMediaUrl: state.linkedInMediaUrl,
-      redditUrl: state.redditUrl,
-      subredditsInput: state.subredditsInput,
-      subredditTitles: state.subredditTitles,
-      subredditSchedules: state.subredditSchedules,
       campaignId: state.post.campaignId,
       scheduledAt: state.post.scheduledAt ?? undefined,
     })
@@ -262,10 +216,6 @@ export default function EditorPage() {
     state.post.notes,
     state.mediaUrls,
     state.linkedInMediaUrl,
-    state.redditUrl,
-    state.subredditsInput,
-    state.subredditTitles,
-    state.subredditSchedules,
     state.post.campaignId,
     state.post.scheduledAt,
     state.isNew,
@@ -310,19 +260,6 @@ export default function EditorPage() {
         setMediaUrls={state.setMediaUrls}
         linkedInMediaUrl={state.linkedInMediaUrl}
         setLinkedInMediaUrl={state.setLinkedInMediaUrl}
-        redditUrl={state.redditUrl}
-        setRedditUrl={state.setRedditUrl}
-        newSubreddit={state.newSubreddit}
-        setNewSubreddit={state.setNewSubreddit}
-        subredditsInput={state.subredditsInput}
-        setSubredditsInput={state.setSubredditsInput}
-        subredditTitles={state.subredditTitles}
-        updateSubredditTitle={subredditMgmt.updateSubredditTitle}
-        subredditSchedules={state.subredditSchedules}
-        updateSubredditSchedule={subredditMgmt.updateSubredditSchedule}
-        expandedSubreddits={state.expandedSubreddits}
-        toggleSubredditExpanded={subredditMgmt.toggleSubredditExpanded}
-        removeSubreddit={subredditMgmt.removeSubreddit}
         showPublishedLinks={state.showPublishedLinks}
         setShowPublishedLinks={state.setShowPublishedLinks}
         platformAccounts={platformAccounts}
@@ -345,8 +282,6 @@ export default function EditorPage() {
         content={state.content}
         mediaUrls={state.mediaUrls}
         linkedInMediaUrl={state.linkedInMediaUrl}
-        redditUrl={state.redditUrl}
-        subredditsInput={state.subredditsInput}
       />
       <EditorConfirmDialogs
         showDeleteConfirm={lifecycle.showDeleteConfirm}

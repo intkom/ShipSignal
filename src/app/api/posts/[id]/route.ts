@@ -7,7 +7,7 @@ import { z } from 'zod'
 export const dynamic = 'force-dynamic'
 
 const updatePostSchema = z.object({
-  platform: z.enum(['twitter', 'linkedin', 'reddit']).optional(),
+  platform: z.enum(['twitter', 'linkedin']).optional(),
   content: z.record(z.string(), z.unknown()).optional(),
   status: z.enum(['draft', 'scheduled', 'ready', 'published', 'failed', 'archived']).optional(),
   scheduled_at: z.string().optional().nullable(),
@@ -71,6 +71,10 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
       return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
     }
 
+    if ((data as { platform?: string }).platform === 'reddit') {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+    }
+
     // Transform post from snake_case to camelCase
     const post = transformPostFromDb(data as DbPost)
     return NextResponse.json({ post })
@@ -116,7 +120,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
     // Get current post to validate status transition (with ownership check)
     const { data: currentPost, error: fetchError } = await supabase
       .from('posts')
-      .select('status')
+      .select('status, platform')
       .eq('id', id)
       .eq('user_id', userId)
       .single()
@@ -127,6 +131,10 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       }
       console.error('Database error:', fetchError)
       return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+
+    if ((currentPost as { platform?: string }).platform === 'reddit') {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
 
     // Validate status transition if status is being changed

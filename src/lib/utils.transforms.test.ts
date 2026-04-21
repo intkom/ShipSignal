@@ -18,7 +18,7 @@ import type {
 
 const sampleDbProject: DbProject = {
   id: 'proj-001',
-  name: 'Bullhorn',
+  name: 'ShipSignal',
   description: 'Social media scheduler',
   hashtags: ['#launch', '#saas'],
   brand_colors: { primary: '#fbbf24', secondary: '#ec4899', accent: '#3b82f6' },
@@ -54,7 +54,7 @@ describe('transformProjectFromDb - field mapping', () => {
   it('maps all fields correctly', () => {
     const project = transformProjectFromDb(sampleDbProject)
     expect(project.id).toBe('proj-001')
-    expect(project.name).toBe('Bullhorn')
+    expect(project.name).toBe('ShipSignal')
     expect(project.description).toBe('Social media scheduler')
     expect(project.hashtags).toEqual(['#launch', '#saas'])
     expect(project.brandColors).toEqual({

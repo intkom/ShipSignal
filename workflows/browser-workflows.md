@@ -5,54 +5,54 @@
 
 ## Quick Reference
 
-| Workflow | Purpose | Steps |
-|----------|---------|-------|
-| Dashboard Overview | View stats, recent posts, and navigate | 6 |
-| Navigation Flow | Navigate between all app sections | 7 |
-| First-Time User Experience | Handle empty states, create first post | 5 |
-| Create Twitter Post | Full Twitter post with media | 10 |
-| Create LinkedIn Post | LinkedIn post with visibility settings | 9 |
-| Create Reddit Post | Multi-subreddit crossposting | 12 |
-| Edit Existing Post | Modify content, schedule, campaign | 8 |
-| Schedule Post for Future | Date/time selection and scheduling | 6 |
-| Publish Post Immediately | Mark as posted workflow | 5 |
-| Search and Filter Posts | List/calendar views, filtering, search | 8 |
-| Create New Campaign | Modal form submission | 5 |
-| Edit Campaign Details | Inline editing name, description, status | 7 |
-| Add Posts to Campaign | Link existing or create new posts | 6 |
-| Delete Campaign | Confirmation and deletion | 4 |
-| Upload Media to Post | Drag-drop or click upload | 7 |
-| Remove Media from Post | Delete uploaded media | 4 |
-| Change Theme | Light/Dark/System switching | 4 |
-| Enable Browser Notifications | Permission request and toggle | 5 |
-| Archive and Restore Post | Soft delete and recovery | 6 |
-| Handle Empty States | Verify empty state displays | 5 |
-| Login with Email and Password | Email/password sign-in flow | 6 |
-| Login with Google OAuth | Google OAuth sign-in flow | 5 |
-| Sign Up with Email | New account registration | 7 |
-| Forgot Password | Request password reset email | 5 |
-| Reset Password | Set new password from reset link | 6 |
-| Access Denied (Email Gating) | Blocked user redirect flow | 4 |
-| Create Launch Post | New launch post for any platform | 9 |
-| Edit Launch Post | Modify existing launch post | 6 |
-| Filter Launch Posts | Platform and status filtering | 6 |
-| Delete Launch Post | Remove a launch post | 4 |
-| Create New Project | Modal form to create project | 5 |
-| View Project Detail | Project header, campaigns, settings | 7 |
-| Edit Project Settings | Name, description, brand kit | 8 |
-| Delete Project | Confirmation and deletion | 5 |
-| Create Campaign in Project | New campaign scoped to project | 5 |
-| Create New Blog Draft | New markdown blog post | 7 |
-| Edit Blog Draft | Modify existing blog draft | 7 |
-| Search and Filter Blog Drafts | Status tabs and search | 6 |
-| Archive and Restore Blog Draft | Soft delete and recovery | 6 |
-| Delete Blog Draft | Permanent blog draft deletion | 4 |
-| Connect Google Analytics | OAuth flow and property selection | 7 |
-| View Analytics Dashboard | Project analytics and connections | 5 |
-| Remove Analytics Connection | Delete analytics connection | 4 |
-| View and Edit Profile | Display name and avatar | 6 |
-| Change Password | Update account password | 6 |
-| Delete Account | Permanent account deletion | 5 |
+| Workflow                       | Purpose                                  | Steps |
+| ------------------------------ | ---------------------------------------- | ----- |
+| Dashboard Overview             | View stats, recent posts, and navigate   | 6     |
+| Navigation Flow                | Navigate between all app sections        | 7     |
+| First-Time User Experience     | Handle empty states, create first post   | 5     |
+| Create Twitter Post            | Full Twitter post with media             | 10    |
+| Create LinkedIn Post           | LinkedIn post with visibility settings   | 9     |
+| Create Reddit Post             | Multi-subreddit crossposting             | 12    |
+| Edit Existing Post             | Modify content, schedule, campaign       | 8     |
+| Schedule Post for Future       | Date/time selection and scheduling       | 6     |
+| Publish Post Immediately       | Mark as posted workflow                  | 5     |
+| Search and Filter Posts        | List/calendar views, filtering, search   | 8     |
+| Create New Campaign            | Modal form submission                    | 5     |
+| Edit Campaign Details          | Inline editing name, description, status | 7     |
+| Add Posts to Campaign          | Link existing or create new posts        | 6     |
+| Delete Campaign                | Confirmation and deletion                | 4     |
+| Upload Media to Post           | Drag-drop or click upload                | 7     |
+| Remove Media from Post         | Delete uploaded media                    | 4     |
+| Change Theme                   | Light/Dark/System switching              | 4     |
+| Enable Browser Notifications   | Permission request and toggle            | 5     |
+| Archive and Restore Post       | Soft delete and recovery                 | 6     |
+| Handle Empty States            | Verify empty state displays              | 5     |
+| Login with Email and Password  | Email/password sign-in flow              | 6     |
+| Login with Google OAuth        | Google OAuth sign-in flow                | 5     |
+| Sign Up with Email             | New account registration                 | 7     |
+| Forgot Password                | Request password reset email             | 5     |
+| Reset Password                 | Set new password from reset link         | 6     |
+| Access Denied (Email Gating)   | Blocked user redirect flow               | 4     |
+| Create Launch Post             | New launch post for any platform         | 9     |
+| Edit Launch Post               | Modify existing launch post              | 6     |
+| Filter Launch Posts            | Platform and status filtering            | 6     |
+| Delete Launch Post             | Remove a launch post                     | 4     |
+| Create New Project             | Modal form to create project             | 5     |
+| View Project Detail            | Project header, campaigns, settings      | 7     |
+| Edit Project Settings          | Name, description, brand kit             | 8     |
+| Delete Project                 | Confirmation and deletion                | 5     |
+| Create Campaign in Project     | New campaign scoped to project           | 5     |
+| Create New Blog Draft          | New markdown blog post                   | 7     |
+| Edit Blog Draft                | Modify existing blog draft               | 7     |
+| Search and Filter Blog Drafts  | Status tabs and search                   | 6     |
+| Archive and Restore Blog Draft | Soft delete and recovery                 | 6     |
+| Delete Blog Draft              | Permanent blog draft deletion            | 4     |
+| Connect Google Analytics       | OAuth flow and property selection        | 7     |
+| View Analytics Dashboard       | Project analytics and connections        | 5     |
+| Remove Analytics Connection    | Delete analytics connection              | 4     |
+| View and Edit Profile          | Display name and avatar                  | 6     |
+| Change Password                | Update account password                  | 6     |
+| Delete Account                 | Permanent account deletion               | 5     |
 
 ---
 
@@ -63,6 +63,7 @@
 > Tests the main dashboard view with stats, recent posts, and campaign cards.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - At least one post and one campaign exist for full testing
 
@@ -104,6 +105,7 @@
 > Tests all navigation paths between app sections on desktop and mobile.
 
 **Prerequisites:**
+
 - App running and accessible
 
 1. Test header navigation (desktop)
@@ -160,6 +162,7 @@
 > Tests empty states and first-time user onboarding flow.
 
 **Prerequisites:**
+
 - Fresh app state with no posts or campaigns
 
 1. View empty dashboard
@@ -198,6 +201,7 @@
 > Tests creating a new Twitter/X post with media and scheduling.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - Test image file available for upload
 
@@ -270,6 +274,7 @@
 > Tests creating a LinkedIn post with visibility settings.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 
 1. Navigate to post editor
@@ -323,6 +328,7 @@
 > Tests creating a Reddit post with multi-subreddit crossposting.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 
 1. Navigate to post editor
@@ -397,6 +403,7 @@
 > Tests editing an existing post's content, schedule, and campaign assignment.
 
 **Prerequisites:**
+
 - At least one saved post exists
 
 1. Navigate to post from dashboard
@@ -449,6 +456,7 @@
 > Tests the complete scheduling flow with date/time pickers.
 
 **Prerequisites:**
+
 - Draft post exists or create new post
 
 1. Open post editor
@@ -488,6 +496,7 @@
 > Tests publishing a post for immediate posting.
 
 **Prerequisites:**
+
 - Draft or scheduled post exists
 
 1. Open post editor
@@ -521,6 +530,7 @@
 > Tests list view, calendar view, filtering, and search functionality.
 
 **Prerequisites:**
+
 - Multiple posts exist with different statuses
 
 1. Navigate to Posts page
@@ -607,6 +617,7 @@
 > Tests inline editing of campaign metadata and status.
 
 **Prerequisites:**
+
 - At least one campaign exists
 
 1. Navigate to campaign detail
@@ -652,6 +663,7 @@
 > Tests linking existing posts and creating new posts within a campaign.
 
 **Prerequisites:**
+
 - Campaign exists
 - At least one post exists without a campaign
 
@@ -693,6 +705,7 @@
 > Tests campaign deletion with confirmation.
 
 **Prerequisites:**
+
 - Campaign exists (preferably one created for testing)
 
 1. Navigate to campaign detail
@@ -724,6 +737,7 @@
 > Tests the complete media upload flow with progress and preview.
 
 **Prerequisites:**
+
 - Test image and video files available
 - Post editor open with Twitter or LinkedIn selected
 
@@ -773,6 +787,7 @@
 > Tests removing uploaded media from a post.
 
 **Prerequisites:**
+
 - Post with uploaded media in editor
 
 1. View current media
@@ -837,6 +852,7 @@
 > Tests the notification permission flow and toggle.
 
 **Prerequisites:**
+
 - Browser supports notifications
 - Notifications not yet granted for this site
 
@@ -873,6 +889,7 @@
 > Tests the archive/restore flow for soft-deleting and recovering posts.
 
 **Prerequisites:**
+
 - At least one non-archived post exists
 
 1. Open post for archiving
@@ -954,6 +971,7 @@
 > Tests the email/password sign-in flow via Supabase authentication.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - A registered user account exists with known email and password
 
@@ -1005,6 +1023,7 @@
 > Tests the Google OAuth sign-in flow.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - Google OAuth is configured in Supabase
 
@@ -1038,6 +1057,7 @@
 > Tests the new account registration flow with email and password.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - An email address that is not yet registered
 
@@ -1093,6 +1113,7 @@
 > Tests the password reset request flow.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - A registered user account exists
 
@@ -1128,6 +1149,7 @@
 > Tests setting a new password after clicking the reset link from email.
 
 **Prerequisites:**
+
 - A valid password reset link has been sent to the user's email
 - The reset link has not expired
 
@@ -1173,6 +1195,7 @@
 > Tests the access denied flow when email-based gating is active via the ALLOWED_EMAILS environment variable.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - ALLOWED_EMAILS environment variable is set with a comma-separated list of allowed emails
 - A user account exists with an email NOT in the allowed list
@@ -1205,6 +1228,7 @@
 > Tests creating a new launch post for any supported platform (Show HN, Ask HN, HN Link, Product Hunt, Dev Hunt, BetaList, Indie Hackers).
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - User is authenticated
 
@@ -1270,6 +1294,7 @@
 > Tests editing an existing launch post's content and platform-specific fields.
 
 **Prerequisites:**
+
 - At least one launch post exists
 
 1. Navigate to launch post editor
@@ -1310,6 +1335,7 @@
 > Tests platform and status filtering on the launch posts list.
 
 **Prerequisites:**
+
 - Multiple launch posts exist across different platforms and statuses
 
 1. Navigate to launch posts page
@@ -1347,6 +1373,7 @@
 > Tests deleting a launch post with confirmation.
 
 **Prerequisites:**
+
 - At least one launch post exists (preferably one created for testing)
 
 1. Navigate to launch posts page
@@ -1375,6 +1402,7 @@
 > Tests creating a new project via the modal form.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - User is authenticated
 
@@ -1390,7 +1418,7 @@
 
 3. Fill project form
    - Verify name input has focus (autofocus)
-   - Verify "Name *" label with required indicator
+   - Verify "Name \*" label with required indicator
    - Type project name (e.g., "Product Launch Q1")
    - Type description in textarea (optional)
    - If at the soft limit (3 projects), verify amber warning about free tier limit
@@ -1413,6 +1441,7 @@
 > Tests the project detail page with header card, analytics stats, tabs, and campaigns.
 
 **Prerequisites:**
+
 - At least one project exists with campaigns
 
 1. Navigate to project detail
@@ -1468,6 +1497,7 @@
 > Tests editing project name, description, hashtags, brand colors, and connected accounts.
 
 **Prerequisites:**
+
 - At least one project exists
 
 1. Navigate to project settings
@@ -1520,6 +1550,7 @@
 > Tests project deletion with confirmation dialog showing affected campaigns.
 
 **Prerequisites:**
+
 - A project exists (preferably one created for testing)
 - Optionally, the project has campaigns associated with it
 
@@ -1553,6 +1584,7 @@
 > Tests creating a new campaign scoped to a specific project from the project detail page.
 
 **Prerequisites:**
+
 - At least one project exists
 
 1. Navigate to project detail
@@ -1588,6 +1620,7 @@
 > Tests creating a new markdown blog post draft.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - User is authenticated
 
@@ -1634,6 +1667,7 @@
 > Tests editing an existing blog draft's content and metadata.
 
 **Prerequisites:**
+
 - At least one blog draft exists
 
 1. Navigate to draft from list
@@ -1685,6 +1719,7 @@
 > Tests status filtering and search on the blog drafts list.
 
 **Prerequisites:**
+
 - Multiple blog drafts exist with different statuses
 
 1. Navigate to blog drafts page
@@ -1724,6 +1759,7 @@
 > Tests archiving and restoring blog drafts.
 
 **Prerequisites:**
+
 - At least one non-archived blog draft exists
 
 1. Open draft for archiving
@@ -1768,6 +1804,7 @@
 > Tests permanently deleting a blog draft.
 
 **Prerequisites:**
+
 - At least one blog draft exists (preferably one created for testing)
 
 1. Navigate to draft editor
@@ -1797,6 +1834,7 @@
 > Tests the Google Analytics 4 OAuth connection flow from the Settings page.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - Google Analytics OAuth is configured (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET env vars)
 - User is authenticated
@@ -1845,6 +1883,7 @@
 > Tests viewing analytics data for a project with connected GA4 properties.
 
 **Prerequisites:**
+
 - At least one project exists
 - At least one Google Analytics connection exists and is linked to the project
 
@@ -1875,6 +1914,7 @@
 > Tests removing a Google Analytics connection from Settings.
 
 **Prerequisites:**
+
 - At least one Google Analytics connection exists
 
 1. Navigate to Settings
@@ -1908,6 +1948,7 @@
 > Tests the profile page for viewing and editing display name.
 
 **Prerequisites:**
+
 - App running at https://bullhorn.to (or configured URL)
 - User is authenticated
 
@@ -1952,6 +1993,7 @@
 > Tests the password change flow on the profile page.
 
 **Prerequisites:**
+
 - User is authenticated with an email/password account (not OAuth-only)
 
 1. Navigate to profile page
@@ -1996,6 +2038,7 @@
 > Tests the account deletion flow with confirmation dialog.
 
 **Prerequisites:**
+
 - User is authenticated
 - User understands this action is irreversible
 
@@ -2033,28 +2076,28 @@
 
 These interactions require `[MANUAL]` intervention:
 
-| Feature | Limitation | Workaround |
-|---------|------------|------------|
-| File upload dialogs | Native OS dialogs cannot be automated | Mark as [MANUAL], pre-stage files |
-| Date/time pickers | Native browser pickers | Use keyboard input or mark [MANUAL] |
-| Browser permission prompts | OS-level dialogs | Pre-configure permissions or mark [MANUAL] |
-| Clipboard operations | May require permissions | Verify via paste into test field |
-| Google OAuth consent screen | External Google domain | Mark as [MANUAL], use test accounts |
-| Browser confirm() dialogs | Native JS confirm dialogs | Mark as [MANUAL] |
-| Color picker inputs | Native OS color picker | Use text input alternative or mark [MANUAL] |
+| Feature                     | Limitation                            | Workaround                                  |
+| --------------------------- | ------------------------------------- | ------------------------------------------- |
+| File upload dialogs         | Native OS dialogs cannot be automated | Mark as [MANUAL], pre-stage files           |
+| Date/time pickers           | Native browser pickers                | Use keyboard input or mark [MANUAL]         |
+| Browser permission prompts  | OS-level dialogs                      | Pre-configure permissions or mark [MANUAL]  |
+| Clipboard operations        | May require permissions               | Verify via paste into test field            |
+| Google OAuth consent screen | External Google domain                | Mark as [MANUAL], use test accounts         |
+| Browser confirm() dialogs   | Native JS confirm dialogs             | Mark as [MANUAL]                            |
+| Color picker inputs         | Native OS color picker                | Use text input alternative or mark [MANUAL] |
 
 ### Keyboard Shortcuts (Editor)
 
-| Shortcut | Action |
-|----------|--------|
-| Ctrl+S / Cmd+S | Save Draft |
-| Ctrl+Enter / Cmd+Enter | Schedule Post |
-| Escape | Return to dashboard |
+| Shortcut               | Action              |
+| ---------------------- | ------------------- |
+| Ctrl+S / Cmd+S         | Save Draft          |
+| Ctrl+Enter / Cmd+Enter | Schedule Post       |
+| Escape                 | Return to dashboard |
 
 ### Keyboard Shortcuts (Blog Editor)
 
-| Shortcut | Action |
-|----------|--------|
+| Shortcut       | Action     |
+| -------------- | ---------- |
 | Ctrl+S / Cmd+S | Save Draft |
 
 ### Test Data Recommendations

@@ -35,6 +35,7 @@ The app has solid foundations — RLS enforcement, Zod validation on API routes,
 **User Type:** Confused User
 
 **Scenario:**
+
 1. User bookmarks `/edit/abc123` for a post they're working on
 2. Post gets deleted (by user or via archive cleanup)
 3. User opens bookmark — posts store fetches, post not found
@@ -42,6 +43,7 @@ The app has solid foundations — RLS enforcement, Zod validation on API routes,
 5. Same behavior on `/campaigns/[id]` and `/projects/[id]`
 
 **Code Location:**
+
 - `src/app/(dashboard)/edit/[id]/page.tsx` — component renders without checking if post exists after fetch
 - `src/app/(dashboard)/campaigns/[id]/page.tsx` — same pattern
 - `src/app/(dashboard)/projects/[id]/page.tsx` — same pattern
@@ -57,6 +59,7 @@ After store initialization, check if the resource exists. If not, show a helpful
 **User Type:** Confused User
 
 **Scenario:**
+
 1. User clicks "Connect Twitter" on `/settings`
 2. Redirects to Twitter OAuth consent screen
 3. User clicks "Cancel" or "Deny" on Twitter
@@ -64,6 +67,7 @@ After store initialization, check if the resource exists. If not, show a helpful
 5. User is confused — did it work? Did it fail?
 
 **Code Location:**
+
 - `src/app/api/social-accounts/twitter/callback/route.ts` — handles success and error codes but not the "user denied" case specifically
 - `/settings` page — no handling for returning without `?connected=` or `?error=` params
 
@@ -81,6 +85,7 @@ Detect the denial case (Twitter returns `error=access_denied` param) and redirec
 User visits a mistyped URL like `/campaings` (typo). Instead of a helpful 404 page suggesting the correct URL, they're silently redirected to `/dashboard`.
 
 **Code Location:**
+
 - `src/app/not-found.tsx` — redirects to `/dashboard`
 
 **Recommended Fix:**
@@ -109,6 +114,7 @@ Add breadcrumb navigation to detail pages: `Dashboard > Campaigns > [Campaign Na
 **User Type:** Confused User (double-click) / Power User (multi-tab)
 
 **Scenario:**
+
 1. Free-tier user has 49/50 posts (1 remaining)
 2. User double-clicks "Save" on a new post, or has two tabs open creating posts
 3. Both requests hit `POST /api/posts` simultaneously
@@ -117,11 +123,13 @@ Add breadcrumb navigation to detail pages: `Dashboard > Campaigns > [Campaign Na
 6. Both INSERT succeeds — user now has 51 posts, exceeding the 50-post limit
 
 **Code Location:**
+
 - `src/lib/planEnforcement.ts` — `enforceResourceLimit()` does SELECT count then returns; not atomic with INSERT
 - `src/app/api/posts/route.ts` — calls `enforceResourceLimit()` before `supabase.from('posts').insert()`
 - Same pattern in campaigns, projects, blog-drafts, launch-posts routes
 
 **Recommended Fix:**
+
 1. **Immediate**: Disable submit buttons on click with `setIsSubmitting(true)` before the API call
 2. **Server-side**: Make the count check atomic with the insert using a Postgres function:
    ```sql
@@ -141,6 +149,7 @@ Add breadcrumb navigation to detail pages: `Dashboard > Campaigns > [Campaign Na
 **User Type:** Any User
 
 **Scenario:**
+
 1. User creates a campaign — store optimistically adds it to the list
 2. Server rejects (e.g., name too long, plan limit hit, network error)
 3. Campaign appears in the UI despite not existing on server
@@ -149,12 +158,14 @@ Add breadcrumb navigation to detail pages: `Dashboard > Campaigns > [Campaign Na
 6. Only a page refresh corrects the state
 
 **Code Location:**
+
 - `src/lib/campaigns.ts` — `addCampaign()` does `set({ campaigns: [...get().campaigns, newCampaign] })` before server response
 - Same pattern in `src/lib/projects.ts`, `src/lib/blogDrafts.ts`, `src/lib/launchPosts.ts`
 - Exception: `src/lib/socialAccounts.ts` — has explicit rollback on delete failure
 
 **Recommended Fix:**
 Add rollback logic to all optimistic updates:
+
 ```typescript
 const previousCampaigns = get().campaigns
 set({ campaigns: [...previousCampaigns, optimisticCampaign] })
@@ -174,6 +185,7 @@ try {
 **User Type:** Power User
 
 **Scenario:**
+
 1. User opens `/edit/abc123` in two tabs
 2. Tab A: changes title to "Morning Post"
 3. Tab B: changes content to "Hello world" (still has old title)
@@ -182,6 +194,7 @@ try {
 6. Neither tab knows about the conflict
 
 **Code Location:**
+
 - `src/hooks/useAutoSave.ts` — saves full form state, no version/ETag checking
 - `src/app/api/posts/[id]/route.ts` PATCH handler — no `If-Match` or `updated_at` conflict detection
 
@@ -199,6 +212,7 @@ Add an `updated_at` check: include the last-known `updated_at` in PATCH requests
 User double-clicks "Create" on the New Campaign or New Project modal → two POST requests fire → two resources created.
 
 **Code Location:**
+
 - `src/components/projects/CreateProjectModal.tsx` — submit handler
 - Campaign create modal — similar pattern
 
@@ -215,6 +229,7 @@ Set `isSubmitting` state to `true` on first click, disable the button, show a sp
 **User Type:** Any User
 
 **Scenario:**
+
 1. User navigates to `/new` and spends 5-10 minutes composing a detailed post
 2. User accidentally closes the tab, browser crashes, or phone runs out of battery
 3. All content is permanently lost — no localStorage draft, no auto-save for new (unsaved) posts
@@ -222,10 +237,12 @@ Set `isSubmitting` state to `true` on first click, disable the button, show a sp
 5. `useUnsavedChanges` only warns on navigation — doesn't help with tab close/crash
 
 **Code Location:**
+
 - `src/app/(dashboard)/new/page.tsx` — form state is React useState only
 - `src/hooks/useAutoSave.ts` — `enabled: !isNew` skips auto-save for new posts
 
 **Recommended Fix:**
+
 1. Save draft to localStorage on every content change (debounced 1s):
    ```typescript
    useEffect(() => {
@@ -243,6 +260,7 @@ Set `isSubmitting` state to `true` on first click, disable the button, show a sp
 **User Type:** Any User (mobile especially)
 
 **Scenario:**
+
 1. User is editing a post on mobile
 2. Network briefly drops (entering elevator, WiFi handoff)
 3. Auto-save fires during the dropout → request fails
@@ -251,6 +269,7 @@ Set `isSubmitting` state to `true` on first click, disable the button, show a sp
 6. Next auto-save trigger may or may not succeed (depends on network recovery timing)
 
 **Code Location:**
+
 - `src/hooks/useAutoSave.ts` — catch block sets `status: 'error'`, no retry logic
 
 **Recommended Fix:**
@@ -264,6 +283,7 @@ Add exponential backoff retry (3 attempts: 2s, 4s, 8s). If all retries fail, sho
 **User Type:** Any User
 
 **Scenario:**
+
 1. User makes a change to a post
 2. Auto-save debounce starts (3s timer)
 3. User closes tab within 3 seconds
@@ -272,6 +292,7 @@ Add exponential backoff retry (3 attempts: 2s, 4s, 8s). If all retries fail, sho
 6. Last 3 seconds of changes are lost
 
 **Code Location:**
+
 - `src/hooks/useAutoSave.ts` — debounce delay of 3000ms
 - `src/hooks/useUnsavedChanges.ts` — `beforeunload` handler warns but can't save
 
@@ -286,6 +307,7 @@ Flush the debounce on `beforeunload` using `navigator.sendBeacon()` or a synchro
 **User Type:** N/A (system issue)
 
 **Scenario:**
+
 1. User uploads images to a post (stored in Supabase Storage at `{userId}/{uuid}.jpg`)
 2. User deletes the post
 3. Media files remain in storage — never cleaned up
@@ -293,6 +315,7 @@ Flush the debounce on `beforeunload` using `navigator.sendBeacon()` or a synchro
 5. User's storage quota fills with files they can't see or manage
 
 **Code Location:**
+
 - `src/app/api/posts/[id]/route.ts` DELETE handler — deletes the post record but not associated media
 - `src/lib/storage.ts` — no cleanup function for post media
 
@@ -309,6 +332,7 @@ On post deletion, query the post's media URLs and delete them from Supabase Stor
 **User Type:** Power User
 
 **Scenario:**
+
 1. User has Bullhorn open in tabs A and B
 2. User logs out in tab A
 3. Tab B still shows full authenticated UI
@@ -316,6 +340,7 @@ On post deletion, query the post's media URLs and delete them from Supabase Stor
 5. Error message says "Unauthorized" — user is confused, they're looking at the app
 
 **Code Location:**
+
 - No `storage` event listener or `BroadcastChannel` for auth state sync
 - `src/lib/supabase/middleware.ts` — session check only runs on server requests
 
@@ -330,12 +355,14 @@ Listen for Supabase `onAuthStateChange` events with `SIGNED_OUT` and redirect to
 **User Type:** iOS App User
 
 **Scenario:**
+
 1. User logs into Bullhorn iOS app (Capacitor, remote URL mode)
 2. User force-quits the app
 3. WKWebView cookies are lost (iOS doesn't persist cookies in remote URL mode)
 4. User reopens app — must log in again every time
 
 **Code Location:**
+
 - `src/lib/sessionBridge.ts` — keychain save/restore attempted but not fully integrated
 - Known issue documented in CLAUDE.md
 
@@ -350,12 +377,14 @@ Complete the `sessionBridge.ts` integration: save tokens to iOS Keychain on auth
 **User Type:** Power User
 
 **Scenario:**
+
 1. User has Bullhorn open on desktop and phone
 2. Creates a campaign on desktop
 3. Phone still shows old campaign list indefinitely
 4. No polling, no WebSocket, no SSE to push updates
 
 **Code Location:**
+
 - All Zustand stores — fetch-once pattern with `initialized` flag, no refresh mechanism
 
 **Recommended Fix:**
@@ -371,6 +400,7 @@ Add optional polling for active stores (e.g., every 60s when tab is focused). Or
 **User Type:** Any User
 
 **Scenario:**
+
 1. User composes a Twitter post, types 350 characters
 2. Character counter shows "350 / 280" (over limit) but doesn't prevent saving
 3. User clicks "Publish Now"
@@ -378,10 +408,12 @@ Add optional polling for active stores (e.g., every 60s when tab is focused). Or
 5. Post status changes to `failed` — user must go back and trim content
 
 **Code Location:**
+
 - Content editor component — displays character count but no hard limit enforcement
 - `src/app/api/posts/[id]/publish/route.ts` — no content length validation before publishing
 
 **Recommended Fix:**
+
 1. Disable the Publish/Schedule buttons when content exceeds platform limit
 2. Add server-side validation before publish: check `content.length <= PLATFORM_LIMITS[platform]`
 3. Show inline error on the content field when over limit
@@ -394,17 +426,20 @@ Add optional polling for active stores (e.g., every 60s when tab is focused). Or
 **User Type:** API User / Power User
 
 **Scenario:**
+
 1. User creates a launch post via API with `platformFields: { "anything": "goes" }`
 2. Server accepts it — Zod schema is `z.record(z.string(), z.unknown())`
 3. Arbitrary data stored in database
 4. When rendered, unexpected field shapes could cause UI errors
 
 **Code Location:**
+
 - `src/app/api/launch-posts/route.ts` — `platformFields: z.record(z.string(), z.unknown())`
 - `src/components/launch-posts/LaunchPostForm.tsx` — reads platformFields for display
 
 **Recommended Fix:**
 Define per-platform Zod schemas:
+
 ```typescript
 const platformFieldSchemas = {
   product_hunt: z.object({ tagline: z.string().max(60), topics: z.array(z.string()).max(3) }),
@@ -424,6 +459,7 @@ const platformFieldSchemas = {
 User submits a project with 10,000 hashtags via API. Server accepts — no `.max()` on the array schema. Could cause performance issues on rendering.
 
 **Code Location:**
+
 - `src/app/api/projects/route.ts` — `hashtags: z.array(z.string()).optional()`
 
 **Recommended Fix:**
@@ -440,6 +476,7 @@ Add `.max(20)` (or appropriate limit) to the hashtags array schema.
 User sets display name to an empty string, a 10,000-character string, or unicode control characters. No validation at any level — client, server, or database.
 
 **Code Location:**
+
 - `src/app/(dashboard)/profile/page.tsx` — no validation on display name input
 - Profile API route — no Zod schema for display name
 
@@ -457,6 +494,7 @@ Add validation: `z.string().min(1).max(100).trim()` on the server, with matching
 User pastes a 100,000-character document into the blog editor. Markdown parsing and rendering may become slow. No warning or performance guard.
 
 **Code Location:**
+
 - `src/app/api/blog-drafts/route.ts` — `content: z.string().max(100000)`
 - Blog editor component — no performance warning
 
@@ -473,6 +511,7 @@ Show a warning above 50k characters: "Very long content may slow down the editor
 **User Type:** Any User
 
 **Scenario:**
+
 1. User opens `/edit/abc123` and starts editing a post
 2. User gets distracted — leaves tab open for 1+ hours
 3. Session expires (access token ~1hr, refresh token ~7 days)
@@ -483,11 +522,13 @@ Show a warning above 50k characters: "Very long content may slow down the editor
 8. Form reloads from server (which has the old version)
 
 **Code Location:**
+
 - `src/hooks/useAutoSave.ts` — no session validation before save attempt
 - `src/lib/supabase/middleware.ts` — session refresh only on server request, not proactively
 - No localStorage backup for form state
 
 **Recommended Fix:**
+
 1. Persist form state to localStorage on every change (debounced)
 2. On auto-save 401, show: "Your session expired. [Log in again] — your changes are saved locally."
 3. After re-login, detect localStorage draft and offer to restore
@@ -501,6 +542,7 @@ Show a warning above 50k characters: "Very long content may slow down the editor
 **User Type:** Power User
 
 **Scenario:**
+
 1. User opens dashboard at 9am — all stores fetched and `initialized: true`
 2. User leaves tab open all day
 3. Collaborator (or user on another device) creates campaigns, modifies posts
@@ -508,6 +550,7 @@ Show a warning above 50k characters: "Very long content may slow down the editor
 5. User makes decisions based on stale information
 
 **Code Location:**
+
 - All Zustand stores — `initialized` flag set once, never reset
 - No TTL, no periodic refresh, no visibility-change refresh
 
@@ -525,6 +568,7 @@ Add a `lastFetchedAt` timestamp to each store. On tab focus (`visibilitychange` 
 User creates posts from two devices. Each client increments its local plan count optimistically. Plan store shows 52/50 on one device and 51/50 on another, while actual DB count is 50. Client may block creation that the server would allow.
 
 **Code Location:**
+
 - `src/lib/planStore.ts` — `incrementCount()` / `decrementCount()` are local only
 
 **Recommended Fix:**
@@ -540,6 +584,7 @@ Re-fetch plan counts from server after any create/delete operation, or at least 
 **User Type:** Any User (slow connections especially)
 
 **Scenario:**
+
 1. User on slow 3G connection navigates to `/posts`
 2. No `loading.tsx` exists — no server-side streaming or Suspense fallback
 3. Page shows blank content area while Zustand store fetches data client-side
@@ -547,6 +592,7 @@ Re-fetch plan counts from server after any create/delete operation, or at least 
 5. User is unsure if the page is loading or broken
 
 **Code Location:**
+
 - No `loading.tsx` files exist anywhere in `src/app/`
 - All data loading is client-side via Zustand stores
 
@@ -561,12 +607,14 @@ Add `loading.tsx` files to key routes (`/posts`, `/campaigns`, `/projects`, `/bl
 **User Type:** Any User
 
 **Scenario:**
+
 1. Auto-save fails (network error, 500, etc.)
 2. `useAutoSave` sets `status: 'error'`
 3. UI shows a small "error" indicator but no retry button
 4. User has no clear action — must guess to click "Save" manually
 
 **Code Location:**
+
 - `src/hooks/useAutoSave.ts` — error state with no retry mechanism
 
 **Recommended Fix:**
@@ -583,6 +631,7 @@ Show a persistent banner on auto-save error: "Changes couldn't be saved. [Retry]
 A runtime error in the campaign detail page (`/campaigns/[id]`) bubbles up to the dashboard-level `error.tsx`. User loses all dashboard context — the error page replaces the entire dashboard layout.
 
 **Code Location:**
+
 - `src/app/error.tsx` — root error boundary
 - `src/app/(dashboard)/error.tsx` — dashboard group error boundary
 - No per-route error boundaries
@@ -603,10 +652,12 @@ Add `error.tsx` to high-value routes: `/posts`, `/campaigns/[id]`, `/edit/[id]`,
 Developer creates an API key with scopes `["postz:readd", "typo:scope"]`. Server accepts and stores them. The key will never match any real scope check, effectively having no permissions — but no error tells the developer.
 
 **Code Location:**
+
 - `src/app/api/api-keys/route.ts` — `scopes: z.array(z.string())`
 
 **Recommended Fix:**
 Validate scopes against an enum of allowed values:
+
 ```typescript
 scopes: z.array(z.enum(['posts:read', 'posts:write', 'campaigns:read', ...]))
 ```
@@ -622,6 +673,7 @@ scopes: z.array(z.enum(['posts:read', 'posts:write', 'campaigns:read', ...]))
 An attacker crafts a link: `https://bullhorn.to/new?text=Buy+crypto+at+scam.com&url=https://scam.com`. If shared with a Bullhorn user, the post editor opens pre-filled with the attacker's content. A careless user might publish without reviewing.
 
 **Code Location:**
+
 - `src/app/(dashboard)/new/page.tsx` — reads `text` and `url` from `useSearchParams()` to pre-fill form
 
 **Recommended Fix:**
@@ -633,18 +685,18 @@ This is designed behavior (iOS share extension uses it). Consider adding a visua
 
 ### Immediate Fixes (Critical + High)
 
-| Priority | Finding | Effort | Impact |
-|----------|---------|--------|--------|
-| 1 | RF-3-001: Add localStorage draft for new posts | Small | Prevents most common data loss |
-| 2 | RF-6-001: Persist form state to localStorage on edit pages | Small | Prevents session-expiry data loss |
-| 3 | RF-2-001: Disable submit buttons on click + atomic limit check | Medium | Prevents plan limit bypass |
-| 4 | RF-2-002: Add optimistic update rollback to all stores | Medium | Prevents phantom data in UI |
-| 5 | RF-5-001: Enforce hard character limits on publish | Small | Prevents failed publishes |
-| 6 | RF-3-002: Add retry logic to auto-save | Small | Prevents data loss on network blips |
-| 7 | RF-4-001: Add cross-tab auth sync | Small | Prevents confusing 401 errors |
-| 8 | RF-7-001: Add loading.tsx to key routes | Small | Improves perceived performance |
-| 9 | RF-1-001: Add "not found" handling for detail pages | Small | Eliminates blank page confusion |
-| 10 | RF-5-002: Define per-platform launch post schemas | Medium | Validates platform-specific data |
+| Priority | Finding                                                        | Effort | Impact                              |
+| -------- | -------------------------------------------------------------- | ------ | ----------------------------------- |
+| 1        | RF-3-001: Add localStorage draft for new posts                 | Small  | Prevents most common data loss      |
+| 2        | RF-6-001: Persist form state to localStorage on edit pages     | Small  | Prevents session-expiry data loss   |
+| 3        | RF-2-001: Disable submit buttons on click + atomic limit check | Medium | Prevents plan limit bypass          |
+| 4        | RF-2-002: Add optimistic update rollback to all stores         | Medium | Prevents phantom data in UI         |
+| 5        | RF-5-001: Enforce hard character limits on publish             | Small  | Prevents failed publishes           |
+| 6        | RF-3-002: Add retry logic to auto-save                         | Small  | Prevents data loss on network blips |
+| 7        | RF-4-001: Add cross-tab auth sync                              | Small  | Prevents confusing 401 errors       |
+| 8        | RF-7-001: Add loading.tsx to key routes                        | Small  | Improves perceived performance      |
+| 9        | RF-1-001: Add "not found" handling for detail pages            | Small  | Eliminates blank page confusion     |
+| 10       | RF-5-002: Define per-platform launch post schemas              | Medium | Validates platform-specific data    |
 
 ### UX Improvements (Medium)
 

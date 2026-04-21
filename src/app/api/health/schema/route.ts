@@ -27,6 +27,7 @@ const TABLES = [
   'campaigns',
   'community_events',
   'deleted_accounts',
+  'github_projects',
   'launch_posts',
   'notification_preferences',
   'plan_changes',

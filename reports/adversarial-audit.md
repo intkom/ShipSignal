@@ -10,14 +10,15 @@
 **Total findings:** 14
 
 | Severity | Count |
-|----------|-------|
-| Critical | 1 |
-| High | 3 |
-| Medium | 6 |
-| Low | 4 |
-| Info | 0 |
+| -------- | ----- |
+| Critical | 1     |
+| High     | 3     |
+| Medium   | 6     |
+| Low      | 4     |
+| Info     | 0     |
 
 **Top 3 findings:**
+
 1. [AC-1-001] Recurring posts bypass plan limits — Cron job creates unlimited posts without quota checks
 2. [AC-4-001] Storage counter drift on RPC failure — Failed RPC leaves storage under-reported, allowing limit bypass
 3. [AC-5-001] No resource purge on plan downgrade — Pro resources retained indefinitely after downgrade to Free
@@ -28,20 +29,20 @@
 
 ### Cost-Bearing Resources
 
-| Resource | Trigger | Est. Unit Cost | Volume Limit | Enforcement |
-|----------|---------|---------------|--------------|-------------|
-| Twitter/X API | Post publish | Free tier (450K/mo) | Plan post limits | API route check |
-| LinkedIn API | Post publish | Free (rate-limited) | Plan post limits | API route check |
-| Reddit API | Post publish | Free (rate-limited) | Plan post limits | API route check |
-| Google Analytics API | Report request | Free (25/day/property), then ~$0.25/1K | None | None |
-| Resend Email | Post reaches "ready" | ~$0.10/email | None per-user | Cron processes up to 50/run |
-| Web Push (VAPID) | Post reaches "ready" | Free (self-hosted) | None per-user | None |
-| Apple APNs | Post reaches "ready" | Free (included in $99/yr dev program) | None per-user | None |
-| Supabase Storage | Media upload | ~$1/GB/mo | Plan storage cap (Free=50MB, Pro=2GB) | Pre-upload check + RPC increment |
-| Supabase PostgreSQL | All CRUD operations | $25/mo + $0.25/M over quota | Plan resource limits | Count-based check (non-atomic) |
-| Vercel Functions | Cron jobs (4 crons) | $20/mo base + $0.50/100K invocations | ~9,600 invocations/mo | None |
-| Upstash Redis | Rate limit checks | Free (10K req/day) | 30 req/10s per IP | Sliding window |
-| Sentry | Error capture | Free (5K events/mo) | 10% perf sampling | Config-based |
+| Resource             | Trigger              | Est. Unit Cost                         | Volume Limit                          | Enforcement                      |
+| -------------------- | -------------------- | -------------------------------------- | ------------------------------------- | -------------------------------- |
+| Twitter/X API        | Post publish         | Free tier (450K/mo)                    | Plan post limits                      | API route check                  |
+| LinkedIn API         | Post publish         | Free (rate-limited)                    | Plan post limits                      | API route check                  |
+| Reddit API           | Post publish         | Free (rate-limited)                    | Plan post limits                      | API route check                  |
+| Google Analytics API | Report request       | Free (25/day/property), then ~$0.25/1K | None                                  | None                             |
+| Resend Email         | Post reaches "ready" | ~$0.10/email                           | None per-user                         | Cron processes up to 50/run      |
+| Web Push (VAPID)     | Post reaches "ready" | Free (self-hosted)                     | None per-user                         | None                             |
+| Apple APNs           | Post reaches "ready" | Free (included in $99/yr dev program)  | None per-user                         | None                             |
+| Supabase Storage     | Media upload         | ~$1/GB/mo                              | Plan storage cap (Free=50MB, Pro=2GB) | Pre-upload check + RPC increment |
+| Supabase PostgreSQL  | All CRUD operations  | $25/mo + $0.25/M over quota            | Plan resource limits                  | Count-based check (non-atomic)   |
+| Vercel Functions     | Cron jobs (4 crons)  | $20/mo base + $0.50/100K invocations   | ~9,600 invocations/mo                 | None                             |
+| Upstash Redis        | Rate limit checks    | Free (10K req/day)                     | 30 req/10s per IP                     | Sliding window                   |
+| Sentry               | Error capture        | Free (5K events/mo)                    | 10% perf sampling                     | Config-based                     |
 
 ### Unmetered Resources
 
@@ -63,6 +64,7 @@
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Free user creates a post with a `recurrence_rule` (e.g., daily repeat)
 2. The cron job `notify-due-posts` runs every 5 minutes
 3. When a recurring post becomes due, `scheduleNextRecurrence()` creates a new post via service role client
@@ -77,6 +79,7 @@ Unbounded post creation. A free user can have hundreds of posts over time. Each 
 None. The `scheduleNextRecurrence` function performs a direct insert with no quota check.
 
 **Code Location:**
+
 - `src/app/api/cron/publish/route.ts:46-73` — `scheduleNextRecurrence()` inserts without limit check
 - `src/app/api/cron/publish/route.ts:168` — Called after every recurring post is processed
 - `src/lib/planEnforcement.ts:28-57` — `enforceResourceLimit()` exists but is not called here
@@ -103,6 +106,7 @@ if (!limitCheck.allowed) {
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Free user has 49/50 posts
 2. User sends 5 parallel POST requests to `/api/posts`
 3. All 5 requests call `enforceResourceLimit()` → all see count=49 < limit=50 → all return `allowed: true`
@@ -116,6 +120,7 @@ Users can exceed plan limits by sending concurrent requests. Affects all resourc
 Limits are checked, but the check-then-insert pattern is not atomic. No database-level constraint prevents exceeding the limit.
 
 **Code Location:**
+
 - `src/lib/planEnforcement.ts:50-56` — COUNT query returns current count
 - `src/app/api/posts/route.ts:117-128` — Check passes, then INSERT happens separately
 - Same pattern in: `campaigns/route.ts`, `projects/route.ts`, `blog-drafts/route.ts`, `launch-posts/route.ts`, `api-keys/route.ts`
@@ -151,6 +156,7 @@ Alternatively, add a PostgreSQL trigger that checks the count before insert and 
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Upstash Redis is not configured (or temporarily unavailable)
 2. Rate limiter falls back to in-memory fixed-window per Vercel function instance
 3. Vercel routes requests across multiple function instances
@@ -158,12 +164,13 @@ Alternatively, add a PostgreSQL trigger that checks the count before insert and 
 5. User sends 30 requests → instance A counts 30 (blocked) → next requests hit instance B (fresh counter) → effectively 60+ requests in 10 seconds
 
 **Impact:**
-Rate limiting is degraded from 30 req/10s to (30 * N instances) req/10s. In practice, Vercel uses cold starts and instance reuse, so the actual bypass factor depends on traffic patterns.
+Rate limiting is degraded from 30 req/10s to (30 \* N instances) req/10s. In practice, Vercel uses cold starts and instance reuse, so the actual bypass factor depends on traffic patterns.
 
 **Current Protection:**
 In-memory fallback exists (not fail-open), but state is not shared. Warning logged in production.
 
 **Code Location:**
+
 - `src/lib/rateLimit.ts:57-83` — `memoryRateLimit()` function with per-instance `Map`
 - `src/lib/rateLimit.ts:105-113` — Fallback when `getRatelimit()` returns null
 
@@ -180,6 +187,7 @@ Ensure Upstash Redis is always configured in production. Add a health check that
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Admin configures `ALLOWED_EMAILS=admin@company.com` to restrict access during beta
 2. Unauthorized user signs up with `attacker@gmail.com` via Google OAuth
 3. Middleware redirects them to `/access-denied` on page routes
@@ -194,6 +202,7 @@ The email allowlist is a UI-only restriction, not a security boundary. Any user 
 Middleware checks allowlist for page routes only. API routes skip the check entirely (lines 59-61 in middleware.ts).
 
 **Code Location:**
+
 - `src/lib/supabase/middleware.ts:59-61` — API routes skip `getUser()` and allowlist check
 - `src/lib/supabase/middleware.ts:100-107` — Allowlist check only runs for non-API paths
 - `src/lib/auth.ts:246-273` — `requireAuth()` validates session but not email
@@ -221,6 +230,7 @@ if (allowedEmails && !allowedEmails.includes(user.email?.toLowerCase())) {
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User schedules 50 posts all with the same `scheduled_at` timestamp (or within the same 5-minute cron window)
 2. Cron job `notify-due-posts` runs and finds all 50 posts due
 3. For each post: transitions to "ready", sends web push, sends APNs, fetches user email, sends email
@@ -233,6 +243,7 @@ A single user can trigger ~150 outbound notifications in one 5-minute window. At
 Cron limits to 50 posts per run. No per-user notification throttle.
 
 **Code Location:**
+
 - `src/app/api/cron/publish/route.ts:107-169` — Loop processes all due posts with notifications
 - `src/lib/emailSender.ts` — Resend email sender (no per-user rate limit)
 
@@ -249,6 +260,7 @@ Add per-user notification batching: group all due posts for a user into a single
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User connects multiple Google Analytics properties
 2. User repeatedly requests reports for each property
 3. Each request triggers a Google Analytics Data API call
@@ -262,6 +274,7 @@ Low immediate impact (free tier is generous). Risk grows with user base. No mete
 None application-side. Relies on Google's free tier quota.
 
 **Code Location:**
+
 - `src/app/api/analytics/connections/[id]/report/route.ts` — Calls Google Analytics Data API per request
 
 **Recommended Fix:**
@@ -281,6 +294,7 @@ Add a daily query counter per user (stored in Redis or DB). Limit to 25 queries/
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User creates account with `user1@gmail.com` via Google OAuth
 2. Gets full free tier: 50 posts, 5 campaigns, 3 projects, 50 MB storage
 3. Creates another account with `user2@gmail.com` (different Google account)
@@ -295,6 +309,7 @@ Unlimited free-tier resources. A determined user can create 10+ accounts and man
 Google OAuth requires a real Google account. No disposable email addresses accepted via OAuth. But users can have unlimited Gmail accounts.
 
 **Code Location:**
+
 - `src/app/(auth)/auth/callback/route.ts` — OAuth callback, no multi-account detection
 - `src/app/(auth)/signup/page.tsx` — Email signup, no IP throttling
 - Supabase Auth config — No blocked domains or signup rate limits
@@ -312,6 +327,7 @@ This is partially mitigated by Google OAuth requiring real accounts. For stronge
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Free user fills up all resources: 50 posts, 5 campaigns, 3 projects
 2. Exports/downloads any data they want to keep
 3. Calls `POST /api/account/delete` — all data cascade-deleted
@@ -326,6 +342,7 @@ Users can cycle through free accounts to reset limits. The import endpoint accep
 Account deletion is irreversible (cascade FK). Social account OAuth tokens are lost. Re-connecting social accounts requires re-authorization.
 
 **Code Location:**
+
 - `src/app/api/account/delete/route.ts` — Full cascade delete
 - `src/app/api/import/route.ts` — Batch import up to 500 posts
 
@@ -346,6 +363,7 @@ Track email addresses of deleted accounts. Apply a cooldown period (e.g., 30 day
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User uploads a 5 MB file
 2. `enforceStorageLimit()` checks: 45 MB used + 5 MB = 50 MB ≤ 50 MB limit → allowed
 3. File uploads successfully to Supabase Storage
@@ -362,11 +380,14 @@ Storage counter becomes unreliable. Users can exceed storage limits without dete
 The RPC call is awaited but its result is not checked. No reconciliation job exists.
 
 **Code Location:**
+
 - `src/app/api/media/upload/route.ts:101-104` — RPC called without error handling
 - `supabase/migrations/20260212162934_add_plan_and_storage_columns.sql` — `increment_storage_used` function
 
 **Recommended Fix:**
+
 1. Check the RPC result and roll back the upload if it fails:
+
 ```typescript
 const { error: rpcError } = await supabase.rpc('increment_storage_used', { ... })
 if (rpcError) {
@@ -375,6 +396,7 @@ if (rpcError) {
   return NextResponse.json({ error: 'Storage tracking failed' }, { status: 500 })
 }
 ```
+
 2. Add a periodic reconciliation cron that recalculates `storage_used_bytes` from actual storage bucket contents.
 
 ---
@@ -387,6 +409,7 @@ if (rpcError) {
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User uploads media and attaches it to a post
 2. User edits the post and replaces the media with a different file
 3. The old file remains in Supabase Storage but is no longer referenced by any post
@@ -400,6 +423,7 @@ Storage bloat. Operator pays for files that are no longer used. The `storage_use
 Account deletion cleans up `media` and `logos` buckets. No periodic cleanup for orphaned files within active accounts.
 
 **Code Location:**
+
 - `src/app/api/account/delete/route.ts:31-42` — Cleanup on account deletion only
 - No orphan cleanup cron exists
 
@@ -420,6 +444,7 @@ Add a weekly cron job that lists all files in each user's storage path and cross
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. User subscribes to Pro (when billing is implemented): 500 posts, 50 campaigns, 2 GB storage
 2. User creates 300 posts, 30 campaigns, uploads 1.5 GB of media
 3. User downgrades to Free: limits become 50 posts, 5 campaigns, 50 MB storage
@@ -434,12 +459,14 @@ Users can subscribe for one month, fill up Pro-tier resources, downgrade, and re
 None. Plan changes are manual DB updates with no cascading logic. The `enforceResourceLimit` function only blocks new creation — it doesn't purge existing resources.
 
 **Code Location:**
+
 - `supabase/migrations/20260212162934_add_plan_and_storage_columns.sql` — Plan column, no triggers
 - `src/lib/planEnforcement.ts:28-57` — Only checks `current < limit` on creation
 - No downgrade webhook or trigger exists
 
 **Recommended Fix:**
 When implementing Stripe webhooks for plan changes, add a downgrade handler that:
+
 1. Marks excess resources as "archived" (soft delete, not hard delete)
 2. Notifies the user which resources were archived and why
 3. Gives the user a 7-day grace period to choose which resources to keep
@@ -455,6 +482,7 @@ When implementing Stripe webhooks for plan changes, add a downgrade handler that
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Admin manually updates `user_profiles.plan` from 'free' to 'pro'
 2. No record of when the change was made, by whom, or why
 3. If a billing dispute arises, there's no audit trail to reference
@@ -467,10 +495,12 @@ Operational risk. No visibility into plan change history for billing disputes, c
 Supabase audit log may capture the raw SQL update, but there's no application-level audit trail.
 
 **Code Location:**
+
 - `supabase/migrations/20260212162934_add_plan_and_storage_columns.sql` — `plan` column with no trigger
 
 **Recommended Fix:**
 Create a `plan_changes` audit table:
+
 ```sql
 CREATE TABLE plan_changes (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -482,6 +512,7 @@ CREATE TABLE plan_changes (
   created_at timestamptz DEFAULT now()
 );
 ```
+
 Add a PostgreSQL trigger on `user_profiles` that logs every plan change.
 
 ---
@@ -498,6 +529,7 @@ Add a PostgreSQL trigger on `user_profiles` that logs every plan change.
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. Free user uploads media files up to 50 MB limit
 2. Attaches media to posts, then deletes the posts
 3. Media files remain in Supabase Storage (no cleanup on post delete)
@@ -512,6 +544,7 @@ Storage costs grow monotonically. Without cleanup, the operator's Supabase stora
 Storage limit caps individual user uploads. Account deletion cleans up files. No periodic orphan cleanup.
 
 **Code Location:**
+
 - `src/app/api/media/upload/route.ts` — Upload without lifecycle management
 - `src/app/api/account/delete/route.ts:31-42` — Only cleanup on full account deletion
 
@@ -532,6 +565,7 @@ Track media files in a `media_files` table with `post_id` references. When a pos
 **Verification:** Not Tested
 
 **Scenario:**
+
 1. The `content` field in post creation accepts `z.record(z.string(), z.unknown())`
 2. No size limit on the JSON payload beyond Next.js body parser limits (~4.5 MB default)
 3. User sends a POST to `/api/posts` with a 4 MB `content` field containing deeply nested JSON
@@ -546,14 +580,17 @@ Database bloat and potential query slowdowns. Each post could contain megabytes 
 Zod validates the structure (must be `Record<string, unknown>`) but does not limit the size. Next.js body parser has a default limit (~4.5 MB) that provides a soft cap.
 
 **Code Location:**
+
 - `src/app/api/posts/route.ts:12` — `content: z.record(z.string(), z.unknown())` with no `.max()`
 - Same pattern in `src/app/api/import/route.ts:10`
 
 **Recommended Fix:**
 Add a content size check after parsing:
+
 ```typescript
 const contentStr = JSON.stringify(parsed.data.content)
-if (contentStr.length > 50_000) { // 50 KB max
+if (contentStr.length > 50_000) {
+  // 50 KB max
   return NextResponse.json({ error: 'Content too large (max 50 KB)' }, { status: 400 })
 }
 ```

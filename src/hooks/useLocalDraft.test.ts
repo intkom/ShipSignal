@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
-const STORAGE_PREFIX = 'bullhorn-draft-'
+const STORAGE_PREFIX = 'ShipSignal-draft-'
 const DEBOUNCE_MS = 1000
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
 

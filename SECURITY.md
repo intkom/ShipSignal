@@ -5,7 +5,7 @@
 Bullhorn is currently in pre-release development (v0.x). All versions receive security updates.
 
 | Version | Supported |
-|---------|-----------|
+| ------- | --------- |
 | 0.x     | Yes       |
 
 ## Reporting a Vulnerability

@@ -1,4 +1,4 @@
-const CAPACITOR_UA_MARKER = 'BullhornCapacitor'
+const CAPACITOR_UA_MARKER = 'ShipSignalCapacitor'
 
 export function isNativePlatform(): boolean {
   if (typeof navigator === 'undefined') return false

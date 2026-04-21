@@ -19,9 +19,7 @@ test.describe('Create Post', () => {
     await enterDemoMode(page)
   })
 
-   
   test.describe('Twitter Posts', () => {
-     
     test('should create a Twitter draft post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -41,7 +39,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should create a Twitter scheduled post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -60,7 +57,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should show character count warning when approaching limit', async ({ page }) => {
       await goToNewPost(page)
 
@@ -74,7 +70,6 @@ test.describe('Create Post', () => {
       await expect(page.getByText('270')).toBeVisible()
     })
 
-     
     test('should show error when exceeding character limit', async ({ page }) => {
       await goToNewPost(page)
 
@@ -89,9 +84,7 @@ test.describe('Create Post', () => {
     })
   })
 
-   
   test.describe('LinkedIn Posts', () => {
-     
     test('should create a LinkedIn draft post with public visibility', async ({ page }) => {
       await goToNewPost(page)
 
@@ -111,7 +104,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should create a LinkedIn post with connections-only visibility', async ({ page }) => {
       await goToNewPost(page)
 
@@ -125,7 +117,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should create a LinkedIn scheduled post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -144,7 +135,6 @@ test.describe('Create Post', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Reddit Posts', () => {
-     
     test('should create a Reddit draft post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -168,7 +158,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should create a Reddit post with flair', async ({ page }) => {
       await goToNewPost(page)
 
@@ -186,7 +175,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should create a Reddit scheduled post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -208,7 +196,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should show title character count', async ({ page }) => {
       await goToNewPost(page)
 
@@ -224,9 +211,7 @@ test.describe('Create Post', () => {
     })
   })
 
-   
   test.describe('Platform Switching', () => {
-     
     test('should switch between platforms', async ({ page }) => {
       await goToNewPost(page)
 
@@ -249,9 +234,7 @@ test.describe('Create Post', () => {
     })
   })
 
-   
   test.describe('Notes', () => {
-     
     test('should add notes to a post', async ({ page }) => {
       await goToNewPost(page)
 
@@ -270,7 +253,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should collapse and expand notes section', async ({ page }) => {
       await goToNewPost(page)
 
@@ -290,9 +272,7 @@ test.describe('Create Post', () => {
     })
   })
 
-   
   test.describe('Multi-Subreddit Posts', () => {
-     
     test('should add multiple subreddits', async ({ page }) => {
       await goToNewPost(page)
 
@@ -317,7 +297,6 @@ test.describe('Create Post', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should remove subreddits via card', async ({ page }) => {
       await goToNewPost(page)
 
@@ -347,7 +326,6 @@ test.describe('Create Post', () => {
       await expect(page.getByText('(1)')).toBeVisible()
     })
 
-     
     test('should show subreddits in preview', async ({ page }) => {
       await goToNewPost(page)
 
@@ -364,9 +342,7 @@ test.describe('Create Post', () => {
     })
   })
 
-   
   test.describe('Validation', () => {
-     
     test('should show preview as user types', async ({ page }) => {
       await goToNewPost(page)
 
@@ -380,7 +356,6 @@ test.describe('Create Post', () => {
       await expect(previewSection).toContainText(testText)
     })
 
-     
     test('should require date for scheduling', async ({ page }) => {
       await goToNewPost(page)
 

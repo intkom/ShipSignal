@@ -60,7 +60,7 @@ export default function AccessDeniedPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-muted-foreground mt-6">Bullhorn Private Beta</p>
+        <p className="text-center text-xs text-muted-foreground mt-6">ShipSignal Private Beta</p>
       </div>
     </div>
   )

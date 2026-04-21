@@ -25,7 +25,6 @@ test.describe('Media Features', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Twitter Media Upload', () => {
-     
     test('should show media button when Twitter is selected', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -35,7 +34,6 @@ test.describe('Media Features', () => {
       await expect(mediaButton).toBeVisible()
     })
 
-     
     test('should open media input section when clicking media button', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -48,7 +46,6 @@ test.describe('Media Features', () => {
       await expect(page.getByText('Twitter (up to 4 images or 1 video)')).toBeVisible()
     })
 
-     
     test('should show drag and drop upload zone for Twitter', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -60,7 +57,6 @@ test.describe('Media Features', () => {
       await expect(page.getByText('Drag & drop or click to upload')).toBeVisible()
     })
 
-     
     test('should upload a media file for Twitter', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -81,7 +77,6 @@ test.describe('Media Features', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should show media count badge on media button', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -103,7 +98,6 @@ test.describe('Media Features', () => {
       await expect(mediaButton).toContainText('1')
     })
 
-     
     test('should remove media when clicking remove button', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -126,7 +120,6 @@ test.describe('Media Features', () => {
       await expect(mediaPreview).not.toBeVisible()
     })
 
-     
     test('should show media in Twitter preview panel', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -146,9 +139,7 @@ test.describe('Media Features', () => {
     })
   })
 
-   
   test.describe('LinkedIn Media Upload', () => {
-     
     test('should show LinkedIn media input when LinkedIn is selected', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')
@@ -160,7 +151,6 @@ test.describe('Media Features', () => {
       await expect(page.getByText('LinkedIn (1 image or video)')).toBeVisible()
     })
 
-     
     test('should upload a media file for LinkedIn', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')
@@ -181,7 +171,6 @@ test.describe('Media Features', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should show LinkedIn media in preview panel', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')
@@ -203,7 +192,6 @@ test.describe('Media Features', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Reddit Link Posts', () => {
-     
     test('should show link URL field for Reddit', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -213,7 +201,6 @@ test.describe('Media Features', () => {
       await expect(page.locator('input[placeholder*="youtube.com"]')).toBeVisible()
     })
 
-     
     test('should create a Reddit link post', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -233,7 +220,6 @@ test.describe('Media Features', () => {
       await waitForNavigation(page, '/')
     })
 
-     
     test('should show link indicator in Reddit preview', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -251,7 +237,6 @@ test.describe('Media Features', () => {
       await expect(previewPanel.getByText('(Link Post)')).toBeVisible()
     })
 
-     
     test('should show text post indicator when no URL', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -269,7 +254,6 @@ test.describe('Media Features', () => {
       await expect(previewPanel.getByText('(Text Post)')).toBeVisible()
     })
 
-     
     test('should show link URL in Reddit preview', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'reddit')
@@ -288,9 +272,7 @@ test.describe('Media Features', () => {
     })
   })
 
-   
   test.describe('Media Persistence', () => {
-     
     test('should persist media when editing post', async ({ page }) => {
       // Create a post with media
       await goToNewPost(page)
@@ -318,9 +300,7 @@ test.describe('Media Features', () => {
     })
   })
 
-   
   test.describe('File Validation', () => {
-     
     test('should show upload zone in media section', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -338,7 +318,6 @@ test.describe('Media Features', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Multiple File Uploads', () => {
-     
     test('should allow uploading up to 4 images for Twitter', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -367,7 +346,6 @@ test.describe('Media Features', () => {
       await expect(mediaButton).toContainText('4')
     })
 
-     
     test('should hide upload zone when Twitter 4-image limit reached', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -388,7 +366,6 @@ test.describe('Media Features', () => {
       await expect(page.getByText('Drag & drop or click to upload')).not.toBeVisible()
     })
 
-     
     test('should enforce single media limit for LinkedIn', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')
@@ -406,7 +383,6 @@ test.describe('Media Features', () => {
       await expect(page.getByText('Drag & drop or click to upload')).not.toBeVisible()
     })
 
-     
     test('should allow replacing media on LinkedIn after removal', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'linkedin')

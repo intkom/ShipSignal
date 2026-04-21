@@ -36,18 +36,18 @@ src/components/
 
 ## Key Libraries (`src/lib/`)
 
-| File | Purpose |
-|------|---------|
-| `auth.ts` | `requireAuth()`, `requireSessionAuth()`, `validateScopes()` |
-| `utils.ts` | `cn()`, snake/camel transforms, `transformXFromDb/ToDb` |
-| `requestDedup.ts` | `dedup()` for preventing duplicate API requests |
-| `posts.ts` | Type definitions (Post, Campaign, Project, Platform) |
-| `campaigns.ts` | Zustand store: `useCampaignsStore` |
-| `projects.ts` | Zustand store: `useProjectsStore` |
-| `blogDrafts.ts` | Zustand store: `useBlogDraftsStore` |
-| `launchPosts.ts` | Zustand store: `useLaunchPostsStore` |
-| `supabase/server.ts` | Server-side Supabase client |
-| `supabase/client.ts` | Browser-side Supabase client |
+| File                 | Purpose                                                     |
+| -------------------- | ----------------------------------------------------------- |
+| `auth.ts`            | `requireAuth()`, `requireSessionAuth()`, `validateScopes()` |
+| `utils.ts`           | `cn()`, snake/camel transforms, `transformXFromDb/ToDb`     |
+| `requestDedup.ts`    | `dedup()` for preventing duplicate API requests             |
+| `posts.ts`           | Type definitions (Post, Campaign, Project, Platform)        |
+| `campaigns.ts`       | Zustand store: `useCampaignsStore`                          |
+| `projects.ts`        | Zustand store: `useProjectsStore`                           |
+| `blogDrafts.ts`      | Zustand store: `useBlogDraftsStore`                         |
+| `launchPosts.ts`     | Zustand store: `useLaunchPostsStore`                        |
+| `supabase/server.ts` | Server-side Supabase client                                 |
+| `supabase/client.ts` | Browser-side Supabase client                                |
 
 ## API Route Pattern
 
@@ -63,10 +63,7 @@ export async function GET() {
     const { userId } = await requireAuth()
     const supabase = await createClient()
 
-    const { data, error } = await supabase
-      .from('table_name')
-      .select('*')
-      .eq('user_id', userId)
+    const { data, error } = await supabase.from('table_name').select('*').eq('user_id', userId)
 
     if (error) throw error
     return Response.json({ items: data.map(transformXFromDb) })
@@ -80,6 +77,7 @@ export async function GET() {
 ```
 
 **Key conventions:**
+
 - Call `requireAuth()` first — returns `{ userId }` or throws
 - Filter by `.eq('user_id', userId)` for ownership checks
 - Apply `transformXFromDb()` to convert snake_case DB fields to camelCase
@@ -87,11 +85,11 @@ export async function GET() {
 
 ### Auth Functions
 
-| Function | Use Case |
-|----------|----------|
-| `requireAuth()` | API key or session auth — most routes |
-| `requireSessionAuth()` | Session-only — sensitive routes (API key management, account deletion) |
-| `validateScopes(scopes, required)` | Check API key has required scopes |
+| Function                           | Use Case                                                               |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| `requireAuth()`                    | API key or session auth — most routes                                  |
+| `requireSessionAuth()`             | Session-only — sensitive routes (API key management, account deletion) |
+| `validateScopes(scopes, required)` | Check API key has required scopes                                      |
 
 ## Zustand Store Pattern
 
@@ -129,19 +127,20 @@ Supabase returns snake_case, the frontend uses camelCase. Transform functions in
 
 **Sticker bomb aesthetic** — bold borders, offset shadows, vibrant colors.
 
-| Class | Effect |
-|-------|--------|
-| `.sticker-card` | 3px border, 4px shadow, rounded-lg |
-| `.sticker-card-hover` | Same + hover lift effect |
-| `.sticker-button` | 3px border, 3px shadow, rounded-md, bold |
-| `.sticker-input` | 3px border, 3px shadow, focus ring |
-| `.sticker-badge` | Inline pill badge with 2px border |
+| Class                 | Effect                                   |
+| --------------------- | ---------------------------------------- |
+| `.sticker-card`       | 3px border, 4px shadow, rounded-lg       |
+| `.sticker-card-hover` | Same + hover lift effect                 |
+| `.sticker-button`     | 3px border, 3px shadow, rounded-md, bold |
+| `.sticker-input`      | 3px border, 3px shadow, focus ring       |
+| `.sticker-badge`      | Inline pill badge with 2px border        |
 
 **Colors:** Primary gold (`#ce9a08`), accent pink (`#ec4899`). Platform colors: `twitter`, `linkedin`, `reddit`. Sticker palette: yellow, pink, purple, green, blue, orange, black.
 
 **Fonts:** Nunito (sans), JetBrains Mono (mono).
 
 **Conventions:**
+
 - `'use client'` for interactive components
 - `cn()` from `@/lib/utils` for conditional class merging
 - Type all props with explicit interfaces

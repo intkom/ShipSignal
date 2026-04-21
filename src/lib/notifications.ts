@@ -31,7 +31,7 @@ export const useNotificationStore = create<NotificationState & NotificationActio
         })),
     }),
     {
-      name: 'bullhorn-notifications',
+      name: 'ShipSignal-notifications',
     }
   )
 )

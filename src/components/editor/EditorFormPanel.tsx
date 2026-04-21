@@ -5,7 +5,6 @@ import { Campaign } from '@/lib/posts'
 import { SocialAccount } from '@/lib/socialAccounts'
 
 type AutoSaveStatus = 'idle' | 'saving' | 'saved' | 'error' | 'retrying'
-import { AlertCircle } from 'lucide-react'
 import { AutoSaveIndicator } from '@/components/ui/AutoSaveIndicator'
 import { AutoPublishIndicator } from '@/components/editor/AutoPublishIndicator'
 import {
@@ -16,7 +15,6 @@ import {
   ContentEditor,
   MediaSection,
   LinkedInSettings,
-  RedditSettings,
   PublishedLinks,
   SchedulePicker,
   EditorActions,
@@ -46,19 +44,6 @@ interface EditorFormPanelProps {
   setMediaUrls: (urls: string[]) => void
   linkedInMediaUrl: string
   setLinkedInMediaUrl: (url: string) => void
-  redditUrl: string
-  setRedditUrl: (url: string) => void
-  newSubreddit: string
-  setNewSubreddit: (v: string) => void
-  subredditsInput: string[]
-  setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>
-  subredditTitles: Record<string, string>
-  updateSubredditTitle: (sub: string, title: string) => void
-  subredditSchedules: Record<string, string>
-  updateSubredditSchedule: (sub: string, iso: string | null) => void
-  expandedSubreddits: Record<string, boolean>
-  toggleSubredditExpanded: (sub: string) => void
-  removeSubreddit: (sub: string) => void
   showPublishedLinks: boolean
   setShowPublishedLinks: (v: boolean) => void
   platformAccounts: SocialAccount[]
@@ -100,20 +85,6 @@ function EditorHeader({
       <div className="h-1 w-16 gradient-bar mt-2 rounded-full" />
     </div>
   )
-}
-
-function MediaWarning({ platform }: { platform: string }) {
-  if (platform === 'reddit') {
-    return (
-      <div className="flex items-center gap-2 p-3 rounded-md bg-sticker-orange/10 text-sticker-orange text-sm border-2 border-sticker-orange/30 mb-4 md:mb-6">
-        <AlertCircle className="w-4 h-4 shrink-0" />
-        <span className="font-medium">
-          Media attachments are not yet supported for Reddit publishing.
-        </span>
-      </div>
-    )
-  }
-  return null
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -166,29 +137,11 @@ export function EditorFormPanel(props: EditorFormPanelProps) {
         onLinkedInMediaUrlChange={props.setLinkedInMediaUrl}
       />
       <LinkedInSettings post={props.post} onPostChange={props.setPost} />
-      <RedditSettings
-        post={props.post}
-        onPostChange={props.setPost}
-        redditUrl={props.redditUrl}
-        onRedditUrlChange={props.setRedditUrl}
-        newSubreddit={props.newSubreddit}
-        onNewSubredditChange={props.setNewSubreddit}
-        subredditsInput={props.subredditsInput}
-        onSubredditsInputChange={props.setSubredditsInput}
-        subredditTitles={props.subredditTitles}
-        onUpdateSubredditTitle={props.updateSubredditTitle}
-        subredditSchedules={props.subredditSchedules}
-        onUpdateSubredditSchedule={props.updateSubredditSchedule}
-        expandedSubreddits={props.expandedSubreddits}
-        onToggleSubredditExpanded={props.toggleSubredditExpanded}
-        onRemoveSubreddit={props.removeSubreddit}
-      />
       <PublishedLinks
         post={props.post}
         onPostChange={props.setPost}
         showPublishedLinks={props.showPublishedLinks}
         onToggle={() => props.setShowPublishedLinks(!props.showPublishedLinks)}
-        subredditsInput={props.subredditsInput}
         className="mb-4 md:mb-6"
       />
       {props.post.status === 'ready' && (
@@ -220,9 +173,7 @@ export function EditorFormPanel(props: EditorFormPanelProps) {
       <AutoPublishIndicator
         hasAccount={!!props.post.socialAccountId}
         hasSchedule={!!props.post.scheduledAt}
-        platform={props.post.platform}
       />
-      {props.mediaUrls.length > 0 && <MediaWarning platform={props.post.platform} />}
       <EditorActions
         isNew={props.isNew}
         isSaving={props.isSaving}

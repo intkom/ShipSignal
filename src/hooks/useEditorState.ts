@@ -5,14 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { usePostsStore } from '@/lib/storage'
 import { useCampaignsStore } from '@/lib/campaigns'
 import { useSocialAccountsStore } from '@/lib/socialAccounts'
-import {
-  Post,
-  Platform,
-  createPost,
-  isTwitterContent,
-  isLinkedInContent,
-  isRedditContent,
-} from '@/lib/posts'
+import { Post, Platform, createPost, isTwitterContent, isLinkedInContent } from '@/lib/posts'
 
 export interface PostDraftData {
   content: string
@@ -20,10 +13,6 @@ export interface PostDraftData {
   notes: string
   mediaUrls: string[]
   linkedInMediaUrl: string
-  redditUrl: string
-  subredditsInput: string[]
-  subredditTitles: Record<string, string>
-  subredditSchedules: Record<string, string>
   campaignId?: string
   scheduledAt?: string
 }
@@ -74,15 +63,9 @@ export function useEditorFormState(options: UseEditorStateOptions) {
   const [content, setContent] = useState(initialContent)
   const [mediaUrls, setMediaUrls] = useState<string[]>([])
   const [linkedInMediaUrl, setLinkedInMediaUrl] = useState('')
-  const [redditUrl, setRedditUrl] = useState('')
   const [showMediaInput, setShowMediaInput] = useState(false)
   const [showNotes, setShowNotes] = useState(false)
   const [showPublishedLinks, setShowPublishedLinks] = useState(false)
-  const [newSubreddit, setNewSubreddit] = useState('')
-  const [subredditsInput, setSubredditsInput] = useState<string[]>([])
-  const [subredditSchedules, setSubredditSchedules] = useState<Record<string, string>>({})
-  const [subredditTitles, setSubredditTitles] = useState<Record<string, string>>({})
-  const [expandedSubreddits, setExpandedSubreddits] = useState<Record<string, boolean>>({})
 
   return {
     isNew,
@@ -97,76 +80,15 @@ export function useEditorFormState(options: UseEditorStateOptions) {
     setMediaUrls,
     linkedInMediaUrl,
     setLinkedInMediaUrl,
-    redditUrl,
-    setRedditUrl,
     showMediaInput,
     setShowMediaInput,
     showNotes,
     setShowNotes,
     showPublishedLinks,
     setShowPublishedLinks,
-    newSubreddit,
-    setNewSubreddit,
-    subredditsInput,
-    setSubredditsInput,
-    subredditSchedules,
-    setSubredditSchedules,
-    subredditTitles,
-    setSubredditTitles,
-    expandedSubreddits,
-    setExpandedSubreddits,
     getAccountsByProvider,
     getActiveAccount,
     fetchPosts,
-  }
-}
-
-export function useSubredditManagement(
-  setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>,
-  setSubredditTitles: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-  setSubredditSchedules: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-  setExpandedSubreddits: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
-) {
-  const toggleSubredditExpanded = (subreddit: string) => {
-    setExpandedSubreddits((prev) => ({ ...prev, [subreddit]: !prev[subreddit] }))
-  }
-  const updateSubredditTitle = (subreddit: string, title: string) => {
-    setSubredditTitles((prev) => ({ ...prev, [subreddit]: title }))
-  }
-  const updateSubredditSchedule = (subreddit: string, isoString: string | null) => {
-    if (isoString === null) {
-      setSubredditSchedules((prev) => {
-        const next = { ...prev }
-        delete next[subreddit]
-        return next
-      })
-    } else {
-      setSubredditSchedules((prev) => ({ ...prev, [subreddit]: isoString }))
-    }
-  }
-  const removeSubreddit = (subreddit: string) => {
-    setSubredditsInput((prev) => prev.filter((s) => s !== subreddit))
-    setSubredditTitles((prev) => {
-      const next = { ...prev }
-      delete next[subreddit]
-      return next
-    })
-    setSubredditSchedules((prev) => {
-      const next = { ...prev }
-      delete next[subreddit]
-      return next
-    })
-    setExpandedSubreddits((prev) => {
-      const next = { ...prev }
-      delete next[subreddit]
-      return next
-    })
-  }
-  return {
-    toggleSubredditExpanded,
-    updateSubredditTitle,
-    updateSubredditSchedule,
-    removeSubreddit,
   }
 }
 
@@ -174,7 +96,6 @@ export function useDirtyTracking(deps: {
   content: string
   mediaUrls: string[]
   linkedInMediaUrl: string
-  redditUrl: string
   platform: Platform
   notes: string | undefined
 }) {
@@ -185,7 +106,6 @@ export function useDirtyTracking(deps: {
       content: deps.content,
       mediaUrls: deps.mediaUrls,
       linkedInMediaUrl: deps.linkedInMediaUrl,
-      redditUrl: deps.redditUrl,
       platform: deps.platform,
       notes: deps.notes,
     })
@@ -194,14 +114,7 @@ export function useDirtyTracking(deps: {
       setIsDirty(true)
     }
     /* eslint-enable react-hooks/set-state-in-effect */
-  }, [
-    deps.content,
-    deps.mediaUrls,
-    deps.linkedInMediaUrl,
-    deps.redditUrl,
-    deps.platform,
-    deps.notes,
-  ])
+  }, [deps.content, deps.mediaUrls, deps.linkedInMediaUrl, deps.platform, deps.notes])
   return { isDirty, setIsDirty, initialContentRef }
 }
 
@@ -212,11 +125,6 @@ export function useLoadExistingPost(
     setContent: React.Dispatch<React.SetStateAction<string>>
     setMediaUrls: React.Dispatch<React.SetStateAction<string[]>>
     setLinkedInMediaUrl: React.Dispatch<React.SetStateAction<string>>
-    setRedditUrl: React.Dispatch<React.SetStateAction<string>>
-    setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>
-    setSubredditTitles: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setSubredditSchedules: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setExpandedSubreddits: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
     setShowNotes: React.Dispatch<React.SetStateAction<boolean>>
     setShowPublishedLinks: React.Dispatch<React.SetStateAction<boolean>>
     initialContentRef: React.MutableRefObject<string>
@@ -231,7 +139,6 @@ export function useLoadExistingPost(
         content: '',
         mediaUrls: [],
         linkedInMediaUrl: '',
-        redditUrl: '',
         platform: 'twitter',
         notes: '',
       })
@@ -246,35 +153,25 @@ function loadExistingPostData(
     setContent: React.Dispatch<React.SetStateAction<string>>
     setMediaUrls: React.Dispatch<React.SetStateAction<string[]>>
     setLinkedInMediaUrl: React.Dispatch<React.SetStateAction<string>>
-    setRedditUrl: React.Dispatch<React.SetStateAction<string>>
-    setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>
-    setSubredditTitles: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setSubredditSchedules: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setExpandedSubreddits: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
     setShowNotes: React.Dispatch<React.SetStateAction<boolean>>
     setShowPublishedLinks: React.Dispatch<React.SetStateAction<boolean>>
     initialContentRef: React.MutableRefObject<string>
   }
 ) {
   setters.setPost(existingPost)
-  const { text, loadedMediaUrls, loadedLinkedInMedia, loadedRedditUrl } = extractContentFields(
-    existingPost,
-    setters
-  )
+  const { text, loadedMediaUrls, loadedLinkedInMedia } = extractContentFields(existingPost, setters)
   setters.setContent(text)
   setters.initialContentRef.current = JSON.stringify({
     content: text,
     mediaUrls: loadedMediaUrls,
     linkedInMediaUrl: loadedLinkedInMedia,
-    redditUrl: loadedRedditUrl,
     platform: existingPost.platform,
     notes: existingPost.notes || '',
   })
   if (existingPost.notes) setters.setShowNotes(true)
   const hasLaunchedUrls =
     (isTwitterContent(existingPost.content) && existingPost.content.launchedUrl) ||
-    (isLinkedInContent(existingPost.content) && existingPost.content.launchedUrl) ||
-    (isRedditContent(existingPost.content) && existingPost.content.launchedUrl)
+    (isLinkedInContent(existingPost.content) && existingPost.content.launchedUrl)
   if (hasLaunchedUrls) setters.setShowPublishedLinks(true)
 }
 
@@ -283,11 +180,6 @@ function extractContentFields(
   setters: {
     setMediaUrls: React.Dispatch<React.SetStateAction<string[]>>
     setLinkedInMediaUrl: React.Dispatch<React.SetStateAction<string>>
-    setRedditUrl: React.Dispatch<React.SetStateAction<string>>
-    setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>
-    setSubredditTitles: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setSubredditSchedules: React.Dispatch<React.SetStateAction<Record<string, string>>>
-    setExpandedSubreddits: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
   }
 ) {
   let text = ''
@@ -297,18 +189,6 @@ function extractContentFields(
   } else if (isLinkedInContent(existingPost.content)) {
     text = existingPost.content.text
     setters.setLinkedInMediaUrl(existingPost.content.mediaUrl || '')
-  } else if (isRedditContent(existingPost.content)) {
-    text = existingPost.content.body || ''
-    setters.setRedditUrl(existingPost.content.url || '')
-    const subreddit = existingPost.content.subreddit
-    setters.setSubredditsInput([subreddit])
-    if (existingPost.content.title) {
-      setters.setSubredditTitles({ [subreddit]: existingPost.content.title })
-    }
-    if (existingPost.scheduledAt) {
-      setters.setSubredditSchedules({ [subreddit]: existingPost.scheduledAt })
-    }
-    setters.setExpandedSubreddits({ [subreddit]: true })
   }
   const loadedMediaUrls = isTwitterContent(existingPost.content)
     ? existingPost.content.mediaUrls || []
@@ -316,33 +196,28 @@ function extractContentFields(
   const loadedLinkedInMedia = isLinkedInContent(existingPost.content)
     ? existingPost.content.mediaUrl || ''
     : ''
-  const loadedRedditUrl = isRedditContent(existingPost.content)
-    ? existingPost.content.url || ''
-    : ''
-  return { text, loadedMediaUrls, loadedLinkedInMedia, loadedRedditUrl }
+  return { text, loadedMediaUrls, loadedLinkedInMedia }
 }
 
 export function usePlatformContentSync(
   content: string,
   mediaUrls: string[],
   linkedInMediaUrl: string,
-  redditUrl: string,
   setPost: React.Dispatch<React.SetStateAction<Post>>
 ) {
   useEffect(() => {
     setPost((prev) => {
-      const newContent = buildPlatformContent(prev, content, mediaUrls, linkedInMediaUrl, redditUrl)
+      const newContent = buildPlatformContent(prev, content, mediaUrls, linkedInMediaUrl)
       return { ...prev, content: newContent }
     })
-  }, [content, mediaUrls, linkedInMediaUrl, redditUrl, setPost])
+  }, [content, mediaUrls, linkedInMediaUrl, setPost])
 }
 
 function buildPlatformContent(
   prev: Post,
   content: string,
   mediaUrls: string[],
-  linkedInMediaUrl: string,
-  redditUrl: string
+  linkedInMediaUrl: string
 ) {
   const platform = prev.platform
   if (platform === 'twitter') {
@@ -362,20 +237,6 @@ function buildPlatformContent(
       text: content,
       visibility: existing?.visibility || 'public',
       ...(linkedInMediaUrl && { mediaUrl: linkedInMediaUrl }),
-      ...(existing?.launchedUrl && { launchedUrl: existing.launchedUrl }),
-    }
-  }
-  if (platform === 'reddit') {
-    const existing = prev.content as {
-      subreddit?: string
-      title?: string
-      launchedUrl?: string
-    }
-    return {
-      subreddit: existing?.subreddit || '',
-      title: existing?.title || '',
-      body: content,
-      ...(redditUrl && { url: redditUrl }),
       ...(existing?.launchedUrl && { launchedUrl: existing.launchedUrl }),
     }
   }

@@ -28,7 +28,6 @@ test.describe('Database State Verification', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe.serial('Create Operations', () => {
-     
     test('should create exactly one Twitter draft', async ({ page }) => {
       expect(await getPostCount(page)).toBe(0)
 
@@ -47,7 +46,6 @@ test.describe('Database State Verification', () => {
       expect(posts[0].content).toMatchObject({ text: 'Twitter draft content' })
     })
 
-     
     test('should create exactly one LinkedIn draft', async ({ page }) => {
       expect(await getPostCount(page)).toBe(0)
 
@@ -64,7 +62,6 @@ test.describe('Database State Verification', () => {
       expect(posts[0].content).toMatchObject({ text: 'LinkedIn draft content' })
     })
 
-     
     test('should create exactly one Reddit draft with metadata', async ({ page }) => {
       expect(await getPostCount(page)).toBe(0)
 
@@ -85,7 +82,6 @@ test.describe('Database State Verification', () => {
       })
     })
 
-     
     test('should create exactly one scheduled post', async ({ page }) => {
       expect(await getPostCount(page)).toBe(0)
 
@@ -110,7 +106,6 @@ test.describe('Database State Verification', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe.serial('Edit Operations', () => {
-     
     test('should update content without creating duplicates', async ({ page }) => {
       // Create a post first
       await createTestPost(page, { platform: 'twitter', content: 'Original content' })
@@ -135,7 +130,6 @@ test.describe('Database State Verification', () => {
       expect(updatedPost?.content).toMatchObject({ text: 'Updated content' })
     })
 
-     
     test('should switch platform without creating duplicates', async ({ page }) => {
       await createTestPost(page, { platform: 'twitter', content: 'Platform test' })
       expect(await getPostCount(page)).toBe(1)
@@ -158,7 +152,6 @@ test.describe('Database State Verification', () => {
       expect(updatedPost?.platform).toBe('linkedin')
     })
 
-     
     test('should convert draft to scheduled without creating duplicates', async ({ page }) => {
       await createTestPost(page, {
         platform: 'twitter',
@@ -189,9 +182,7 @@ test.describe('Database State Verification', () => {
     })
   })
 
-   
   test.describe.serial('Delete Operations', () => {
-     
     test('should remove post from database after deletion', async ({ page }) => {
       // Create and archive a post (required before deletion)
       await createTestPost(page, { platform: 'twitter', content: 'Post to delete' })
@@ -213,7 +204,6 @@ test.describe('Database State Verification', () => {
       expect(await getPostCount(page)).toBe(0)
     })
 
-     
     test('should delete one post and leave others intact', async ({ page }) => {
       // Create two posts
       await createTestPost(page, { platform: 'twitter', content: 'Post to keep' })
@@ -246,9 +236,7 @@ test.describe('Database State Verification', () => {
     })
   })
 
-   
   test.describe.serial('Archive Operations', () => {
-     
     test('should archive post without creating duplicates', async ({ page }) => {
       await createTestPost(page, { platform: 'twitter', content: 'Post to archive' })
       expect(await getPostCount(page)).toBe(1)
@@ -268,7 +256,6 @@ test.describe('Database State Verification', () => {
       expect(archivedPost?.status).toBe('archived')
     })
 
-     
     test('should restore post without creating duplicates', async ({ page }) => {
       await createTestPost(page, { platform: 'twitter', content: 'Post to restore' })
       expect(await getPostCount(page)).toBe(1)

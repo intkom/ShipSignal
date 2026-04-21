@@ -83,30 +83,30 @@ src/components/
 
 ### Libs (`src/lib/`)
 
-| File | Purpose |
-|------|---------|
-| `auth.ts` | `requireAuth()`, `getOptionalAuth()`, ownership validators |
-| `utils.ts` | `cn()`, `snakeToCamel/camelToSnake`, `transformXFromDb/ToDb` functions |
-| `requestDedup.ts` | `dedup()`, `createDedupKey()` for Zustand request deduplication |
-| `posts.ts` | Type definitions (Post, Campaign, Project, Platform, etc.) |
-| `campaigns.ts` | Zustand store: `useCampaignsStore` |
-| `projects.ts` | Zustand store: `useProjectsStore` |
-| `blogDrafts.ts` | Zustand store: `useBlogDraftsStore` |
-| `launchPosts.ts` | Zustand store: `useLaunchPostsStore` |
-| `analyticsStore.ts` | Zustand store: `useAnalyticsStore` |
-| `media.ts` | Media upload utilities |
-| `storage.ts` | Supabase storage helpers |
-| `profile.ts` | User profile utilities |
-| `notifications.ts` | Notification system |
-| `theme.tsx` | Theme provider (light/dark) |
-| `supabase/server.ts` | Server-side Supabase client |
-| `supabase/client.ts` | Browser-side Supabase client |
-| `selfHosted.ts` | `isSelfHosted()` — runtime mode check for self-hosted vs SaaS |
-| `scheduler.ts` | `node-cron` scheduler for self-hosted mode (publish + token refresh) |
-| `tokenRefresh.ts` | OAuth token refresh + Reddit password grant (`refreshRedditViaPasswordGrant()`) |
-| `cronAuth.ts` | `verifyCronSecret()` — timing-safe cron endpoint auth |
-| `limits.ts` | `PlanType` (`free`, `pro`, `selfHosted`), `PLAN_LIMITS`, `PLAN_FEATURES` |
-| `planEnforcement.ts` | `getUserPlan()`, `enforceResourceLimit()`, `enforceStorageLimit()` |
+| File                 | Purpose                                                                         |
+| -------------------- | ------------------------------------------------------------------------------- |
+| `auth.ts`            | `requireAuth()`, `getOptionalAuth()`, ownership validators                      |
+| `utils.ts`           | `cn()`, `snakeToCamel/camelToSnake`, `transformXFromDb/ToDb` functions          |
+| `requestDedup.ts`    | `dedup()`, `createDedupKey()` for Zustand request deduplication                 |
+| `posts.ts`           | Type definitions (Post, Campaign, Project, Platform, etc.)                      |
+| `campaigns.ts`       | Zustand store: `useCampaignsStore`                                              |
+| `projects.ts`        | Zustand store: `useProjectsStore`                                               |
+| `blogDrafts.ts`      | Zustand store: `useBlogDraftsStore`                                             |
+| `launchPosts.ts`     | Zustand store: `useLaunchPostsStore`                                            |
+| `analyticsStore.ts`  | Zustand store: `useAnalyticsStore`                                              |
+| `media.ts`           | Media upload utilities                                                          |
+| `storage.ts`         | Supabase storage helpers                                                        |
+| `profile.ts`         | User profile utilities                                                          |
+| `notifications.ts`   | Notification system                                                             |
+| `theme.tsx`          | Theme provider (light/dark)                                                     |
+| `supabase/server.ts` | Server-side Supabase client                                                     |
+| `supabase/client.ts` | Browser-side Supabase client                                                    |
+| `selfHosted.ts`      | `isSelfHosted()` — runtime mode check for self-hosted vs SaaS                   |
+| `scheduler.ts`       | `node-cron` scheduler for self-hosted mode (publish + token refresh)            |
+| `tokenRefresh.ts`    | OAuth token refresh + Reddit password grant (`refreshRedditViaPasswordGrant()`) |
+| `cronAuth.ts`        | `verifyCronSecret()` — timing-safe cron endpoint auth                           |
+| `limits.ts`          | `PlanType` (`free`, `pro`, `selfHosted`), `PLAN_LIMITS`, `PLAN_FEATURES`        |
+| `planEnforcement.ts` | `getUserPlan()`, `enforceResourceLimit()`, `enforceStorageLimit()`              |
 
 ### Custom Hooks (`src/hooks/`)
 
@@ -130,10 +130,7 @@ export async function GET() {
     const { userId } = await requireAuth()
     const supabase = await createClient()
 
-    const { data, error } = await supabase
-      .from('table_name')
-      .select('*')
-      .eq('user_id', userId)
+    const { data, error } = await supabase.from('table_name').select('*').eq('user_id', userId)
 
     if (error) throw error
 
@@ -148,6 +145,7 @@ export async function GET() {
 ```
 
 Key points:
+
 - Always call `requireAuth()` first — returns `{ userId }` or throws `'Unauthorized'`
 - Always filter by `.eq('user_id', userId)` for RLS-like ownership checks
 - Always apply `transformXFromDb()` to map snake_case DB fields to camelCase
@@ -198,6 +196,7 @@ export const useXStore = create<XState & XActions>()((set, get) => ({
 ```
 
 Key points:
+
 - State shape: `{ items, loading, error, initialized }`
 - CRUD actions: `fetchX`, `addX`, `updateX`, `deleteX`
 - Use `dedup()` with `createDedupKey()` to prevent duplicate API requests
@@ -235,13 +234,13 @@ All Supabase responses use snake_case. The frontend uses camelCase. Transform fu
 
 ### Utility Classes
 
-| Class | Effect |
-|-------|--------|
-| `.sticker-card` | 3px border, 4px shadow, rounded-lg |
-| `.sticker-card-hover` | Same + hover lift effect |
-| `.sticker-button` | 3px border, 3px shadow, rounded-md, bold |
-| `.sticker-input` | 3px border, 3px shadow, focus ring |
-| `.sticker-badge` | Inline pill badge with 2px border |
+| Class                 | Effect                                   |
+| --------------------- | ---------------------------------------- |
+| `.sticker-card`       | 3px border, 4px shadow, rounded-lg       |
+| `.sticker-card-hover` | Same + hover lift effect                 |
+| `.sticker-button`     | 3px border, 3px shadow, rounded-md, bold |
+| `.sticker-input`      | 3px border, 3px shadow, focus ring       |
+| `.sticker-badge`      | Inline pill badge with 2px border        |
 
 ### Tailwind Colors
 
@@ -297,23 +296,24 @@ Commit format: `<type>: <description>`
 versioning via semantic-release. Using the wrong type will create an incorrect version bump.
 Commits are validated by a commitlint git hook — invalid messages will be rejected.
 
-| Type | Version Bump | When to Use |
-|------|-------------|-------------|
-| `feat` | Minor (1.0→1.1) | New feature or user-facing capability |
-| `fix` | Patch (1.0.0→1.0.1) | Bug fix |
-| `perf` | Patch | Performance improvement |
-| `security` | Patch | Security fix |
-| `docs` | No release | Documentation only |
-| `test` | No release | Adding/updating tests |
-| `chore` | No release | Maintenance, deps, config |
-| `refactor` | No release | Code restructure, no behavior change |
-| `ci` | No release | CI/CD pipeline changes |
-| `style` | No release | Formatting, whitespace |
+| Type       | Version Bump        | When to Use                           |
+| ---------- | ------------------- | ------------------------------------- |
+| `feat`     | Minor (1.0→1.1)     | New feature or user-facing capability |
+| `fix`      | Patch (1.0.0→1.0.1) | Bug fix                               |
+| `perf`     | Patch               | Performance improvement               |
+| `security` | Patch               | Security fix                          |
+| `docs`     | No release          | Documentation only                    |
+| `test`     | No release          | Adding/updating tests                 |
+| `chore`    | No release          | Maintenance, deps, config             |
+| `refactor` | No release          | Code restructure, no behavior change  |
+| `ci`       | No release          | CI/CD pipeline changes                |
+| `style`    | No release          | Formatting, whitespace                |
 
 For breaking changes, add `!` after the type: `feat!: redesign auth flow`
 This triggers a major version bump (1.0→2.0).
 
 Guidelines:
+
 - First line: 50 chars max, imperative mood ("add feature" not "added feature")
 - Use `feat` only for genuinely new capabilities — not for extending existing ones (use `fix` or `refactor`)
 - Use `chore` for dependency updates, config changes, and anything that doesn't affect the shipped product
@@ -323,26 +323,26 @@ Guidelines:
 
 ### Skills
 
-| Command | Purpose | When to use |
-|---------|---------|-------------|
-| `/db-migrate <name>` | Create and apply a Supabase migration | Adding/changing database schema |
-| `/audit-rls` | Scan tables for missing RLS policies | After `/db-migrate`, or periodically |
-| `/scaffold-api <path> <methods>` | Generate boilerplate API route | Creating new API endpoints |
-| `/gen-test <file>` | Generate unit tests for a file | After implementing new code |
-| `/ship` | Build, lint, typecheck, and deploy | Ready to deploy changes |
-| `/monitor-ci` | Watch CI pipeline and debug failures | After pushing to remote |
-| `/deploy-check` | Check Vercel deployment status and drift | After merging or to verify production state |
-| `/e2e-debug` | Systematic Playwright failure diagnosis | A CI E2E shard fails and you need to find root cause |
+| Command                          | Purpose                                  | When to use                                          |
+| -------------------------------- | ---------------------------------------- | ---------------------------------------------------- |
+| `/db-migrate <name>`             | Create and apply a Supabase migration    | Adding/changing database schema                      |
+| `/audit-rls`                     | Scan tables for missing RLS policies     | After `/db-migrate`, or periodically                 |
+| `/scaffold-api <path> <methods>` | Generate boilerplate API route           | Creating new API endpoints                           |
+| `/gen-test <file>`               | Generate unit tests for a file           | After implementing new code                          |
+| `/ship`                          | Build, lint, typecheck, and deploy       | Ready to deploy changes                              |
+| `/monitor-ci`                    | Watch CI pipeline and debug failures     | After pushing to remote                              |
+| `/deploy-check`                  | Check Vercel deployment status and drift | After merging or to verify production state          |
+| `/e2e-debug`                     | Systematic Playwright failure diagnosis  | A CI E2E shard fails and you need to find root cause |
 
 ### Agents
 
-| Agent | Purpose | When to invoke |
-|-------|---------|----------------|
-| `code-reviewer` | Review code against project conventions | After completing a feature or PR |
-| `security-reviewer` | Focused security audit (OWASP, auth, RLS) | After auth/API/database changes |
-| `ios-tester` | Test workflows on iOS Simulator | After UI changes affecting mobile |
-| `performance-analyzer` | Find query, store, and bundle performance issues | After adding API routes, stores, or heavy components |
-| `e2e-reviewer` | Review Playwright specs for selector stability, race conditions, prod-vs-dev fragility | After writing or modifying E2E tests |
+| Agent                  | Purpose                                                                                | When to invoke                                       |
+| ---------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `code-reviewer`        | Review code against project conventions                                                | After completing a feature or PR                     |
+| `security-reviewer`    | Focused security audit (OWASP, auth, RLS)                                              | After auth/API/database changes                      |
+| `ios-tester`           | Test workflows on iOS Simulator                                                        | After UI changes affecting mobile                    |
+| `performance-analyzer` | Find query, store, and bundle performance issues                                       | After adding API routes, stores, or heavy components |
+| `e2e-reviewer`         | Review Playwright specs for selector stability, race conditions, prod-vs-dev fragility | After writing or modifying E2E tests                 |
 
 ### Hooks (automatic)
 
@@ -356,12 +356,12 @@ Guidelines:
 
 ### MCP Servers
 
-| Server | Purpose |
-|--------|---------|
-| `context7` | Library documentation lookup |
-| `playwright` | Browser automation for E2E testing |
-| `github` | GitHub API (PRs, issues, repos) |
-| `supabase` | Database queries, migrations, edge functions |
+| Server       | Purpose                                      |
+| ------------ | -------------------------------------------- |
+| `context7`   | Library documentation lookup                 |
+| `playwright` | Browser automation for E2E testing           |
+| `github`     | GitHub API (PRs, issues, repos)              |
+| `supabase`   | Database queries, migrations, edge functions |
 
 ### Browser Automation
 
@@ -377,14 +377,14 @@ Self-hosted mode is activated by the runtime env var `SELF_HOSTED=true`. The sin
 
 ### Key differences from SaaS mode
 
-| Behavior | SaaS | Self-Hosted |
-|----------|------|-------------|
-| Plan type | `free` or `pro` (from DB) | `selfHosted` (hardcoded, no DB query) |
-| Resource limits | Enforced per plan tier | All unlimited (`Number.MAX_SAFE_INTEGER`) |
-| Reddit auth | OAuth (authorization_code grant) | Script auth (password grant) — no browser redirect |
-| Cron scheduling | Vercel Cron (external) | `node-cron` in `instrumentation.ts` (internal) |
-| Auto-publish | Pro only, excludes Reddit | All platforms including Reddit |
-| Token refresh | Skips accounts without `refresh_token` | Falls back to password grant for Reddit |
+| Behavior        | SaaS                                   | Self-Hosted                                        |
+| --------------- | -------------------------------------- | -------------------------------------------------- |
+| Plan type       | `free` or `pro` (from DB)              | `selfHosted` (hardcoded, no DB query)              |
+| Resource limits | Enforced per plan tier                 | All unlimited (`Number.MAX_SAFE_INTEGER`)          |
+| Reddit auth     | OAuth (authorization_code grant)       | Script auth (password grant) — no browser redirect |
+| Cron scheduling | Vercel Cron (external)                 | `node-cron` in `instrumentation.ts` (internal)     |
+| Auto-publish    | Pro only, excludes Reddit              | All platforms including Reddit                     |
+| Token refresh   | Skips accounts without `refresh_token` | Falls back to password grant for Reddit            |
 
 ### Pattern: `isSelfHosted()` gate
 
@@ -407,6 +407,7 @@ if (isSelfHosted()) {
 ### Reddit script auth
 
 Self-hosted Reddit uses password grant instead of OAuth. Key files:
+
 - `src/app/api/social-accounts/reddit/connect/route.ts` — POST endpoint for password grant
 - `src/app/api/social-accounts/reddit/auth/route.ts` — delegates to connect when self-hosted + `REDDIT_USERNAME` and `REDDIT_PASSWORD` are set
 - `src/lib/tokenRefresh.ts` — `refreshRedditViaPasswordGrant()` shared between connect and token refresh
@@ -414,6 +415,7 @@ Self-hosted Reddit uses password grant instead of OAuth. Key files:
 ### Internal cron scheduler
 
 `src/instrumentation.ts` starts `node-cron` when `SELF_HOSTED=true`. The scheduler itself requires `CRON_SECRET` to be set (checked in `scheduler.ts`). Two jobs run every 5 minutes:
+
 - `/api/cron/publish` — auto-publishes due posts
 - `/api/cron/refresh-tokens` — rotates expiring OAuth tokens
 
@@ -489,6 +491,7 @@ Contributors: You will need your own Apple Developer account and App Store Conne
 
 Authenticated browser profiles are available at `.playwright/profiles/`.
 Available profiles:
+
 - **free-user**: Free plan user — default tier with standard limits
   Test files: valid-image.png (valid), valid-video.mp4 (valid), oversized-image.png (error case), corrupted-file.jpg (error case)
   Acceptance: upload accepted, processing completes

@@ -35,11 +35,11 @@ export function DataManagementSection() {
 
       if (exportFormat === 'csv') {
         const text = await res.text()
-        downloadFile(text, `bullhorn-export.csv`, 'text/csv')
+        downloadFile(text, `ShipSignal-export.csv`, 'text/csv')
       } else {
         const data = await res.json()
         const json = JSON.stringify(data, null, 2)
-        downloadFile(json, `bullhorn-export.json`, 'application/json')
+        downloadFile(json, `ShipSignal-export.json`, 'application/json')
       }
     } catch (err) {
       setError((err as Error).message)
@@ -75,7 +75,7 @@ export function DataManagementSection() {
       setImportResult(result)
     } catch (err) {
       if (err instanceof SyntaxError) {
-        setError('Invalid JSON file. Please select a valid Bullhorn export file.')
+        setError('Invalid JSON file. Please select a valid ShipSignal export file.')
       } else {
         setError((err as Error).message)
       }
@@ -169,7 +169,7 @@ export function DataManagementSection() {
       <div>
         <h3 className="text-sm font-bold text-foreground mb-3">Import</h3>
         <p className="text-xs text-muted-foreground mb-3">
-          Upload a JSON file from a previous Bullhorn export. Duplicate entries will be skipped.
+          Upload a JSON file from a previous ShipSignal export. Duplicate entries will be skipped.
         </p>
 
         <input

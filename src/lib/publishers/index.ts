@@ -3,7 +3,6 @@ import { getValidAccessToken } from '@/lib/tokenRefresh'
 import { createClient } from '@/lib/supabase/server'
 import { publishToTwitter } from './twitter'
 import { publishToLinkedIn } from './linkedin'
-import { publishToReddit } from './reddit'
 import type { SupabaseClient } from '@supabase/supabase-js'
 
 export interface PublishInput {
@@ -31,7 +30,6 @@ type Publisher = (input: PublishInput) => Promise<PublishOutput>
 const publishers: Record<Platform, Publisher> = {
   twitter: publishToTwitter,
   linkedin: publishToLinkedIn,
-  reddit: publishToReddit,
 }
 
 /**

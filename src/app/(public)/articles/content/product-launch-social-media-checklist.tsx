@@ -164,7 +164,7 @@ export const article: ArticleWithContent = {
       <p>
         Coordinating a launch across 5 platforms is a lot of content to manage. This is exactly what{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         is built for — organize your launch posts into campaigns, use dedicated launch templates for
         Product Hunt and Hacker News, and schedule everything from one place. Capture ideas from
@@ -172,7 +172,7 @@ export const article: ArticleWithContent = {
       </p>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Try Bullhorn free
+          Try ShipSignal free
         </Link>{' '}
         — 50 posts, 5 campaigns, launch templates included.
       </p>

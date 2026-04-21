@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Megaphone, Loader2 } from 'lucide-react'
+import { Radio, Loader2 } from 'lucide-react'
 import { useCommunityEventsStore } from '@/lib/communityEvents'
 import { EventBrowser } from '@/components/calendar/EventBrowser'
 
@@ -56,7 +56,7 @@ export default function CommunityEventsPage() {
       {/* Page header */}
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2.5 rounded-md bg-sticker-purple/10 border-[3px] border-border shadow-sticker-sm">
-          <Megaphone className="w-5 h-5 text-sticker-purple" />
+          <Radio className="w-5 h-5 text-sticker-purple" />
         </div>
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">Community Events</h1>

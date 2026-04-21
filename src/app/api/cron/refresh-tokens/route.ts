@@ -9,7 +9,6 @@ export const dynamic = 'force-dynamic'
 /** Provider-specific refresh thresholds in milliseconds */
 const REFRESH_THRESHOLDS: Record<string, number> = {
   twitter: 60 * 60 * 1000, // 1 hour before expiry
-  reddit: 30 * 60 * 1000, // 30 minutes before expiry
   linkedin: 7 * 24 * 60 * 60 * 1000, // 7 days before expiry
 }
 
@@ -39,6 +38,7 @@ async function fetchAccountsToRefresh() {
     .from('social_accounts')
     .select('id, provider, access_token, refresh_token, token_expires_at')
     .eq('status', 'active')
+    .neq('provider', 'reddit')
 
   if (!isSelfHosted()) {
     // In SaaS mode, only fetch accounts with refresh tokens

@@ -18,7 +18,6 @@ test.describe('Archive Post', () => {
     await enterDemoMode(page)
   })
 
-   
   test('should archive a draft post from editor', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     // Create a test post
@@ -39,7 +38,6 @@ test.describe('Archive Post', () => {
     await expect(page).toHaveURL(/\/(dashboard)?$/, { timeout: 15000 })
   })
 
-   
   test('should show archived posts in archived filter', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Archived post content', testId)
@@ -58,7 +56,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByText(content)).toBeVisible()
   })
 
-   
   test('should hide archived posts from All view', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const visibleContent = uniqueContent('Visible post', testId)
@@ -79,7 +76,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByText(hiddenContent)).not.toBeVisible()
   })
 
-   
   test('should restore archived post to drafts', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Post to restore', testId)
@@ -108,7 +104,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByText(content)).toBeVisible()
   })
 
-   
   test('should permanently delete archived post', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Post to delete forever', testId)
@@ -137,7 +132,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByRole('button', { name: /archived/i })).not.toBeVisible()
   })
 
-   
   test('should cancel archive confirmation', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Post to keep', testId)
@@ -163,7 +157,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByText(content)).toBeVisible()
   })
 
-   
   test('should show restore button only for archived posts', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Draft post', testId)
@@ -178,7 +171,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByRole('button', { name: /restore/i })).not.toBeVisible()
   })
 
-   
   test('should hide archived tab when no archived posts', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('Regular post', testId)
@@ -192,7 +184,6 @@ test.describe('Archive Post', () => {
     await expect(page.getByRole('button', { name: /archived/i })).not.toBeVisible()
   })
 
-   
   test('should show archived tab when archived posts exist', async ({ page }, testInfo) => {
     const testId = generateTestId(testInfo)
     const content = uniqueContent('To be archived', testId)

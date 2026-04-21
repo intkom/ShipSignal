@@ -5,9 +5,9 @@ import { LandingPage } from './landing-page'
 
 // eslint-disable-next-line react-refresh/only-export-components -- metadata export is required by Next.js App Router
 export const metadata: Metadata = {
-  title: 'Bullhorn — Social Media Post Scheduler',
+  title: 'ShipSignal — GitHub to social proof',
   description:
-    'Free social media scheduler for Twitter, LinkedIn, and Reddit. Schedule posts, organize campaigns, and capture ideas from AI tools. Built for developers and indie hackers.',
+    'ShipSignal converts your commits and releases into reviewed X and LinkedIn posts. Schedule posts, organize campaigns, and capture ideas from AI tools.',
 }
 
 export default async function Home() {

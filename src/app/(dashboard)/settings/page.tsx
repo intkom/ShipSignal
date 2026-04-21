@@ -17,6 +17,7 @@ import { ConnectAnalyticsModal } from '@/components/analytics/ConnectAnalyticsMo
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 import { ApiKeyManager } from '@/components/ui/ApiKeyManager'
 import { ThemeSection, AnalyticsSection, AboutSection } from './SettingsSections'
+import { AIPersonaSection } from './AIPersonaSection'
 import { ConnectedAccountsSection } from './ConnectedAccountsSection'
 import { DataManagementSection } from './DataManagementSection'
 import { PlanSection } from './PlanSection'
@@ -133,7 +134,6 @@ export default function SettingsPage() {
       const names: Record<string, string> = {
         twitter: 'Twitter/X',
         linkedin: 'LinkedIn',
-        reddit: 'Reddit',
       }
       setSuccess(`${names[connectedPlatform] || connectedPlatform} connected successfully!`)
       fetchAccounts()
@@ -250,6 +250,9 @@ export default function SettingsPage() {
       {/* Plan & Usage */}
       <PlanSection />
 
+      {/* AI Persona */}
+      <AIPersonaSection />
+
       {/* Theme */}
       <ThemeSection theme={theme} setTheme={setTheme} />
 
@@ -300,7 +303,7 @@ export default function SettingsPage() {
           <Key className="w-4 h-4 inline-block mr-1 -mt-0.5" /> API Keys
         </h2>
         <p className="text-sm text-muted-foreground mb-4">
-          Create API keys for the Bullhorn MCP server or external integrations.{' '}
+          Create API keys for the ShipSignal MCP server or external integrations.{' '}
           <a href="/docs/mcp" className="text-primary font-semibold hover:underline">
             Learn how to set up the MCP server &rarr;
           </a>

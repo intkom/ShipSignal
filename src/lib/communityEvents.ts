@@ -9,7 +9,7 @@ export interface CommunityEvent {
   id: string
   name: string
   description: string | null
-  platform: 'twitter' | 'linkedin' | 'reddit'
+  platform: 'twitter' | 'linkedin'
   target: string | null
   recurrenceRule: string
   recurrenceTimezone: string
@@ -39,7 +39,7 @@ export interface DbCommunityEvent {
   id: string
   name: string
   description: string | null
-  platform: 'twitter' | 'linkedin' | 'reddit'
+  platform: 'twitter' | 'linkedin'
   target: string | null
   recurrence_rule: string
   recurrence_timezone: string

@@ -78,7 +78,7 @@ export default function LoginPage() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-lg bg-primary flex items-center justify-center border-[3px] border-border shadow-sticker text-3xl">
               📢
             </div>
-            <h1 className="text-3xl font-extrabold text-foreground">Bullhorn</h1>
+            <h1 className="text-3xl font-extrabold text-foreground">ShipSignal</h1>
             <p className="mt-2 text-muted-foreground">Sign in to manage your social posts</p>
           </div>
 

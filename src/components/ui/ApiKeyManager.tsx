@@ -233,7 +233,8 @@ export function ApiKeyManager() {
         </div>
       ) : (
         <p className="text-sm text-muted-foreground">
-          No API keys yet. Create one to use with the Bullhorn MCP server or external integrations.
+          No API keys yet. Create one to use with the ShipSignal MCP server or external
+          integrations.
         </p>
       )}
 

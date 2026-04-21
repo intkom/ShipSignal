@@ -1,5 +1,5 @@
 // Post fixtures for testing
-import { Post, TwitterContent, LinkedInContent, RedditContent } from '@/lib/posts'
+import { Post, TwitterContent, LinkedInContent } from '@/lib/posts'
 
 // Base fixture factory
 function createBasePost(overrides: Partial<Post> = {}): Post {
@@ -127,75 +127,6 @@ export const linkedinPublishedFixture: Post = createBasePost({
 })
 
 // ============================================
-// Reddit Fixtures
-// ============================================
-
-export const redditDraftFixture: Post = createBasePost({
-  id: 'reddit-draft-1',
-  platform: 'reddit',
-  status: 'draft',
-  content: {
-    subreddit: 'programming',
-    title: 'Built a social media scheduler with GitHub as the backend',
-    body: 'Just finished building a social media scheduler that uses GitHub repos for storage and GitHub Actions for publishing. Would love to get some feedback from the community!\n\nFeatures:\n- Schedule posts to Twitter, LinkedIn, and Reddit\n- Calendar view for managing posts\n- Draft support',
-  } as RedditContent,
-})
-
-export const redditWithFlairFixture: Post = createBasePost({
-  id: 'reddit-flair-1',
-  platform: 'reddit',
-  status: 'draft',
-  content: {
-    subreddit: 'SideProject',
-    title: 'Show and Tell: My weekend project',
-    body: 'Spent the weekend building something cool. Let me know what you think!',
-    flairId: 'show-and-tell',
-    flairText: 'Show and Tell',
-  } as RedditContent,
-})
-
-export const redditLinkPostFixture: Post = createBasePost({
-  id: 'reddit-link-1',
-  platform: 'reddit',
-  status: 'draft',
-  content: {
-    subreddit: 'webdev',
-    title: 'Great article on modern CSS techniques',
-    url: 'https://example.com/css-article',
-  } as RedditContent,
-})
-
-export const redditScheduledFixture: Post = createBasePost({
-  id: 'reddit-scheduled-1',
-  platform: 'reddit',
-  status: 'scheduled',
-  scheduledAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(), // In 3 days
-  content: {
-    subreddit: 'startups',
-    title: 'Launching next week - would love early feedback',
-    body: "We're launching our product next week and would love to get some early adopters from this community.",
-  } as RedditContent,
-})
-
-export const redditPublishedFixture: Post = createBasePost({
-  id: 'reddit-published-1',
-  platform: 'reddit',
-  status: 'published',
-  scheduledAt: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString(), // 3 days ago
-  content: {
-    subreddit: 'learnprogramming',
-    title: 'Tips for learning React in 2024',
-    body: 'Here are my top recommendations for learning React effectively...',
-  } as RedditContent,
-  publishResult: {
-    success: true,
-    postId: 'abc123xyz',
-    postUrl: 'https://reddit.com/r/learnprogramming/comments/abc123xyz',
-    publishedAt: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString(),
-  },
-})
-
-// ============================================
 // Edge Case Fixtures
 // ============================================
 
@@ -250,19 +181,6 @@ export function createLinkedInPost(
   })
 }
 
-export function createRedditPost(
-  subreddit: string,
-  title: string,
-  body: string,
-  status: Post['status'] = 'draft'
-): Post {
-  return createBasePost({
-    platform: 'reddit',
-    status,
-    content: { subreddit, title, body } as RedditContent,
-  })
-}
-
 // ============================================
 // Collections for testing
 // ============================================
@@ -282,35 +200,16 @@ export const allLinkedInFixtures = [
   linkedinPublishedFixture,
 ]
 
-export const allRedditFixtures = [
-  redditDraftFixture,
-  redditWithFlairFixture,
-  redditLinkPostFixture,
-  redditScheduledFixture,
-  redditPublishedFixture,
-]
-
 export const allDraftFixtures = [
   twitterDraftFixture,
   twitterLongTweetFixture,
   twitterWithMediaFixture,
   linkedinDraftFixture,
   linkedinConnectionsOnlyFixture,
-  redditDraftFixture,
-  redditWithFlairFixture,
-  redditLinkPostFixture,
 ]
 
-export const allScheduledFixtures = [
-  twitterScheduledFixture,
-  linkedinScheduledFixture,
-  redditScheduledFixture,
-]
+export const allScheduledFixtures = [twitterScheduledFixture, linkedinScheduledFixture]
 
-export const allPublishedFixtures = [
-  twitterPublishedFixture,
-  linkedinPublishedFixture,
-  redditPublishedFixture,
-]
+export const allPublishedFixtures = [twitterPublishedFixture, linkedinPublishedFixture]
 
-export const allFixtures = [...allTwitterFixtures, ...allLinkedInFixtures, ...allRedditFixtures]
+export const allFixtures = [...allTwitterFixtures, ...allLinkedInFixtures]

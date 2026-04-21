@@ -21,7 +21,6 @@ describe('MCP Server E2E', () => {
   let transport: StdioClientTransport
   let apiProcess: ChildProcess
 
-   
   beforeAll(async () => {
     // 1. Build the MCP server first
     await new Promise<void>((resolve, reject) => {
@@ -60,7 +59,6 @@ describe('MCP Server E2E', () => {
     await client.connect(transport)
   }, 30000) // 30s timeout for setup
 
-   
   afterAll(async () => {
     // Close client connection
     if (transport) {
@@ -73,9 +71,7 @@ describe('MCP Server E2E', () => {
     }
   })
 
-   
   describe('Tool Discovery', () => {
-     
     it('should list all available tools', async () => {
       const response = await client.request(
         { method: 'tools/list', params: {} },
@@ -110,7 +106,6 @@ describe('MCP Server E2E', () => {
   describe('Post Operations', () => {
     let createdPostId: string
 
-     
     it('should create a post', async () => {
       const response = await client.request(
         {
@@ -136,7 +131,6 @@ describe('MCP Server E2E', () => {
       createdPostId = result.post.id
     })
 
-     
     it('should list posts', async () => {
       const response = await client.request(
         {
@@ -154,7 +148,6 @@ describe('MCP Server E2E', () => {
       expect(Array.isArray(result.posts)).toBe(true)
     })
 
-     
     it('should get a post by id', async () => {
       const response = await client.request(
         {
@@ -172,7 +165,6 @@ describe('MCP Server E2E', () => {
       expect(result.post.id).toBe(createdPostId)
     })
 
-     
     it('should update a post', async () => {
       const response = await client.request(
         {
@@ -193,7 +185,6 @@ describe('MCP Server E2E', () => {
       expect(result.post.notes).toBe('Updated via E2E test')
     })
 
-     
     it('should delete a post with confirmation', async () => {
       const response = await client.request(
         {
@@ -210,7 +201,6 @@ describe('MCP Server E2E', () => {
       expect(result.success).toBe(true)
     })
 
-     
     it('should require confirmation for delete_post', async () => {
       // First create a post to delete
       const createResponse = await client.request(
@@ -256,7 +246,6 @@ describe('MCP Server E2E', () => {
       )
     })
 
-     
     it('should require confirmation for archive_post', async () => {
       // First create a post to archive
       const createResponse = await client.request(
@@ -302,7 +291,6 @@ describe('MCP Server E2E', () => {
       )
     })
 
-     
     it('should search posts', async () => {
       // First create a post with specific content to search for
       const createResponse = await client.request(
@@ -351,7 +339,6 @@ describe('MCP Server E2E', () => {
       )
     })
 
-     
     it('should search posts by notes', async () => {
       // First create a post with specific notes to search for
       const createResponse = await client.request(
@@ -405,7 +392,6 @@ describe('MCP Server E2E', () => {
     let campaignId: string
     let postId: string
 
-     
     it('should create a campaign', async () => {
       const response = await client.request(
         {
@@ -429,7 +415,6 @@ describe('MCP Server E2E', () => {
       campaignId = result.campaign.id
     })
 
-     
     it('should list campaigns', async () => {
       const response = await client.request(
         {
@@ -448,7 +433,6 @@ describe('MCP Server E2E', () => {
       expect(result.campaigns.some((c: { id: string }) => c.id === campaignId)).toBe(true)
     })
 
-     
     it('should get campaign by id', async () => {
       const response = await client.request(
         {
@@ -466,7 +450,6 @@ describe('MCP Server E2E', () => {
       expect(result.campaign.id).toBe(campaignId)
     })
 
-     
     it('should update a campaign', async () => {
       const response = await client.request(
         {
@@ -487,7 +470,6 @@ describe('MCP Server E2E', () => {
       expect(result.campaign.status).toBe('active')
     })
 
-     
     it('should add post to campaign', async () => {
       // First create a post
       const postResponse = await client.request(
@@ -525,7 +507,6 @@ describe('MCP Server E2E', () => {
       expect(result.post.campaignId).toBe(campaignId)
     })
 
-     
     it('should remove post from campaign', async () => {
       const response = await client.request(
         {
@@ -547,7 +528,6 @@ describe('MCP Server E2E', () => {
       expect(result.post.campaignId).toBeFalsy()
     })
 
-     
     it('should delete a campaign', async () => {
       const response = await client.request(
         {
@@ -567,7 +547,6 @@ describe('MCP Server E2E', () => {
 
   // eslint-disable-next-line max-lines-per-function
   describe('Reddit Cross-Posting', () => {
-     
     it('should create multiple reddit crossposts with shared groupId', async () => {
       const response = await client.request(
         {
@@ -613,7 +592,6 @@ describe('MCP Server E2E', () => {
       expect(result.posts[1].content.subreddit).toBe('test2')
     })
 
-     
     it('should create crossposts with individual schedules', async () => {
       const now = new Date()
       const schedule1 = new Date(now.getTime() + 3600000).toISOString() // +1 hour
@@ -655,7 +633,6 @@ describe('MCP Server E2E', () => {
       expect(result.posts[1].status).toBe('scheduled')
     })
 
-     
     it('should filter posts by groupId', async () => {
       // First create some crossposts
       const createResponse = await client.request(
@@ -701,7 +678,6 @@ describe('MCP Server E2E', () => {
   describe('Blog Draft Operations', () => {
     let createdDraftId: string
 
-     
     it('should create a blog draft', async () => {
       const response = await client.request(
         {
@@ -730,7 +706,6 @@ describe('MCP Server E2E', () => {
       createdDraftId = result.draft.id
     })
 
-     
     it('should list blog drafts', async () => {
       const response = await client.request(
         {
@@ -748,7 +723,6 @@ describe('MCP Server E2E', () => {
       expect(Array.isArray(result.drafts)).toBe(true)
     })
 
-     
     it('should get a blog draft by id', async () => {
       const response = await client.request(
         {
@@ -767,7 +741,6 @@ describe('MCP Server E2E', () => {
       expect(result.draft.title).toBe('E2E Test Blog Post')
     })
 
-     
     it('should update a blog draft', async () => {
       const response = await client.request(
         {
@@ -789,7 +762,6 @@ describe('MCP Server E2E', () => {
       expect(result.draft.title).toBe('Updated E2E Test Blog Post')
     })
 
-     
     it('should search blog drafts', async () => {
       const response = await client.request(
         {
@@ -809,7 +781,6 @@ describe('MCP Server E2E', () => {
       expect(result.drafts.some((d: { id: string }) => d.id === createdDraftId)).toBe(true)
     })
 
-     
     it('should archive a blog draft with confirmation', async () => {
       const response = await client.request(
         {
@@ -830,7 +801,6 @@ describe('MCP Server E2E', () => {
       expect(result.draft.status).toBe('archived')
     })
 
-     
     it('should restore an archived blog draft', async () => {
       const response = await client.request(
         {
@@ -848,7 +818,6 @@ describe('MCP Server E2E', () => {
       expect(result.draft.status).toBe('draft')
     })
 
-     
     it('should get draft images (empty initially)', async () => {
       const response = await client.request(
         {
@@ -867,7 +836,6 @@ describe('MCP Server E2E', () => {
       expect(result.images.length).toBe(0)
     })
 
-     
     it('should delete a blog draft with confirmation', async () => {
       const response = await client.request(
         {
@@ -887,7 +855,6 @@ describe('MCP Server E2E', () => {
       expect(result.success).toBe(true)
     })
 
-     
     it('should require confirmation for delete', async () => {
       // First create a draft to delete
       const createResponse = await client.request(
@@ -933,7 +900,6 @@ describe('MCP Server E2E', () => {
       )
     })
 
-     
     it('should require confirmation for archive', async () => {
       // First create a draft to archive
       const createResponse = await client.request(
@@ -979,7 +945,6 @@ describe('MCP Server E2E', () => {
       )
     })
 
-     
     it('should filter drafts by status', async () => {
       // Create a draft
       const createResponse = await client.request(

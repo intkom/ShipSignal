@@ -6,7 +6,7 @@ export function initShareHandler(router: Router) {
   App.addListener('appUrlOpen', (event) => {
     const url = new URL(event.url)
 
-    // Handle OAuth callback universal links (e.g. https://bullhorn.to/auth/callback?code=...)
+    // Handle OAuth callback universal links (e.g. https://shipsignal.app/auth/callback?code=...)
     if (
       (url.protocol === 'https:' || url.protocol === 'http:') &&
       url.pathname.startsWith('/auth/callback')
@@ -16,8 +16,8 @@ export function initShareHandler(router: Router) {
       return
     }
 
-    // Handle share extension deep links (bullhorn://share?text=...&url=...)
-    if (url.protocol === 'bullhorn:' && url.hostname === 'share') {
+    // Handle share extension deep links (ShipSignal://share?text=...&url=...)
+    if (url.protocol === 'ShipSignal:' && url.hostname === 'share') {
       const text = url.searchParams.get('text') || ''
       const sharedUrl = url.searchParams.get('url') || ''
       const params = new URLSearchParams()

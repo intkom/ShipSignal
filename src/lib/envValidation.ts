@@ -60,11 +60,6 @@ const ENV_CHECKS: EnvCheck[] = [
     required: false,
     description: 'LinkedIn OAuth client ID for posting',
   },
-  {
-    name: 'REDDIT_CLIENT_ID',
-    required: false,
-    description: 'Reddit client ID for posting',
-  },
 ]
 
 /**
@@ -116,14 +111,6 @@ export function validateEnv(): void {
   // Self-hosted mode validation
   if (process.env.SELF_HOSTED === 'true') {
     console.log('[envValidation] ℹ️  Self-hosted mode enabled')
-
-    // Check Reddit script auth configuration
-    if (process.env.REDDIT_CLIENT_ID && !process.env.REDDIT_USERNAME) {
-      console.warn('[envValidation] ⚠️  REDDIT_CLIENT_ID is set but REDDIT_USERNAME is missing')
-    }
-    if (process.env.REDDIT_CLIENT_ID && !process.env.REDDIT_PASSWORD) {
-      console.warn('[envValidation] ⚠️  REDDIT_CLIENT_ID is set but REDDIT_PASSWORD is missing')
-    }
 
     // Check cron scheduler
     if (!process.env.CRON_SECRET) {

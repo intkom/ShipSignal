@@ -11,9 +11,6 @@ import { trackMilestone } from '@/lib/appReview'
 
 interface SaveContext {
   isNew: boolean
-  subredditsInput: string[]
-  subredditSchedules: Record<string, string>
-  subredditTitles: Record<string, string>
   clearDraft: () => void
 }
 
@@ -27,7 +24,11 @@ export function useEditorSave(ctx: SaveContext) {
     setIsSaving(true)
     setIsDirty(false)
     try {
-      await executeSave(postToSave, ctx, addPost, updatePost)
+      if (ctx.isNew) {
+        await addPost(postToSave)
+      } else {
+        await updatePost(postToSave.id, postToSave)
+      }
       trackMilestone()
       ctx.clearDraft()
       router.push('/')
@@ -42,95 +43,16 @@ export function useEditorSave(ctx: SaveContext) {
   return { isSaving, isDirty, setIsDirty, handleSave }
 }
 
-async function executeSave(
-  postToSave: Post,
-  ctx: SaveContext,
-  addPost: (p: Post) => Promise<Post>,
-  updatePost: (id: string, p: Post) => Promise<void>
-) {
-  if (ctx.isNew && postToSave.platform === 'reddit' && ctx.subredditsInput.length > 1) {
-    await saveMultipleRedditPosts(postToSave, ctx, addPost)
-  } else if (ctx.isNew) {
-    const finalPost = applyRedditSubreddit(postToSave, ctx)
-    await addPost(finalPost)
-  } else {
-    const finalPost = applyRedditSubreddit(postToSave, ctx)
-    await updatePost(finalPost.id, finalPost)
-  }
-}
-
-async function saveMultipleRedditPosts(
-  postToSave: Post,
-  ctx: SaveContext,
-  addPost: (p: Post) => Promise<Post>
-) {
-  const groupId = crypto.randomUUID()
-  const redditContent = postToSave.content as {
-    subreddit: string
-    title: string
-    body?: string
-    url?: string
-    flairText?: string
-  }
-  for (const subreddit of ctx.subredditsInput) {
-    const postForSubreddit: Post = {
-      ...postToSave,
-      id: crypto.randomUUID(),
-      groupId,
-      groupType: 'reddit-crosspost',
-      scheduledAt: ctx.subredditSchedules[subreddit] || postToSave.scheduledAt,
-      content: {
-        ...redditContent,
-        subreddit,
-        title: ctx.subredditTitles[subreddit] || '',
-      },
-    }
-    await addPost(postForSubreddit)
-  }
-}
-
-function applyRedditSubreddit(postToSave: Post, ctx: SaveContext): Post {
-  const finalPost = { ...postToSave }
-  const hasSubreddits =
-    finalPost.platform === 'reddit' &&
-    (ctx.isNew ? ctx.subredditsInput.length === 1 : ctx.subredditsInput.length >= 1)
-  if (hasSubreddits) {
-    const subreddit = ctx.subredditsInput[0]
-    const redditContent = finalPost.content as {
-      subreddit: string
-      title: string
-      body?: string
-      url?: string
-      flairText?: string
-    }
-    finalPost.content = {
-      ...redditContent,
-      subreddit,
-      title: ctx.subredditTitles[subreddit] || redditContent.title || '',
-    }
-  }
-  return finalPost
-}
-
 // eslint-disable-next-line max-lines-per-function -- near-borderline, extraction would hurt readability
 export function useEditorActions(
   post: Post,
   content: string,
-  handleSave: (p: Post) => Promise<void>,
-  subredditsInput: string[],
-  subredditSchedules: Record<string, string>
+  handleSave: (p: Post) => Promise<void>
 ) {
   const isOverLimit = content.length > CHAR_LIMITS[post.platform]
-  const hasMultipleSubreddits = post.platform === 'reddit' && subredditsInput.length > 1
-  const canSchedule = hasMultipleSubreddits
-    ? subredditsInput.every((sub) => subredditSchedules[sub]) || !!post.scheduledAt
-    : !!post.scheduledAt
+  const canSchedule = !!post.scheduledAt
 
   const handleSaveDraft = () => {
-    if (post.platform === 'reddit' && subredditsInput.length === 0) {
-      toast.error('Please select at least one subreddit')
-      return
-    }
     handleSave({ ...post, status: 'draft' as const })
     toast.success('Draft saved')
   }
@@ -142,13 +64,7 @@ export function useEditorActions(
       )
       return
     }
-    if (post.platform === 'reddit' && subredditsInput.length === 0) {
-      toast.error('Please select at least one subreddit')
-      return
-    }
-    const isRedditMulti = post.platform === 'reddit' && subredditsInput.length > 1
-    const allHaveSchedule = isRedditMulti && subredditsInput.every((sub) => subredditSchedules[sub])
-    if (!post.scheduledAt && !allHaveSchedule) {
+    if (!post.scheduledAt) {
       toast.error('Please select a date and time')
       return
     }
@@ -168,7 +84,7 @@ export function useEditorActions(
   return {
     isOverLimit,
     canSchedule,
-    hasMultipleSubreddits,
+    hasMultipleSubreddits: false,
     handleSaveDraft,
     handleSchedule,
     handleMarkAsPosted,
@@ -181,7 +97,6 @@ export function usePublishNow(
   content: string,
   isNew: boolean,
   hasConnectedAccount: boolean,
-  subredditsInput: string[],
   isOverLimit: boolean
 ) {
   const [isPublishing, setIsPublishing] = useState(false)
@@ -196,10 +111,6 @@ export function usePublishNow(
     }
     if (!content.trim()) {
       toast.error('Please add some content')
-      return
-    }
-    if (post.platform === 'reddit' && subredditsInput.length === 0) {
-      toast.error('Please select at least one subreddit')
       return
     }
     if (!hasConnectedAccount) {
@@ -257,35 +168,18 @@ export function usePlatformSwitch(
   content: string,
   mediaUrls: string[],
   linkedInMediaUrl: string,
-  redditUrl: string,
-  subredditsInput: string[],
-  setPost: React.Dispatch<React.SetStateAction<Post>>,
-  setSubredditsInput: React.Dispatch<React.SetStateAction<string[]>>,
-  setSubredditTitles: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-  setSubredditSchedules: React.Dispatch<React.SetStateAction<Record<string, string>>>,
-  setExpandedSubreddits: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
+  setPost: React.Dispatch<React.SetStateAction<Post>>
 ) {
   const [showPlatformSwitchConfirm, setShowPlatformSwitchConfirm] = useState(false)
   const [pendingPlatform, setPendingPlatform] = useState<Platform | null>(null)
 
   const executePlatformSwitch = (platform: Platform) => {
     setPost((prev) => ({ ...prev, platform, socialAccountId: undefined }))
-    if (platform !== 'reddit') {
-      setSubredditsInput([])
-      setSubredditTitles({})
-      setSubredditSchedules({})
-      setExpandedSubreddits({})
-    }
     setPendingPlatform(null)
   }
 
   const setPlatform = (platform: Platform) => {
-    const hasContent =
-      content.trim().length > 0 ||
-      mediaUrls.length > 0 ||
-      linkedInMediaUrl ||
-      redditUrl ||
-      subredditsInput.length > 0
+    const hasContent = content.trim().length > 0 || mediaUrls.length > 0 || !!linkedInMediaUrl
     if (hasContent && platform !== post.platform) {
       setPendingPlatform(platform)
       setShowPlatformSwitchConfirm(true)

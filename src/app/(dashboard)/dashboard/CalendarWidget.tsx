@@ -25,7 +25,6 @@ interface CalendarWidgetProps {
 const PLATFORM_DOT_COLOR: Record<Platform, string> = {
   twitter: '#1DA1F2',
   linkedin: '#0A66C2',
-  reddit: '#FF4500',
 }
 
 interface DayData {
@@ -35,7 +34,6 @@ interface DayData {
   reminders: Reminder[]
 }
 
- 
 export function CalendarWidget({ posts, reminders, days = 7 }: CalendarWidgetProps) {
   const today = startOfDay(new Date())
 

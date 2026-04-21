@@ -18,9 +18,7 @@ test.describe('Scheduling', () => {
     await resetDatabase(page)
   })
 
-   
   test.describe('Date Input', () => {
-     
     test('should be visible and clickable', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -34,7 +32,6 @@ test.describe('Scheduling', () => {
       await dateButton.click()
     })
 
-     
     test('should accept date via keyboard input', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -50,7 +47,6 @@ test.describe('Scheduling', () => {
       await expect(dateInput).toHaveValue(dateStr)
     })
 
-     
     test('should persist date after page navigation', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -75,9 +71,7 @@ test.describe('Scheduling', () => {
     })
   })
 
-   
   test.describe('Time Input', () => {
-     
     test('should be visible and clickable', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -91,7 +85,6 @@ test.describe('Scheduling', () => {
       await timeButton.click()
     })
 
-     
     test('should accept time via keyboard input', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -107,7 +100,6 @@ test.describe('Scheduling', () => {
       await expect(timeInput).toHaveValue('14:30')
     })
 
-     
     test('should persist time after page navigation', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -139,7 +131,6 @@ test.describe('Scheduling', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Scheduling Flow', () => {
-     
     test('should schedule post with date and time', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -166,7 +157,6 @@ test.describe('Scheduling', () => {
       expect(posts[0].scheduledAt).toBeTruthy()
     })
 
-     
     test('should disable schedule button when no date is set', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -178,7 +168,6 @@ test.describe('Scheduling', () => {
       await expect(scheduleButton).toHaveAttribute('title', 'Select a date and time to schedule')
     })
 
-     
     test('should reschedule existing post', async ({ page }) => {
       // Create scheduled post
       await goToNewPost(page)
@@ -226,7 +215,6 @@ test.describe('Scheduling', () => {
       await expect(page.locator('[data-testid="main-schedule-time-input"]')).toHaveValue('15:00')
     })
 
-     
     test('should clear schedule and save as draft', async ({ page }) => {
       // Create scheduled post
       await goToNewPost(page)
@@ -255,9 +243,7 @@ test.describe('Scheduling', () => {
     })
   })
 
-   
   test.describe('Calendar Icon Visibility', () => {
-     
     test('date input should have visible picker indicator', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -273,7 +259,6 @@ test.describe('Scheduling', () => {
       expect(box!.height).toBeGreaterThan(20)
     })
 
-     
     test('time input should have visible picker indicator', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -290,9 +275,7 @@ test.describe('Scheduling', () => {
     })
   })
 
-   
   test.describe('Date and Time Selection', () => {
-     
     test('should enable schedule button when date and time are set', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -311,7 +294,6 @@ test.describe('Scheduling', () => {
       await expect(scheduleButton).toBeEnabled()
     })
 
-     
     test('should enable schedule button for today with future time', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -335,7 +317,6 @@ test.describe('Scheduling', () => {
       await expect(scheduleButton).toBeEnabled()
     })
 
-     
     test('should allow selecting any date in the date picker', async ({ page }) => {
       await goToNewPost(page)
       await selectPlatform(page, 'twitter')
@@ -351,9 +332,7 @@ test.describe('Scheduling', () => {
     })
   })
 
-   
   test.describe('Scheduled Posts Display', () => {
-     
     test('should show all scheduled posts in the scheduled filter', async ({ page }) => {
       // Create 3 scheduled posts
       const baseTomorrow = new Date()
@@ -393,7 +372,6 @@ test.describe('Scheduling', () => {
       await expect(page.getByText('Post scheduled at 12:00')).toBeVisible()
     })
 
-     
     test('should display schedule datetime on post card', async ({ page }) => {
       // Create a scheduled post for a specific date/time
       const tomorrow = new Date()

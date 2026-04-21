@@ -9,7 +9,6 @@ import type { SocialAccount, SocialProvider } from '@/lib/socialAccounts'
 const PLATFORMS: { provider: SocialProvider; name: string; icon: string }[] = [
   { provider: 'twitter', name: 'Twitter / X', icon: '\uD835\uDD4F' },
   { provider: 'linkedin', name: 'LinkedIn', icon: 'in' },
-  { provider: 'reddit', name: 'Reddit', icon: 'r/' },
 ]
 
 const PLATFORM_STYLES: Record<SocialProvider, { bg: string; border: string; text: string }> = {
@@ -22,11 +21,6 @@ const PLATFORM_STYLES: Record<SocialProvider, { bg: string; border: string; text
     bg: 'bg-linkedin/10',
     border: 'border-linkedin/30',
     text: 'text-linkedin',
-  },
-  reddit: {
-    bg: 'bg-reddit/10',
-    border: 'border-reddit/30',
-    text: 'text-reddit',
   },
 }
 
@@ -207,7 +201,6 @@ export function ConnectedAccountsSection({
       const data = await res.json()
 
       if (data.connected) {
-        // Script auth completed server-side (self-hosted Reddit)
         _onConnect(provider)
         setConnecting(null)
       } else if (data.url) {

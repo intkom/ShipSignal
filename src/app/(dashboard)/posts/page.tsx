@@ -328,7 +328,7 @@ export default function PostsPage() {
               </h3>
               <p className="text-muted-foreground mb-6 max-w-sm mx-auto px-4">
                 {filter === 'all'
-                  ? 'Start creating content for Twitter, LinkedIn, and Reddit.'
+                  ? 'Start creating content for Twitter and LinkedIn.'
                   : filter === 'draft'
                     ? 'All your drafts have been published or scheduled.'
                     : filter === 'scheduled'

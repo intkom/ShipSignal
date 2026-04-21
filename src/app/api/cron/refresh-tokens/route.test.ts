@@ -12,7 +12,8 @@ vi.mock('@/lib/tokenRefresh', () => ({
 
 const mockSelect = vi.fn()
 const mockNot = vi.fn(() => ({ limit: mockSelect }))
-const mockEq = vi.fn(() => ({ not: mockNot, limit: mockSelect }))
+const mockNeq = vi.fn(() => ({ not: mockNot, limit: mockSelect }))
+const mockEq = vi.fn(() => ({ neq: mockNeq }))
 const mockFrom = vi.fn(() => ({
   select: vi.fn(() => ({ eq: mockEq })),
 }))
@@ -95,11 +96,11 @@ describe('GET /api/cron/refresh-tokens (1/5)', () => {
 })
 
 describe('GET /api/cron/refresh-tokens (2/5)', () => {
-  it('refreshes a Reddit token expiring within 30 minutes', async () => {
+  it('refreshes a LinkedIn token expiring within 7 days', async () => {
     const account = makeAccount({
-      id: 'reddit-1',
-      provider: 'reddit',
-      token_expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+      id: 'li-expiring',
+      provider: 'linkedin',
+      token_expires_at: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
     })
     mockSelect.mockResolvedValue({ data: [account], error: null })
     mockRefreshTokenIfNeeded.mockResolvedValue({
@@ -183,13 +184,13 @@ describe('GET /api/cron/refresh-tokens (4/5)', () => {
       provider: 'linkedin',
       token_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
     })
-    const redditSoon = makeAccount({
-      id: 'rd-1',
-      provider: 'reddit',
-      token_expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+    const twitterFar = makeAccount({
+      id: 'tw-2',
+      provider: 'twitter',
+      token_expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
     })
     mockSelect.mockResolvedValue({
-      data: [twitterSoon, linkedinFar, redditSoon],
+      data: [twitterSoon, linkedinFar, twitterFar],
       error: null,
     })
     mockRefreshTokenIfNeeded.mockResolvedValue({
@@ -204,8 +205,8 @@ describe('GET /api/cron/refresh-tokens (4/5)', () => {
     const res = await GET(req)
     const body = await res.json()
     expect(body.processed).toBe(3)
-    expect(body.refreshed).toBe(2)
-    expect(body.skipped).toBe(1)
+    expect(body.refreshed).toBe(1)
+    expect(body.skipped).toBe(2)
     expect(body.failed).toBe(0)
   })
 })
@@ -227,8 +228,8 @@ describe('GET /api/cron/refresh-tokens (5/5)', () => {
   it('includes null refresh_token accounts in self-hosted mode', async () => {
     mockIsSelfHosted.mockReturnValue(true)
     const nullRefreshAccount = makeAccount({
-      id: 'reddit-null-refresh',
-      provider: 'reddit',
+      id: 'linkedin-null-refresh',
+      provider: 'linkedin',
       refresh_token: null,
       token_expires_at: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
     })

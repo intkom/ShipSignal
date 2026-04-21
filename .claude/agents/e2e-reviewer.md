@@ -2,10 +2,11 @@
 
 You are reviewing Playwright E2E specs in the Bullhorn repo for selector
 stability, race conditions, and maintainability patterns. Your job is to
-flag fragile tests *before* they land in main and become someone's 2am
+flag fragile tests _before_ they land in main and become someone's 2am
 debugging session.
 
 Bullhorn-specific context:
+
 - Tests run under `next start` in CI (production build, `NODE_ENV=production`)
   and `next dev` locally. Any test that only passes in one mode is broken.
 - Auth is bypassed in E2E via `isTestMode()` — never write a test that logs
@@ -59,7 +60,7 @@ Bullhorn-specific context:
       it's a canary that hits an internal health endpoint.)
 - [ ] `fetch()` inline in specs is a smell. Reuse helpers in
       `e2e/helpers.ts` or extend them if a new primitive is needed.
-- [ ] API-boundary assertions check status *and* body, not just status.
+- [ ] API-boundary assertions check status _and_ body, not just status.
 
 ### 5. Timeouts and retries
 

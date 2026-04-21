@@ -62,13 +62,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <div className="mt-12 rounded-lg border-3 border-[hsl(var(--gold))] bg-[hsl(var(--gold))/0.05] p-6 text-center">
         <p className="text-lg font-bold">Ready to schedule your posts?</p>
         <p className="mt-1 text-muted-foreground">
-          Schedule across Twitter, LinkedIn, and Reddit from one place.
+          Schedule across X (Twitter) and LinkedIn from one place.
         </p>
         <Link
           href="/signup"
           className="sticker-button mt-4 inline-block bg-[hsl(var(--gold))] px-6 py-3"
         >
-          Try Bullhorn Free
+          Try ShipSignal Free
         </Link>
       </div>
 

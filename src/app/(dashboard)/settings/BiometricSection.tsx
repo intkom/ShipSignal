@@ -35,7 +35,7 @@ export function BiometricSection() {
   const handleToggle = async () => {
     const { setBiometricEnabled, authenticateBiometric } = await import('@/lib/biometricAuth')
     if (!enabled) {
-      const success = await authenticateBiometric(`Enable ${label} for Bullhorn`)
+      const success = await authenticateBiometric(`Enable ${label} for ShipSignal`)
       if (!success) return
     }
     const newValue = !enabled
@@ -51,7 +51,7 @@ export function BiometricSection() {
       <div className="flex items-center justify-between">
         <div>
           <p className="font-bold text-sm">{label} Lock</p>
-          <p className="text-sm text-muted-foreground">Require {label} to open Bullhorn</p>
+          <p className="text-sm text-muted-foreground">Require {label} to open ShipSignal</p>
         </div>
         <button
           onClick={handleToggle}

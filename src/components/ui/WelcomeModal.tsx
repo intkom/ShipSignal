@@ -24,8 +24,7 @@ export function WelcomeModal() {
     {
       icon: FileText,
       title: 'Draft your posts',
-      description:
-        'Write content for Twitter, LinkedIn, and Reddit with platform-specific formatting.',
+      description: 'Write content for X (Twitter) and LinkedIn with platform-specific formatting.',
     },
     {
       icon: FolderOpen,
@@ -60,7 +59,7 @@ export function WelcomeModal() {
 
         <div className="text-center mb-6">
           <div className="text-4xl mb-3">📢</div>
-          <h2 className="text-xl font-extrabold">Welcome to Bullhorn</h2>
+          <h2 className="text-xl font-extrabold">Welcome to ShipSignal</h2>
           <p className="text-sm text-muted-foreground mt-1">Your social media command center</p>
         </div>
 

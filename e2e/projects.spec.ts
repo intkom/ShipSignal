@@ -17,7 +17,6 @@ test.describe('Projects', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Project CRUD Operations', () => {
-     
     test('should create a new project', async ({ page }) => {
       // Navigate to projects
       await goToProjects(page)
@@ -45,7 +44,6 @@ test.describe('Projects', () => {
       expect(projects[0].description).toBe('Marketing initiatives for new product release')
     })
 
-     
     test('should edit a project name and description', async ({ page }) => {
       // Create a project first
       await goToProjects(page)
@@ -87,7 +85,6 @@ test.describe('Projects', () => {
       expect(projects[0].description).toBe('New description for the project')
     })
 
-     
     test('should delete a project', async ({ page }) => {
       // Create a project
       await goToProjects(page)
@@ -118,7 +115,6 @@ test.describe('Projects', () => {
       expect(projects.length).toBe(0)
     })
 
-     
     test('should delete project and show affected campaigns in confirmation', async ({ page }) => {
       // Create a project
       await goToProjects(page)
@@ -166,9 +162,7 @@ test.describe('Projects', () => {
     })
   })
 
-   
   test.describe('Project List Page', () => {
-     
     test('should show empty state when no projects exist', async ({ page }) => {
       await goToProjects(page)
 
@@ -179,7 +173,6 @@ test.describe('Projects', () => {
       await expect(page.getByRole('button', { name: /create your first project/i })).toBeVisible()
     })
 
-     
     test('should list all projects sorted by most recent', async ({ page }) => {
       // Create projects via API
       await createProjectViaAPI(page, { name: 'First Project' })
@@ -202,7 +195,6 @@ test.describe('Projects', () => {
       expect(firstCardText).toContain('Third Project')
     })
 
-     
     test('should show campaign count on project cards', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Project With Count' })
@@ -226,9 +218,7 @@ test.describe('Projects', () => {
     })
   })
 
-   
   test.describe('Project Detail Page', () => {
-     
     test('should show project details', async ({ page }) => {
       // Create a project
       await goToProjects(page)
@@ -243,7 +233,6 @@ test.describe('Projects', () => {
       await expect(page.getByText('This is the project description')).toBeVisible()
     })
 
-     
     test('should show empty campaigns state', async ({ page }) => {
       // Create a project
       await goToProjects(page)
@@ -256,7 +245,6 @@ test.describe('Projects', () => {
       await expect(page.getByText(/no campaigns/i)).toBeVisible()
     })
 
-     
     test('should list campaigns in project', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Project With Campaigns' })
@@ -277,7 +265,6 @@ test.describe('Projects', () => {
       await expect(page.getByText('Second Campaign')).toBeVisible()
     })
 
-     
     test('should navigate to create campaign scoped to project', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Project for Campaign' })
@@ -314,7 +301,6 @@ test.describe('Projects', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Campaign Move Between Projects', () => {
-     
     test('should move campaign from unassigned to project', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Target Project' })
@@ -359,7 +345,6 @@ test.describe('Projects', () => {
       expect(movedCampaign?.projectId).toBe(project.id)
     })
 
-     
     test('should move campaign between projects', async ({ page }) => {
       // Create two projects
       const project1 = await createProjectViaAPI(page, { name: 'Project One' })
@@ -403,7 +388,6 @@ test.describe('Projects', () => {
       expect(movedCampaign?.projectId).toBe(project2.id)
     })
 
-     
     test('should move campaign to unassigned', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Source Project' })
@@ -447,9 +431,7 @@ test.describe('Projects', () => {
     })
   })
 
-   
   test.describe('Project Brand Kit', () => {
-     
     test('should add hashtags to project', async ({ page }) => {
       // Create a project
       await goToProjects(page)
@@ -478,7 +460,6 @@ test.describe('Projects', () => {
       }
     })
 
-     
     test('should remove hashtag from project', async ({ page }) => {
       // Create a project with hashtags via API
       const response = await page.request.post('/api/projects', {
@@ -509,9 +490,7 @@ test.describe('Projects', () => {
     })
   })
 
-   
   test.describe('Loading and Error States', () => {
-     
     test('should show loading state while fetching projects', async ({ page }) => {
       // Navigate to projects - loading should briefly appear
       await page.goto('/projects')
@@ -521,7 +500,6 @@ test.describe('Projects', () => {
       await expect(page.getByRole('heading', { name: 'Projects', exact: true })).toBeVisible()
     })
 
-     
     test('should show retry button on error', async ({ page }) => {
       // This test would require mocking network failures
       // For now, just verify the error UI exists by checking component structure
@@ -535,9 +513,7 @@ test.describe('Projects', () => {
     })
   })
 
-   
   test.describe('Navigation', () => {
-     
     test('should navigate from dashboard to projects', async ({ page }) => {
       // Go to dashboard
       await page.goto('/dashboard')
@@ -550,7 +526,6 @@ test.describe('Projects', () => {
       await expect(page.getByRole('heading', { name: 'Projects', exact: true })).toBeVisible()
     })
 
-     
     test('should navigate from project list to project detail', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Navigation Test' })
@@ -566,7 +541,6 @@ test.describe('Projects', () => {
       await expect(page.getByRole('heading', { name: 'Navigation Test' })).toBeVisible()
     })
 
-     
     test('should navigate back to projects list from detail', async ({ page }) => {
       // Create a project
       const project = await createProjectViaAPI(page, { name: 'Back Nav Test' })

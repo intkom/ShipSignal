@@ -17,7 +17,7 @@ import {
   isBefore,
   startOfDay,
 } from 'date-fns'
-import { ChevronLeft, ChevronRight, Bell, Megaphone } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Bell, Radio } from 'lucide-react'
 import { Post, getPostPreviewText } from '@/lib/posts'
 import { cn } from '@/lib/utils'
 import type { CommunityEvent, EventSubscription } from '@/lib/communityEvents'
@@ -52,8 +52,7 @@ function PostBadge({ post, onClick }: { post: Post; onClick: (e: React.MouseEven
       className={cn(
         'flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold truncate border',
         post.platform === 'twitter' && 'bg-twitter/10 text-twitter border-twitter/30',
-        post.platform === 'linkedin' && 'bg-linkedin/10 text-linkedin border-linkedin/30',
-        post.platform === 'reddit' && 'bg-reddit/10 text-reddit border-reddit/30'
+        post.platform === 'linkedin' && 'bg-linkedin/10 text-linkedin border-linkedin/30'
       )}
       onClick={onClick}
     >
@@ -162,12 +161,11 @@ function EventDot({ name, platform }: { name: string; platform: string }) {
         'flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold truncate border',
         'bg-sticker-purple/10 border-sticker-purple/30 text-sticker-purple',
         platform === 'twitter' && 'bg-twitter/5 border-twitter/20 text-twitter',
-        platform === 'linkedin' && 'bg-linkedin/5 border-linkedin/20 text-linkedin',
-        platform === 'reddit' && 'bg-reddit/5 border-reddit/20 text-reddit'
+        platform === 'linkedin' && 'bg-linkedin/5 border-linkedin/20 text-linkedin'
       )}
       title={name}
     >
-      <Megaphone className="w-2.5 h-2.5 shrink-0" />
+      <Radio className="w-2.5 h-2.5 shrink-0" />
       {name.slice(0, 16)}
     </div>
   )
@@ -421,16 +419,14 @@ function WeekPostItem({ post, time }: { post: Post; time: Date }) {
         'flex items-center gap-2 px-2 py-1.5 rounded border cursor-pointer',
         'hover:shadow-sticker-hover transition-all',
         post.platform === 'twitter' && 'bg-twitter/10 border-twitter/30',
-        post.platform === 'linkedin' && 'bg-linkedin/10 border-linkedin/30',
-        post.platform === 'reddit' && 'bg-reddit/10 border-reddit/30'
+        post.platform === 'linkedin' && 'bg-linkedin/10 border-linkedin/30'
       )}
     >
       <span
         className={cn(
           'w-2 h-2 rounded-full shrink-0',
           post.platform === 'twitter' && 'bg-twitter',
-          post.platform === 'linkedin' && 'bg-linkedin',
-          post.platform === 'reddit' && 'bg-reddit'
+          post.platform === 'linkedin' && 'bg-linkedin'
         )}
       />
       <span className="text-[11px] font-bold text-muted-foreground w-12 shrink-0">
@@ -475,12 +471,11 @@ function WeekEventItem({ name, platform }: { name: string; platform: string }) {
         'flex items-center gap-2 px-2 py-1.5 rounded border',
         'bg-sticker-purple/10 border-sticker-purple/30',
         platform === 'twitter' && 'bg-twitter/5 border-twitter/20',
-        platform === 'linkedin' && 'bg-linkedin/5 border-linkedin/20',
-        platform === 'reddit' && 'bg-reddit/5 border-reddit/20'
+        platform === 'linkedin' && 'bg-linkedin/5 border-linkedin/20'
       )}
       title={name}
     >
-      <Megaphone className="w-3 h-3 text-sticker-purple shrink-0" />
+      <Radio className="w-3 h-3 text-sticker-purple shrink-0" />
       <span className="text-[11px] font-bold text-muted-foreground w-12 shrink-0">Event</span>
       <span className="text-xs font-semibold truncate">{name.slice(0, 50)}</span>
     </div>

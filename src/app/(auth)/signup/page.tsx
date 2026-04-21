@@ -145,7 +145,7 @@ export default function SignUpPage() {
               🎉
             </div>
             <h1 className="text-3xl font-extrabold text-foreground">Create an account</h1>
-            <p className="mt-2 text-muted-foreground">Get started with Bullhorn</p>
+            <p className="mt-2 text-muted-foreground">Get started with ShipSignal</p>
           </div>
 
           {/* Email/Password Form */}

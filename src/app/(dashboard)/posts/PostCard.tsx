@@ -84,14 +84,12 @@ export function PostCard({ post, index }: { post: Post; index: number }) {
               'w-8 h-8 rounded-md flex items-center justify-center',
               'border-2 font-bold text-xs',
               post.platform === 'twitter' && 'bg-twitter/10 border-twitter/30 text-twitter',
-              post.platform === 'linkedin' && 'bg-linkedin/10 border-linkedin/30 text-linkedin',
-              post.platform === 'reddit' && 'bg-reddit/10 border-reddit/30 text-reddit'
+              post.platform === 'linkedin' && 'bg-linkedin/10 border-linkedin/30 text-linkedin'
             )}
             title={PLATFORM_INFO[post.platform].name}
           >
             {post.platform === 'twitter' && '\u{1D54F}'}
             {post.platform === 'linkedin' && 'in'}
-            {post.platform === 'reddit' && 'r/'}
           </span>
         </div>
 

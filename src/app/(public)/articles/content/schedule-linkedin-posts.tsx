@@ -6,7 +6,7 @@ export const article: ArticleWithContent = {
   slug: 'schedule-linkedin-posts',
   title: 'How to Schedule LinkedIn Posts in 2026',
   description:
-    'Learn how to schedule LinkedIn posts for maximum engagement. Compare native scheduling, third-party tools, and multi-platform schedulers like Bullhorn.',
+    'Learn how to schedule LinkedIn posts for maximum engagement. Compare native scheduling, third-party tools, and multi-platform schedulers like ShipSignal.',
   publishedAt: '2026-03-16',
   keywords: ['schedule linkedin posts', 'linkedin post scheduler', 'linkedin scheduling tool'],
   content: () => (
@@ -44,15 +44,15 @@ export const article: ArticleWithContent = {
         ship updates alongside their product work.
       </p>
 
-      <h2>Option 3: Bullhorn — Built for Developers Who Ship</h2>
+      <h2>Option 3: ShipSignal — Built for Developers Who Ship</h2>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         is a social media scheduler built specifically for developers, indie hackers, and
         early-stage teams. Schedule posts for LinkedIn, Twitter, and Reddit from one place.
       </p>
-      <p>What makes Bullhorn different:</p>
+      <p>What makes ShipSignal different:</p>
       <ul>
         <li>
           <strong>AI capture via MCP</strong> — Save post ideas from Claude, Cursor, or any AI tool
@@ -94,7 +94,7 @@ export const article: ArticleWithContent = {
       <p>
         Ready to schedule your LinkedIn posts alongside Twitter and Reddit?{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Try Bullhorn free
+          Try ShipSignal free
         </Link>{' '}
         — no credit card required.
       </p>

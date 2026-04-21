@@ -57,13 +57,11 @@ export default function CalendarPage() {
   const platformClasses: Record<string, string> = {
     twitter: 'bg-twitter',
     linkedin: 'bg-linkedin',
-    reddit: 'bg-reddit',
   }
 
   const platformLabels: Record<string, string> = {
     twitter: 'Twitter',
     linkedin: 'LinkedIn',
-    reddit: 'Reddit',
   }
 
   return (

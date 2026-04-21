@@ -8,14 +8,13 @@ import {
 } from '@/lib/utils'
 import { requireAuth, validateScopes } from '@/lib/auth'
 import { rateLimit } from '@/lib/rateLimit'
-import type { Post, Campaign } from '@/lib/posts'
+import { type Post, type Campaign, isTwitterContent, isLinkedInContent } from '@/lib/posts'
 
 export const dynamic = 'force-dynamic'
 
 function getPostText(post: Post): string {
   const c = post.content
-  if ('subreddit' in c) return c.body || c.title
-  if ('text' in c) return c.text
+  if (isTwitterContent(c) || isLinkedInContent(c)) return c.text
   return ''
 }
 
@@ -184,7 +183,7 @@ export async function GET(request: NextRequest) {
         status: 200,
         headers: {
           'Content-Type': 'text/csv',
-          'Content-Disposition': `attachment; filename="bullhorn-export-${new Date().toISOString().slice(0, 10)}.csv"`,
+          'Content-Disposition': `attachment; filename="ShipSignal-export-${new Date().toISOString().slice(0, 10)}.csv"`,
           'X-Export-Count': String(totalCount),
         },
       })

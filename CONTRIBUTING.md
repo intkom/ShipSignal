@@ -13,23 +13,29 @@ Thanks for your interest in contributing to Bullhorn! This guide will help you g
 1. **Fork and clone** the repository
 
 2. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables:**
+
    ```bash
    cp .env.example .env.local
    ```
+
    Fill in your Supabase URL, anon key, and service role key. See `docs/environment-variables.md` for all options.
 
 4. **Set up MCP config (optional, for Claude Code users):**
+
    ```bash
    cp .mcp.json.example .mcp.json
    ```
+
    Fill in your Supabase project ref.
 
 5. **Start the dev server:**
+
    ```bash
    make dev
    ```
@@ -50,14 +56,14 @@ Thanks for your interest in contributing to Bullhorn! This guide will help you g
 
 We use [Conventional Commits](https://www.conventionalcommits.org/). A commitlint hook validates your messages.
 
-| Prefix | When to use |
-|--------|-------------|
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `chore:` | Maintenance, deps |
-| `refactor:` | Code restructure |
-| `docs:` | Documentation |
-| `test:` | Tests |
+| Prefix      | When to use       |
+| ----------- | ----------------- |
+| `feat:`     | New feature       |
+| `fix:`      | Bug fix           |
+| `chore:`    | Maintenance, deps |
+| `refactor:` | Code restructure  |
+| `docs:`     | Documentation     |
+| `test:`     | Tests             |
 
 ## Testing
 
@@ -70,6 +76,7 @@ make test-e2e      # E2E tests (Playwright)
 ## Project Structure
 
 See `CLAUDE.md` for a detailed architecture overview including:
+
 - App Router structure
 - API route patterns
 - Zustand store patterns
@@ -79,21 +86,22 @@ See `CLAUDE.md` for a detailed architecture overview including:
 
 If you're forking Bullhorn to run your own instance, update these project-specific values:
 
-| Value | Location | What to set |
-|-------|----------|-------------|
-| Bundle ID | `capacitor.config.ts` → `appId` | Your own reverse-domain ID (e.g. `com.yourorg.app`) |
-| `APNS_TEAM_ID` | Environment variable | Your Apple Developer Team ID |
-| `APNS_KEY_ID` | Environment variable | Your APNs auth key ID |
-| `APNS_PRIVATE_KEY` | Environment variable | Your APNs `.p8` key contents |
-| `GOOGLE_IOS_CLIENT_ID` | Environment variable | Your Google OAuth iOS client ID |
-| `GOOGLE_WEB_CLIENT_ID` | Environment variable | Your Google OAuth web client ID |
-| `NEXT_PUBLIC_APP_URL` | Environment variable | Your production URL |
+| Value                  | Location                        | What to set                                         |
+| ---------------------- | ------------------------------- | --------------------------------------------------- |
+| Bundle ID              | `capacitor.config.ts` → `appId` | Your own reverse-domain ID (e.g. `com.yourorg.app`) |
+| `APNS_TEAM_ID`         | Environment variable            | Your Apple Developer Team ID                        |
+| `APNS_KEY_ID`          | Environment variable            | Your APNs auth key ID                               |
+| `APNS_PRIVATE_KEY`     | Environment variable            | Your APNs `.p8` key contents                        |
+| `GOOGLE_IOS_CLIENT_ID` | Environment variable            | Your Google OAuth iOS client ID                     |
+| `GOOGLE_WEB_CLIENT_ID` | Environment variable            | Your Google OAuth web client ID                     |
+| `NEXT_PUBLIC_APP_URL`  | Environment variable            | Your production URL                                 |
 
 See `docs/environment-variables.md` for the full list of environment variables.
 
 ## iOS Development (Optional)
 
 The iOS app is a Capacitor 8 wrapper. To work on it:
+
 1. Set `GOOGLE_IOS_CLIENT_ID` and `GOOGLE_WEB_CLIENT_ID` in your environment
 2. Run `npx cap sync ios` to generate the Xcode project
 3. You'll need your own Apple Developer account for signing

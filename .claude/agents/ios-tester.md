@@ -50,6 +50,7 @@ Use the iOS Simulator MCP tools (`mcp__ios-simulator__*`) to interact with the a
 Validate each of the 17 workflows from `workflows/ios-workflows.md`:
 
 **Core (1-6)**:
+
 - [ ] 1. Dashboard overview — metrics, upcoming posts, recent drafts visible
 - [ ] 2. Create & save draft — new post form, write content, save
 - [ ] 3. Schedule single-platform post — Twitter-only with date/time
@@ -58,12 +59,14 @@ Validate each of the 17 workflows from `workflows/ios-workflows.md`:
 - [ ] 6. Edit existing post — find draft, modify, save changes
 
 **Campaign Management (7-14)**:
+
 - [ ] 7. Create new campaign — name and description
 - [ ] 8-12. Add posts to campaign — Twitter, LinkedIn, multi-platform, Reddit variants
 - [ ] 13. View campaign detail — all post types display correctly
 - [ ] 14. Edit campaign — update name/description
 
 **List & Management (15-17)**:
+
 - [ ] 15. Posts list & filtering — browse, filter by status
 - [ ] 16. Archive & restore — archive a post, then restore it
 - [ ] 17. Settings — theme toggle, notification preferences

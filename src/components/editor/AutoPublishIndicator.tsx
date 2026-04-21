@@ -8,21 +8,15 @@ import { UpgradePromptModal } from '@/components/ui/UpgradePromptModal'
 interface AutoPublishIndicatorProps {
   hasAccount: boolean
   hasSchedule: boolean
-  platform: string
 }
 
-export function AutoPublishIndicator({
-  hasAccount,
-  hasSchedule,
-  platform,
-}: AutoPublishIndicatorProps) {
+export function AutoPublishIndicator({ hasAccount, hasSchedule }: AutoPublishIndicatorProps) {
   const canAutoPublish = usePlanStore((s) => s.hasFeature('autoPublish'))
   const initialized = usePlanStore((s) => s.initialized)
   const [showUpgrade, setShowUpgrade] = useState(false)
   const [waitlistJoined, setWaitlistJoined] = useState(false)
 
   if (!initialized || !hasAccount) return null
-  if (platform === 'reddit') return null
 
   async function handleJoinWaitlist() {
     try {

@@ -158,30 +158,6 @@ describe('publishPost (1/3)', () => {
 })
 
 describe('publishPost (2/3)', () => {
-  it('calls correct publisher for reddit', async () => {
-    const { publishPost } = await import('./index')
-    mockFetchSuccess({
-      json: {
-        errors: [],
-        data: { id: 'abc123', name: 't3_abc123', url: 'https://reddit.com/r/test/abc' },
-      },
-    })
-
-    const post = makePost({
-      platform: 'reddit',
-      content: { subreddit: 'test', title: 'Test post', body: 'Body text' },
-    })
-    const result = await publishPost(post, 'account-1')
-
-    expect(result.success).toBe(true)
-    expect(result.publishResult?.platform).toBe('reddit')
-    expect(result.publishResult?.subreddit).toBe('test')
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://oauth.reddit.com/api/submit',
-      expect.objectContaining({ method: 'POST' })
-    )
-  })
-
   it('updates post status to published on success', async () => {
     const { publishPost } = await import('./index')
     mockFetchSuccess({ data: { id: 'tweet-123', text: 'Hello' } })

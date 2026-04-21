@@ -1,11 +1,11 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 // Use production URL by default, override with CAPACITOR_SERVER_URL for development
-const serverUrl = process.env.CAPACITOR_SERVER_URL || 'https://bullhorn.to'
+const serverUrl = process.env.CAPACITOR_SERVER_URL || 'https://shipsignal.app'
 
 const config: CapacitorConfig = {
-  appId: 'to.bullhorn.app',
-  appName: 'Bullhorn',
+  appId: 'to.shipsignal.app',
+  appName: 'ShipSignal',
   webDir: 'public', // Minimal webDir for assets, actual content loads from server
   server: {
     url: serverUrl,
@@ -15,9 +15,9 @@ const config: CapacitorConfig = {
   ios: {
     contentInset: 'automatic',
     preferredContentMode: 'mobile',
-    scheme: 'Bullhorn',
+    scheme: 'ShipSignal',
     allowsLinkPreview: false,
-    appendUserAgent: 'BullhornCapacitor',
+    appendUserAgent: 'ShipSignalCapacitor',
   },
   plugins: {
     SplashScreen: {

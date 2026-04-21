@@ -23,7 +23,7 @@ interface UpgradePromptModalProps {
 }
 
 const UPCOMING_FEATURES = [
-  'Auto-publishing to Twitter, LinkedIn, and Reddit',
+  'Auto-publishing to X (Twitter) and LinkedIn',
   'Analytics dashboards',
   'Team collaboration',
   'Higher limits on all resources',
@@ -34,7 +34,7 @@ export function UpgradePromptModal({
   open,
   onDismiss,
   title = "You've reached the beta limit",
-  description = 'Bullhorn is free during beta. Paid plans with higher limits are coming soon.',
+  description = 'ShipSignal is free during beta. Paid plans with higher limits are coming soon.',
   resourceName = 'Resources',
   currentCount = 3,
   limit = 3,

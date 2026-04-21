@@ -12,6 +12,7 @@
 **Path alias:** `@/*` → `./src/*` (mirrors tsconfig)
 
 **Run commands:**
+
 ```bash
 make test          # Vitest watch mode (development)
 make test-run      # Vitest single run (CI)
@@ -23,6 +24,7 @@ npm run test:coverage  # Single run with coverage report
 **Location:** Co-located with source file, same directory.
 
 **Naming:**
+
 - `route.ts` → `route.test.ts`
 - `campaigns.ts` → `campaigns.test.ts` (lib store)
 - `useAutoSave.ts` → `useAutoSave.test.ts` (hook)
@@ -105,6 +107,7 @@ describe('GET /api/resource', () => {
 ## API Route Unit Test Mocking
 
 **Auth mock (always present):**
+
 ```typescript
 vi.mock('@/lib/auth', async (importOriginal) => ({
   ...(await importOriginal<typeof import('@/lib/auth')>()),
@@ -127,6 +130,7 @@ vi.mock('@/lib/supabase/server', () => ({
 ```
 
 **Plan enforcement mock (common in routes with resource limits):**
+
 ```typescript
 vi.mock('@/lib/planEnforcement', () => ({
   enforceResourceLimit: vi.fn(async () => ({
@@ -140,6 +144,7 @@ vi.mock('@/lib/planEnforcement', () => ({
 ```
 
 **Self-hosted mode mock (cron and publisher routes):**
+
 ```typescript
 const mockIsSelfHosted = vi.fn(() => false)
 vi.mock('@/lib/selfHosted', () => ({
@@ -148,6 +153,7 @@ vi.mock('@/lib/selfHosted', () => ({
 ```
 
 **Global fetch mock (store tests):**
+
 ```typescript
 const mockFetch = vi.fn()
 global.fetch = mockFetch
@@ -194,6 +200,7 @@ const makeConnection = (overrides: Partial<AnalyticsConnection> = {}): Analytics
 **No enforced minimum.** Coverage reporters configured (`text`, `json`, `html`) but no threshold gates in CI.
 
 **View coverage:**
+
 ```bash
 npm run test:coverage
 ```
@@ -210,6 +217,7 @@ npm run test:coverage
 **Retries:** 2 on CI, 0 locally
 
 **Run commands:**
+
 ```bash
 make test-e2e          # Headless, dev server
 npm run test:e2e:ui    # Playwright UI mode
@@ -218,6 +226,7 @@ npm run test:e2e:debug   # Step debugger
 ```
 
 **Timeouts:**
+
 - Overall test: 120s CI, 30s local
 - Action timeout: 30s CI, 10s local
 - Navigation timeout: 60s CI, 30s local
@@ -234,6 +243,7 @@ test.beforeEach(async ({ page }) => {
 ```
 
 `enterDemoMode` does three things:
+
 1. Calls `POST /api/posts/reset` to wipe all data for the test user
 2. Sets `localStorage.cookie_consent = 'accepted'` and `localStorage.onboarding_complete = 'true'` via `addInitScript`
 3. Navigates to `/` and waits for the header link to appear
@@ -309,6 +319,7 @@ expect(posts[0].status).toBe('scheduled')
 ```
 
 **`data-testid` selectors:** Used for elements that lack semantic roles (subreddit cards, schedule inputs):
+
 - `[data-testid="subreddit-card-{name}"]`
 - `[data-testid="subreddit-title-{name}"]`
 - `[data-testid="main-schedule-date-input"]`
@@ -317,6 +328,7 @@ expect(posts[0].status).toBe('scheduled')
 - `[data-testid="launch-post-card"]`
 
 **Preferred selectors (in priority order):**
+
 1. `getByRole` with accessible name (most stable)
 2. `getByLabel` for form inputs
 3. `getByText` for static text
@@ -354,6 +366,7 @@ await setSchedule(page, tomorrow)
 The `qa/` directory provides a YAML-based seed system for manual QA workflows (not automated tests).
 
 **Fixture files:**
+
 - `qa/fixtures/default.yaml` — Realistic dataset: 2 projects, 4 campaigns, ~10 posts across all platforms, 4 blog drafts, 4 launch posts
 - `qa/fixtures/empty.yaml` — Wipes the database only (empty fixture)
 - `qa/fixtures/media/test-image.png` — Sample image for media upload testing
@@ -361,6 +374,7 @@ The `qa/` directory provides a YAML-based seed system for manual QA workflows (n
 **Seed script:** `qa/seed.ts` — reads YAML, resolves `ref:fieldName` cross-references, resolves `+Nd HH:MM` relative timestamps, inserts into Supabase via service role key.
 
 **Run commands:**
+
 ```bash
 make qa-dev          # Start dev server in E2E_TEST_MODE (auth bypassed)
 make qa-seed         # Seed with default.yaml
@@ -369,6 +383,7 @@ make qa-reset        # Reset DB (no seed)
 ```
 
 **YAML conventions:**
+
 - `_name: identifier` — internal reference name (not stored in DB)
 - `ref:fieldName: target-name` — foreign key cross-reference by `_name`
 - `"+Nd HH:MM"` — relative timestamp: N days from now at HH:MM UTC
@@ -379,22 +394,23 @@ make qa-reset        # Reset DB (no seed)
 
 Defined in `.github/workflows/ci.yml`. Runs on push to `main` and all PRs.
 
-| Job | What it runs | Timeout |
-|-----|-------------|---------|
-| `knip` | Dead code / unused dependency check (`npm run knip`) | 5 min |
-| `lint` | ESLint with cache (`npm run lint`) | 5 min |
-| `typecheck` | TypeScript (`npm run typecheck`) | 5 min |
-| `unit-tests` | Vitest (`npx vitest run`) + MCP server tests | 10 min |
-| `build` | Next.js build in E2E mode, uploads `.next` artifact | 10 min |
-| `e2e-tests` | Playwright — 5 shards in parallel, excludes `Self-Hosted Mode` | 20 min |
-| `e2e-self-hosted` | Playwright — only `e2e/self-hosted.spec.ts` with `SELF_HOSTED=true` | 15 min |
-| `release` | semantic-release (main branch only, after all jobs pass) | — |
+| Job               | What it runs                                                        | Timeout |
+| ----------------- | ------------------------------------------------------------------- | ------- |
+| `knip`            | Dead code / unused dependency check (`npm run knip`)                | 5 min   |
+| `lint`            | ESLint with cache (`npm run lint`)                                  | 5 min   |
+| `typecheck`       | TypeScript (`npm run typecheck`)                                    | 5 min   |
+| `unit-tests`      | Vitest (`npx vitest run`) + MCP server tests                        | 10 min  |
+| `build`           | Next.js build in E2E mode, uploads `.next` artifact                 | 10 min  |
+| `e2e-tests`       | Playwright — 5 shards in parallel, excludes `Self-Hosted Mode`      | 20 min  |
+| `e2e-self-hosted` | Playwright — only `e2e/self-hosted.spec.ts` with `SELF_HOSTED=true` | 15 min  |
+| `release`         | semantic-release (main branch only, after all jobs pass)            | —       |
 
 E2E jobs require the `build` job to complete first and download the `.next` artifact. Both SaaS and self-hosted E2E jobs start a local Supabase instance and run migrations before tests.
 
 ## What Is Tested
 
 **Well-covered:**
+
 - All API routes have unit tests — 52 test files for `src/app/api/**`
 - Happy path + auth failure (401) + DB failure (500) for every route
 - Plan limit enforcement paths in resource-creation routes
@@ -422,4 +438,4 @@ E2E jobs require the `build` job to complete first and download the `.next` arti
 
 ---
 
-*Testing analysis: 2026-04-21*
+_Testing analysis: 2026-04-21_

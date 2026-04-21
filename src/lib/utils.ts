@@ -11,6 +11,8 @@ import type {
   Campaign,
   CampaignStatus,
   Project,
+  GithubProject,
+  GithubActivity,
 } from './posts'
 import type { AnalyticsConnection, AnalyticsProvider, SyncStatus } from './analytics.types'
 
@@ -37,7 +39,7 @@ export interface DbPost {
   updated_at: string
   scheduled_at: string | null
   status: PostStatus
-  platform: Platform
+  platform: string
   notes?: string | null
   campaign_id?: string | null
   group_id?: string | null
@@ -46,6 +48,7 @@ export interface DbPost {
   content: PlatformContent
   publish_result?: PublishResult | null
   recurrence_rule?: string | null
+  github_activity_id?: string | null
   user_id: string
 }
 
@@ -90,6 +93,17 @@ export interface DbProject {
   created_at: string
   updated_at: string
   user_id: string
+}
+
+/** Row shape returned by `select('*')` on the `github_projects` table */
+export interface DbGithubProject {
+  id: string
+  user_id: string
+  github_repo_url: string
+  changelog_url?: string | null
+  documentation_url?: string | null
+  created_at: string
+  updated_at: string
 }
 
 /** Partial snake_case shape used when inserting / updating a project */
@@ -191,6 +205,9 @@ export function camelToSnake<T extends Record<string, unknown>>(obj: T): Record<
  * Transform a post from Supabase format (snake_case) to frontend format (camelCase)
  */
 export function transformPostFromDb(dbPost: DbPost): Post {
+  if (dbPost.platform !== 'twitter' && dbPost.platform !== 'linkedin') {
+    throw new Error(`Unsupported post platform: ${dbPost.platform}`)
+  }
   return {
     id: dbPost.id,
     createdAt: dbPost.created_at,
@@ -281,6 +298,45 @@ export function transformProjectToDb(project: ProjectUpdateInput): DbProjectInse
   if (project.brandColors !== undefined) result.brand_colors = project.brandColors
   if (project.logoUrl !== undefined) result.logo_url = project.logoUrl
   return result
+}
+
+// ---------------------------------------------------------------------------
+// GitHub project transforms
+// ---------------------------------------------------------------------------
+
+export function transformGithubProjectFromDb(row: DbGithubProject): GithubProject {
+  return {
+    id: row.id,
+    githubRepoUrl: row.github_repo_url,
+    changelogUrl: row.changelog_url ?? undefined,
+    documentationUrl: row.documentation_url ?? undefined,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  }
+}
+
+/** Row shape returned by `select('*')` on the `github_activity` table */
+export interface DbGithubActivity {
+  id: string
+  user_id: string
+  github_project_id: string
+  source_type: 'release' | 'prs' | 'commits'
+  raw_text: string
+  fetched_at: string
+  created_at: string
+  updated_at: string
+}
+
+export function transformGithubActivityFromDb(row: DbGithubActivity): GithubActivity {
+  return {
+    id: row.id,
+    githubProjectId: row.github_project_id,
+    sourceType: row.source_type,
+    rawText: row.raw_text,
+    fetchedAt: row.fetched_at,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -381,7 +437,7 @@ export function transformLaunchPostFromDb(data: Record<string, unknown>) {
 // Social account types & transforms
 // ---------------------------------------------------------------------------
 
-export type SocialProvider = 'twitter' | 'linkedin' | 'reddit'
+export type SocialProvider = 'twitter' | 'linkedin'
 export type SocialAccountStatus = 'active' | 'expired' | 'revoked' | 'error'
 
 /** Frontend shape of a social account (camelCase, no tokens) */

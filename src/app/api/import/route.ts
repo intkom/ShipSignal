@@ -6,7 +6,7 @@ import { enforceResourceLimit, isPlanLimitError } from '@/lib/planEnforcement'
 import { z } from 'zod'
 
 const importPostSchema = z.object({
-  platform: z.enum(['twitter', 'linkedin', 'reddit']),
+  platform: z.enum(['twitter', 'linkedin']),
   content: z.record(z.string(), z.unknown()),
   status: z.enum(['draft', 'scheduled', 'published', 'failed', 'archived']).optional(),
   scheduledAt: z.string().nullable().optional(),

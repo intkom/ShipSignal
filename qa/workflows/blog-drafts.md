@@ -34,14 +34,16 @@ Test blog draft CRUD, search, status filtering, and tag management.
 1. Navigate to `/blog/new`
 2. Fill in title: "QA Test Blog Draft"
 3. Write some markdown content:
+
    ```
    # Test Post
-   
+
    This is a **test** blog draft from the QA workflow.
-   
+
    - Item 1
    - Item 2
    ```
+
 4. Select the "Blog Post" tag
 5. Add notes: "Created during QA workflow"
 6. Click "Save"

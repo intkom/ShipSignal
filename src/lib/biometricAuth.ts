@@ -31,7 +31,7 @@ export async function isBiometricAvailable(): Promise<{
   }
 }
 
-export async function authenticateBiometric(reason = 'Unlock Bullhorn'): Promise<boolean> {
+export async function authenticateBiometric(reason = 'Unlock ShipSignal'): Promise<boolean> {
   try {
     const plugin = await getPlugin()
     if (!plugin) return true // Allow access on web

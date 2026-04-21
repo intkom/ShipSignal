@@ -1,11 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
-import { isSelfHosted } from '@/lib/selfHosted'
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-export type SocialProvider = 'twitter' | 'linkedin' | 'reddit'
+export type SocialProvider = 'twitter' | 'linkedin'
 export type SocialAccountStatus = 'active' | 'expired' | 'revoked' | 'error'
 
 export interface SocialAccountWithTokens {
@@ -33,8 +32,6 @@ export interface PlatformTokenResponse {
 // ---------------------------------------------------------------------------
 
 const TOKEN_EXPIRY_BUFFER_SECONDS = 300 // 5 minutes
-export const REDDIT_USER_AGENT =
-  process.env.REDDIT_USER_AGENT || 'web:bullhorn-scheduler:v1.0.0 (by /u/unknown)'
 
 // ---------------------------------------------------------------------------
 // Helper
@@ -95,57 +92,6 @@ async function refreshLinkedInToken(refreshToken: string): Promise<PlatformToken
   return handleRefreshResponse(res, 'linkedin')
 }
 
-async function refreshRedditToken(refreshToken: string): Promise<PlatformTokenResponse> {
-  const clientId = process.env.REDDIT_CLIENT_ID
-  const clientSecret = process.env.REDDIT_CLIENT_SECRET
-  if (!clientId || !clientSecret) {
-    throw new Error('Reddit OAuth credentials not configured')
-  }
-
-  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-  const res = await fetch('https://www.reddit.com/api/v1/access_token', {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': REDDIT_USER_AGENT,
-    },
-    body: new URLSearchParams({
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-    }),
-  })
-
-  return handleRefreshResponse(res, 'reddit')
-}
-
-export async function refreshRedditViaPasswordGrant(): Promise<PlatformTokenResponse> {
-  const clientId = process.env.REDDIT_CLIENT_ID
-  const clientSecret = process.env.REDDIT_CLIENT_SECRET
-  const username = process.env.REDDIT_USERNAME
-  const password = process.env.REDDIT_PASSWORD
-  if (!clientId || !clientSecret || !username || !password) {
-    throw new Error('Reddit script credentials not configured')
-  }
-
-  const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-  const res = await fetch('https://www.reddit.com/api/v1/access_token', {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${credentials}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': REDDIT_USER_AGENT,
-    },
-    body: new URLSearchParams({
-      grant_type: 'password',
-      username,
-      password,
-    }),
-  })
-
-  return handleRefreshResponse(res, 'reddit')
-}
-
 // ---------------------------------------------------------------------------
 // Shared response handler
 // ---------------------------------------------------------------------------
@@ -200,37 +146,6 @@ export async function refreshTokenIfNeeded(
   }
 
   if (!account.refresh_token) {
-    // In self-hosted mode, Reddit can re-auth via password grant
-    if (
-      account.provider === 'reddit' &&
-      isSelfHosted() &&
-      process.env.REDDIT_USERNAME &&
-      process.env.REDDIT_PASSWORD
-    ) {
-      const supabase = await createClient()
-      try {
-        const tokens = await refreshRedditViaPasswordGrant()
-        const expiresAt = new Date(Date.now() + tokens.expires_in * 1000)
-        await supabase
-          .from('social_accounts')
-          .update({
-            access_token: tokens.access_token,
-            refresh_token: tokens.refresh_token || null,
-            token_expires_at: expiresAt.toISOString(),
-            status: 'active' as SocialAccountStatus,
-            status_error: null,
-          })
-          .eq('id', account.id)
-        return {
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token || null,
-          expiresAt,
-        }
-      } catch (err) {
-        await markAccountError(supabase, account.id, err)
-        throw err
-      }
-    }
     throw new Error(`No refresh token for ${account.provider} account ${account.id}`)
   }
 
@@ -295,8 +210,6 @@ function refreshByProvider(
       return refreshTwitterToken(refreshToken)
     case 'linkedin':
       return refreshLinkedInToken(refreshToken)
-    case 'reddit':
-      return refreshRedditToken(refreshToken)
   }
 }
 

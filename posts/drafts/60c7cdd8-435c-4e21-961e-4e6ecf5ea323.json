@@ -4,10 +4,7 @@
   "updatedAt": "2026-01-02T13:59:32.213Z",
   "scheduledAt": null,
   "status": "draft",
-  "platforms": [
-    "twitter",
-    "linkedin"
-  ],
+  "platforms": ["twitter", "linkedin"],
   "content": {
     "twitter": {
       "text": "Testing the MCP integration with Claude Code! 🚀 This draft was created directly from the terminal using the social-tools MCP server."

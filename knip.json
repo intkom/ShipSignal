@@ -1,15 +1,8 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": [
-    "src/app/**/page.tsx",
-    "src/app/**/layout.tsx",
-    "src/app/**/route.ts",
-    "qa/seed.ts"
-  ],
+  "entry": ["src/app/**/page.tsx", "src/app/**/layout.tsx", "src/app/**/route.ts", "qa/seed.ts"],
   "project": ["src/**/*.{ts,tsx}", "qa/**/*.ts"],
-  "ignore": [
-    "src/app/**/*"
-  ],
+  "ignore": ["src/app/**/*"],
   "ignoreDependencies": [
     "@capacitor/ios",
     "@capacitor/assets",

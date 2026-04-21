@@ -162,32 +162,44 @@ async function runCleanup() {
   for (const id of cleanup.postIds) {
     try {
       await callTool(nextId(), 'delete_post', { id, confirmed: true })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
   for (const id of cleanup.campaignIds) {
     try {
       await callTool(nextId(), 'delete_campaign', { id })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
   for (const id of cleanup.projectIds) {
     try {
       await callTool(nextId(), 'delete_project', { id, confirmed: true })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
   for (const id of cleanup.draftIds) {
     try {
       await callTool(nextId(), 'delete_blog_draft', { id, confirmed: true })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
   for (const id of cleanup.launchIds) {
     try {
       await callTool(nextId(), 'delete_launch_post', { id, confirmed: true })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
   for (const filename of cleanup.mediaFilenames) {
     try {
       await callTool(nextId(), 'delete_media', { filename })
-    } catch { /* best effort */ }
+    } catch {
+      /* best effort */
+    }
   }
 }
 
@@ -770,7 +782,9 @@ async function run() {
   }
 
   const total = passed + failed + skipped
-  console.log(`\n  Results: ${passed} passed, ${failed} failed, ${skipped} skipped (${total} total)`)
+  console.log(
+    `\n  Results: ${passed} passed, ${failed} failed, ${skipped} skipped (${total} total)`
+  )
   console.log('===============================\n')
 
   proc.kill()

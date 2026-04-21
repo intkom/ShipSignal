@@ -13,13 +13,11 @@ interface EventCardProps {
 const PLATFORM_STYLES: Record<string, { bg: string; text: string; border: string }> = {
   twitter: { bg: 'bg-twitter/10', text: 'text-twitter', border: 'border-twitter/40' },
   linkedin: { bg: 'bg-linkedin/10', text: 'text-linkedin', border: 'border-linkedin/40' },
-  reddit: { bg: 'bg-reddit/10', text: 'text-reddit', border: 'border-reddit/40' },
 }
 
 const PLATFORM_LABELS: Record<string, string> = {
   twitter: 'Twitter',
   linkedin: 'LinkedIn',
-  reddit: 'Reddit',
 }
 
 const DAY_NAMES: Record<string, string> = {

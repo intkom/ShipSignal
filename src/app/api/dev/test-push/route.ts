@@ -44,7 +44,7 @@ export async function GET() {
         keyId: process.env.APNS_KEY_ID ? `${process.env.APNS_KEY_ID.slice(0, 4)}...` : null,
         teamId: process.env.APNS_TEAM_ID || null,
         environment: process.env.APNS_ENVIRONMENT || 'sandbox',
-        bundleId: process.env.APNS_BUNDLE_ID || 'to.bullhorn.app',
+        bundleId: process.env.APNS_BUNDLE_ID || 'to.shipsignal.app',
       },
       deviceTokens: (tokens || []).map((t) => ({
         id: t.id,
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   try {
     const { userId } = await requireSessionAuth()
 
-    let title = 'Bullhorn Test Push'
+    let title = 'ShipSignal Test Push'
     let body = `Test notification sent at ${new Date().toLocaleTimeString()}`
 
     try {

@@ -56,8 +56,7 @@ export function CampaignPostCard({
           className={cn(
             'w-2.5 h-2.5 rounded-full',
             post.platform === 'twitter' && 'bg-twitter shadow-[0_0_8px_rgba(29,161,242,0.4)]',
-            post.platform === 'linkedin' && 'bg-linkedin shadow-[0_0_8px_rgba(10,102,194,0.4)]',
-            post.platform === 'reddit' && 'bg-reddit shadow-[0_0_8px_rgba(255,69,0,0.4)]'
+            post.platform === 'linkedin' && 'bg-linkedin shadow-[0_0_8px_rgba(10,102,194,0.4)]'
           )}
           title={PLATFORM_INFO[post.platform].name}
         />

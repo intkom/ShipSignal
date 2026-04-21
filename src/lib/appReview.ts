@@ -1,7 +1,7 @@
 import { isNativePlatform } from './capacitor'
 
-const MILESTONE_KEY = 'bullhorn-review-milestone'
-const LAST_PROMPT_KEY = 'bullhorn-review-last-prompt'
+const MILESTONE_KEY = 'ShipSignal-review-milestone'
+const LAST_PROMPT_KEY = 'ShipSignal-review-last-prompt'
 const MILESTONES = [5, 15, 50]
 const COOLDOWN_MS = 90 * 24 * 60 * 60 * 1000 // 90 days
 

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Copy, CheckCircle, Share2, Bell, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { copyToClipboard } from '@/lib/nativeClipboard'
-import { Post, PLATFORM_INFO, getPostPreviewText, isRedditContent } from '@/lib/posts'
+import { Post, PLATFORM_INFO, getPostPreviewText } from '@/lib/posts'
 import toast from 'react-hot-toast'
 
 interface PostActionsProps {
@@ -17,10 +17,6 @@ function getPlatformUrl(post: Post): string | null {
   const p = post.platform
   if (p === 'twitter') return 'https://x.com/compose/post'
   if (p === 'linkedin') return 'https://www.linkedin.com/feed/'
-  if (p === 'reddit' && isRedditContent(post.content)) {
-    const sub = post.content.subreddit
-    return sub ? `https://www.reddit.com/r/${sub}/submit` : 'https://www.reddit.com/submit'
-  }
   return null
 }
 

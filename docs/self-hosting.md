@@ -90,6 +90,7 @@ REDDIT_USER_AGENT=web:bullhorn-scheduler:v1.0.0 (by /u/your-reddit-username)
 Self-hosted mode runs everything locally in Docker:
 
 **Supabase Docker** (5 services managed by Docker Compose):
+
 - **PostgreSQL** — primary database
 - **GoTrue** — authentication service (email/password, OAuth)
 - **PostgREST** — auto-generated REST API over PostgreSQL
@@ -97,6 +98,7 @@ Self-hosted mode runs everything locally in Docker:
 - **Storage** — file and media storage
 
 **Next.js** runs with an internal cron scheduler powered by `node-cron`. Two jobs run every 5 minutes:
+
 - **Publish scheduler** — picks up posts whose scheduled time has passed and publishes them to their target platforms
 - **Token refresh** — proactively refreshes expiring OAuth tokens for connected social accounts
 
@@ -118,16 +120,16 @@ cp .env.self-hosted.example .env.local
 
 Key variables to set in `.env.local`:
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Local Supabase URL (e.g. `http://localhost:8000`) |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Anon key from `self-hosted/.env` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Service role key from `self-hosted/.env` |
-| `TWITTER_CLIENT_ID` / `TWITTER_CLIENT_SECRET` | Optional | Twitter OAuth app credentials |
-| `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | Optional | LinkedIn OAuth app credentials |
-| `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET` | Optional | Reddit script app credentials |
-| `REDDIT_USERNAME` / `REDDIT_PASSWORD` | Optional | Reddit account for script auth |
-| `REDDIT_USER_AGENT` | Optional | Reddit API user agent string |
+| Variable                                        | Required | Description                                       |
+| ----------------------------------------------- | -------- | ------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`                      | Yes      | Local Supabase URL (e.g. `http://localhost:8000`) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`                 | Yes      | Anon key from `self-hosted/.env`                  |
+| `SUPABASE_SERVICE_ROLE_KEY`                     | Yes      | Service role key from `self-hosted/.env`          |
+| `TWITTER_CLIENT_ID` / `TWITTER_CLIENT_SECRET`   | Optional | Twitter OAuth app credentials                     |
+| `LINKEDIN_CLIENT_ID` / `LINKEDIN_CLIENT_SECRET` | Optional | LinkedIn OAuth app credentials                    |
+| `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET`     | Optional | Reddit script app credentials                     |
+| `REDDIT_USERNAME` / `REDDIT_PASSWORD`           | Optional | Reddit account for script auth                    |
+| `REDDIT_USER_AGENT`                             | Optional | Reddit API user agent string                      |
 
 See `.env.self-hosted.example` for all available variables and `docs/environment-variables.md` for full descriptions.
 

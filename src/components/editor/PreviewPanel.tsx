@@ -1,7 +1,7 @@
 'use client'
 
 import { Image } from 'lucide-react'
-import { Post, isRedditContent } from '@/lib/posts'
+import { Post } from '@/lib/posts'
 import { cn } from '@/lib/utils'
 import { getMediaUrl } from '@/lib/media'
 
@@ -10,18 +10,9 @@ interface PreviewPanelProps {
   content: string
   mediaUrls: string[]
   linkedInMediaUrl: string
-  redditUrl: string
-  subredditsInput: string[]
 }
 
-export const PreviewPanel = ({
-  post,
-  content,
-  mediaUrls,
-  linkedInMediaUrl,
-  redditUrl,
-  subredditsInput,
-}: PreviewPanelProps) => {
+export const PreviewPanel = ({ post, content, mediaUrls, linkedInMediaUrl }: PreviewPanelProps) => {
   return (
     <div
       data-testid="preview-panel"
@@ -37,14 +28,6 @@ export const PreviewPanel = ({
         {post.platform === 'twitter' && <TwitterPreview content={content} mediaUrls={mediaUrls} />}
         {post.platform === 'linkedin' && (
           <LinkedInPreview content={content} linkedInMediaUrl={linkedInMediaUrl} />
-        )}
-        {post.platform === 'reddit' && (
-          <RedditPreview
-            post={post}
-            content={content}
-            redditUrl={redditUrl}
-            subredditsInput={subredditsInput}
-          />
         )}
       </div>
     </div>
@@ -149,44 +132,6 @@ const LinkedInPreview = ({
             />
           </div>
         )}
-      </div>
-    </div>
-  )
-}
-
-const RedditPreview = ({
-  post,
-  content,
-  redditUrl,
-  subredditsInput,
-}: {
-  post: Post
-  content: string
-  redditUrl: string
-  subredditsInput: string[]
-}) => {
-  return (
-    <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
-      <div className="flex items-center gap-2 text-reddit text-xs font-medium mb-2">
-        <span className="w-2 h-2 rounded-full bg-reddit" />
-        Reddit {redditUrl ? '(Link Post)' : '(Text Post)'}
-      </div>
-      <div className="bg-[#1A1A1B] border border-[#343536] rounded">
-        <div className="flex items-center gap-2 px-3 py-2 text-xs text-[#818384]">
-          <span className="font-bold text-[#D7DADC]">
-            {subredditsInput.length
-              ? subredditsInput.map((s: string) => `r/${s}`).join(', ')
-              : 'r/subreddit'}
-          </span>
-          • Posted by u/yourname
-        </div>
-        <div className="px-3 text-lg font-medium text-[#D7DADC]">
-          {(isRedditContent(post.content) && post.content.title) || 'Your post title'}
-        </div>
-        {redditUrl && <div className="px-3 py-2 text-xs text-[#4FBCFF] truncate">{redditUrl}</div>}
-        <div className="p-3 text-sm text-[#D7DADC] whitespace-pre-wrap">
-          {content || 'Your Reddit post will appear here...'}
-        </div>
       </div>
     </div>
   )

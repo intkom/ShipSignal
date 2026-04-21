@@ -37,8 +37,7 @@ import * as os from 'os'
 
 // Configuration
 const SQLITE_PATH =
-  process.env.SQLITE_PATH ||
-  path.join(os.homedir(), '.social-scheduler', 'posts.db')
+  process.env.SQLITE_PATH || path.join(os.homedir(), '.social-scheduler', 'posts.db')
 const DRY_RUN = process.env.DRY_RUN === 'true'
 
 // Validate environment

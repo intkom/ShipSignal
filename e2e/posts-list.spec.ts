@@ -14,9 +14,7 @@ test.describe('Posts List', () => {
     await enterDemoMode(page)
   })
 
-   
   test.describe.serial('Navigation', () => {
-     
     test('should navigate to posts list from dashboard', async ({ page }) => {
       await page.goto('/')
 
@@ -28,9 +26,7 @@ test.describe('Posts List', () => {
     })
   })
 
-   
   test.describe.serial('Filter Tabs', () => {
-     
     test('should show all posts by default', async ({ page }) => {
       await goToPosts(page)
 
@@ -39,7 +35,6 @@ test.describe('Posts List', () => {
       await expect(allTab).toHaveClass(/bg-primary/)
     })
 
-     
     test('should filter to drafts', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('Draft post', testId)
@@ -60,7 +55,6 @@ test.describe('Posts List', () => {
       }
     })
 
-     
     test('should filter to scheduled', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('Scheduled post', testId)
@@ -85,7 +79,6 @@ test.describe('Posts List', () => {
       }
     })
 
-     
     test('should show counts in filter tabs', async ({ page }) => {
       // Create some posts first
       await createTestPost(page, { platform: 'twitter', content: 'Post 1' })
@@ -102,9 +95,7 @@ test.describe('Posts List', () => {
     })
   })
 
-   
   test.describe.serial('Post Cards', () => {
-     
     test('should display platform indicators', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('Test post', testId)
@@ -121,7 +112,6 @@ test.describe('Posts List', () => {
       expect(indicatorCount).toBeGreaterThan(0)
     })
 
-     
     test('should display content preview', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('My post content preview', testId)
@@ -135,7 +125,6 @@ test.describe('Posts List', () => {
       await expect(firstCard).toContainText(content)
     })
 
-     
     test('should display status badge', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('Test post', testId)
@@ -150,7 +139,6 @@ test.describe('Posts List', () => {
       expect(hasStatus).toBeGreaterThan(0)
     })
 
-     
     test('should navigate to editor when clicked', async ({ page }, testInfo) => {
       const testId = generateTestId(testInfo)
       const content = uniqueContent('Clickable post', testId)
@@ -166,9 +154,7 @@ test.describe('Posts List', () => {
     })
   })
 
-   
   test.describe('New Post Button', () => {
-     
     test('should have new post button in header', async ({ page }) => {
       await goToPosts(page)
 
@@ -177,7 +163,6 @@ test.describe('Posts List', () => {
       await expect(newPostBtn).toBeVisible()
     })
 
-     
     test('should navigate to new post page', async ({ page }) => {
       await goToPosts(page)
 

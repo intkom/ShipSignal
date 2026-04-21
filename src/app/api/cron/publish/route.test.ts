@@ -147,9 +147,11 @@ describe('GET /api/cron/publish (notify-due-posts) (2/5)', () => {
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -184,9 +186,11 @@ describe('GET /api/cron/publish (notify-due-posts) (3/5)', () => {
       from: vi.fn(() => ({
         select: vi.fn(() => ({
           eq: vi.fn(() => ({
-            lte: vi.fn(() => ({
-              gte: vi.fn(() => ({
-                order: vi.fn(() => ({ limit: postsLimit })),
+            neq: vi.fn(() => ({
+              lte: vi.fn(() => ({
+                gte: vi.fn(() => ({
+                  order: vi.fn(() => ({ limit: postsLimit })),
+                })),
               })),
             })),
           })),
@@ -216,9 +220,11 @@ describe('GET /api/cron/publish (notify-due-posts) (4/5)', () => {
       from: vi.fn(() => ({
         select: vi.fn(() => ({
           eq: vi.fn(() => ({
-            lte: vi.fn(() => ({
-              gte: vi.fn(() => ({
-                order: vi.fn(() => ({ limit: postsLimit })),
+            neq: vi.fn(() => ({
+              lte: vi.fn(() => ({
+                gte: vi.fn(() => ({
+                  order: vi.fn(() => ({ limit: postsLimit })),
+                })),
               })),
             })),
           })),
@@ -260,9 +266,11 @@ describe('GET /api/cron/publish (notify-due-posts) (5/5)', () => {
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -314,9 +322,11 @@ describe('GET /api/cron/publish — auto-publish for pro (6/8)', () => {
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -363,9 +373,11 @@ describe('GET /api/cron/publish — free user notify-only (7/8)', () => {
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -386,17 +398,17 @@ describe('GET /api/cron/publish — free user notify-only (7/8)', () => {
   })
 })
 
-describe('GET /api/cron/publish — self-hosted auto-publish Reddit (8/9)', () => {
-  it('auto-publishes Reddit posts when self-hosted regardless of plan', async () => {
+describe('GET /api/cron/publish — self-hosted auto-publish LinkedIn (8/9)', () => {
+  it('auto-publishes LinkedIn posts when self-hosted regardless of plan', async () => {
     vi.stubEnv('CRON_SECRET', 'my-secret')
 
     const { publishPost } = await import('@/lib/publishers')
 
     const post = makeDbPost({
-      id: 'post-sh-reddit',
-      social_account_id: 'acc-reddit-sh',
+      id: 'post-sh-linkedin',
+      social_account_id: 'acc-li-sh',
       user_id: 'any-user',
-      platform: 'reddit',
+      platform: 'linkedin',
     })
 
     // self-hosted mode — plan is irrelevant
@@ -405,7 +417,7 @@ describe('GET /api/cron/publish — self-hosted auto-publish Reddit (8/9)', () =
     const postsLimit = vi.fn(() => Promise.resolve({ data: [post], error: null }))
 
     const selectAfterMatch = vi.fn(() =>
-      Promise.resolve({ data: [{ id: 'post-sh-reddit' }], error: null })
+      Promise.resolve({ data: [{ id: 'post-sh-linkedin' }], error: null })
     )
     const matchFn = vi.fn(() => ({ select: selectAfterMatch }))
     const updateFn = vi.fn(() => ({ match: matchFn }))
@@ -416,9 +428,11 @@ describe('GET /api/cron/publish — self-hosted auto-publish Reddit (8/9)', () =
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -447,22 +461,26 @@ describe('GET /api/cron/publish — self-hosted auto-publish Reddit (8/9)', () =
   })
 })
 
-describe('GET /api/cron/publish — Reddit skip (9/9 SaaS)', () => {
-  it('routes Reddit posts to notify-only even with social_account_id on pro', async () => {
+describe('GET /api/cron/publish — auto-publish LinkedIn for pro (9/9 SaaS)', () => {
+  it('auto-publishes LinkedIn posts with social_account_id when user is pro', async () => {
     vi.stubEnv('CRON_SECRET', 'my-secret')
 
     const { publishPost } = await import('@/lib/publishers')
 
     const post = makeDbPost({
-      social_account_id: 'acc-reddit',
+      id: 'post-li-auto',
+      social_account_id: 'acc-li',
       user_id: 'pro-user',
-      platform: 'reddit',
+      platform: 'linkedin',
     })
 
     mockGetUserPlan.mockImplementation(async () => 'pro' as import('@/lib/limits').PlanType)
 
     const postsLimit = vi.fn(() => Promise.resolve({ data: [post], error: null }))
-    const matchFn = vi.fn(() => Promise.resolve({ data: null, error: null }))
+    const selectAfterMatch = vi.fn(() =>
+      Promise.resolve({ data: [{ id: 'post-li-auto' }], error: null })
+    )
+    const matchFn = vi.fn(() => ({ select: selectAfterMatch }))
     const updateFn = vi.fn(() => ({ match: matchFn }))
 
     mockCreateClient.mockReturnValue({
@@ -471,9 +489,11 @@ describe('GET /api/cron/publish — Reddit skip (9/9 SaaS)', () => {
           return {
             select: vi.fn(() => ({
               eq: vi.fn(() => ({
-                lte: vi.fn(() => ({
-                  gte: vi.fn(() => ({
-                    order: vi.fn(() => ({ limit: postsLimit })),
+                neq: vi.fn(() => ({
+                  lte: vi.fn(() => ({
+                    gte: vi.fn(() => ({
+                      order: vi.fn(() => ({ limit: postsLimit })),
+                    })),
                   })),
                 })),
               })),
@@ -485,11 +505,15 @@ describe('GET /api/cron/publish — Reddit skip (9/9 SaaS)', () => {
       }),
     })
 
+    vi.mocked(publishPost).mockResolvedValue({ success: true })
+
     const req = makeRequest({ authorization: 'Bearer my-secret' })
     const res = await GET(req)
 
     expect(res.status).toBe(200)
-    expect(updateFn).toHaveBeenCalledWith(expect.objectContaining({ status: 'ready' }))
-    expect(publishPost).not.toHaveBeenCalled()
+    const body = await res.json()
+    expect(body.autoPublished).toBe(1)
+    expect(updateFn).toHaveBeenCalledWith(expect.objectContaining({ status: 'publishing' }))
+    expect(publishPost).toHaveBeenCalled()
   })
 })

@@ -6,10 +6,10 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'MCP Server Documentation',
   description:
-    'Connect Claude Code or any MCP client to manage your Bullhorn content with AI. Documentation for the @mean-weasel/bullhorn-mcp npm package.',
+    'Connect Claude Code or any MCP client to manage your ShipSignal content with AI. Uses the @mean-weasel/bullhorn-mcp package against your ShipSignal deployment.',
 }
 import {
-  Megaphone,
+  Radio,
   Key,
   Terminal,
   ArrowLeft,
@@ -41,10 +41,6 @@ const postTools = [
   {
     name: 'search_posts',
     description: 'Search posts by content, notes, platform, or campaign name',
-  },
-  {
-    name: 'create_reddit_crossposts',
-    description: 'Create multiple Reddit posts to different subreddits with a shared group',
   },
 ]
 
@@ -180,11 +176,11 @@ const toolCategories = [
 
 const mcpConfig = `{
   "mcpServers": {
-    "bullhorn": {
+    "shipsignal": {
       "command": "npx",
       "args": ["-y", "@mean-weasel/bullhorn-mcp"],
       "env": {
-        "BULLHORN_API_URL": "https://bullhorn.to"
+        "BULLHORN_API_URL": "https://shipsignal.app"
       }
     }
   }
@@ -214,33 +210,6 @@ const toolExamples = [
     },
     "status": "scheduled",
     "scheduledAt": "2026-03-01T09:00:00Z"
-  }
-}`,
-  },
-  {
-    title: 'Create a Reddit Post',
-    json: `{
-  "tool": "create_post",
-  "arguments": {
-    "platform": "reddit",
-    "content": {
-      "subreddit": "SideProject",
-      "title": "Show r/SideProject: I built a social media scheduler",
-      "body": "After 6 months of development..."
-    },
-    "status": "draft"
-  }
-}`,
-  },
-  {
-    title: 'Create Reddit Crossposts',
-    json: `{
-  "tool": "create_reddit_crossposts",
-  "arguments": {
-    "subreddits": ["SideProject", "startups", "webdev"],
-    "title": "Show: I built Bullhorn",
-    "body": "A social media post scheduler...",
-    "status": "draft"
   }
 }`,
   },
@@ -290,8 +259,8 @@ export default function McpDocsPage() {
       <nav className="sticky top-0 z-50 border-b-[3px] border-border bg-card">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <Megaphone className="h-7 w-7 text-primary" />
-            <span className="text-xl font-extrabold tracking-tight">Bullhorn</span>
+            <Radio className="h-7 w-7 text-primary" />
+            <span className="text-xl font-extrabold tracking-tight">ShipSignal</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link
@@ -334,7 +303,7 @@ export default function McpDocsPage() {
             MCP Server <span className="text-primary">Documentation</span>
           </h1>
           <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
-            Connect Claude Code or any MCP client to manage your Bullhorn content with AI.
+            Connect Claude Code or any MCP client to manage your ShipSignal content with AI.
           </p>
 
           <div className="inline-flex">
@@ -372,7 +341,7 @@ export default function McpDocsPage() {
               <div className="ml-11">
                 <p className="mb-3 text-muted-foreground">
                   Go to <strong className="text-foreground">Settings &rarr; API Keys</strong> in the
-                  Bullhorn app and create a new key.
+                  ShipSignal app and create a new key.
                 </p>
                 <p className="mb-4 text-sm text-muted-foreground">
                   <Key className="mr-1 inline-block h-3.5 w-3.5" />
@@ -452,7 +421,7 @@ export default function McpDocsPage() {
           </h2>
           <p className="mb-10 text-muted-foreground">
             {toolCategories.reduce((sum, cat) => sum + cat.tools.length, 0)} tools across{' '}
-            {toolCategories.length} categories. Each tool maps to a Bullhorn API endpoint.
+            {toolCategories.length} categories. Each tool maps to a ShipSignal API endpoint.
           </p>
 
           <div className="space-y-10">
@@ -524,7 +493,7 @@ export default function McpDocsPage() {
                   <td className="px-4 py-3 text-sm text-muted-foreground">
                     API base URL. Defaults to{' '}
                     <code className="rounded bg-[#1e1e2e] px-1.5 py-0.5 font-mono text-xs text-[#cdd6f4]">
-                      https://bullhorn.to
+                      https://shipsignal.app
                     </code>
                   </td>
                 </tr>
@@ -640,8 +609,8 @@ export default function McpDocsPage() {
       <footer className="border-t-[3px] border-border px-4 py-8 sm:px-6">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-2">
-            <Megaphone className="h-5 w-5 text-primary" />
-            <span className="text-sm font-bold">Bullhorn</span>
+            <Radio className="h-5 w-5 text-primary" />
+            <span className="text-sm font-bold">ShipSignal</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a
@@ -653,14 +622,14 @@ export default function McpDocsPage() {
               npm
             </a>
             <a
-              href="https://github.com/mean-weasel/bullhorn"
+              href="https://github.com/mean-weasel/ShipSignal"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-foreground"
             >
               GitHub
             </a>
-            <span>&copy; {new Date().getFullYear()} Bullhorn</span>
+            <span>&copy; {new Date().getFullYear()} ShipSignal</span>
           </div>
         </div>
       </footer>

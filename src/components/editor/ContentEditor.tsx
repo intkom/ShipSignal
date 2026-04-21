@@ -62,8 +62,7 @@ export const ContentEditor = ({
               className={cn(
                 'w-1.5 h-1.5 rounded-full',
                 platform === 'twitter' && 'bg-twitter',
-                platform === 'linkedin' && 'bg-linkedin',
-                platform === 'reddit' && 'bg-reddit'
+                platform === 'linkedin' && 'bg-linkedin'
               )}
             />
             <span

@@ -21,7 +21,6 @@ const navItems: NavItem[] = [
   { icon: Settings, label: 'More', path: '/settings' },
 ]
 
- 
 export function BottomNav() {
   const pathname = usePathname()
 

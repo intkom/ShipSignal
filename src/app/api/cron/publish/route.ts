@@ -17,9 +17,8 @@ export const dynamic = 'force-dynamic'
  * Cron: publish-due-posts
  *
  * Runs every 5 minutes. In self-hosted mode, auto-publishes all posts with
- * linked social accounts (including Reddit). In SaaS mode, auto-publishes
- * for Pro users (excluding Reddit), and transitions other posts to "ready"
- * status with notifications for manual publishing.
+ * linked social accounts. In SaaS mode, auto-publishes for Pro users and
+ * transitions other posts to "ready" status with notifications for manual publishing.
  */
 
 function createServiceClient() {
@@ -190,6 +189,7 @@ export async function GET(request: NextRequest) {
       .from('posts')
       .select('*')
       .eq('status', 'scheduled')
+      .neq('platform', 'reddit')
       .lte('scheduled_at', now.toISOString())
       .gte('scheduled_at', oneHourAgo.toISOString())
       .order('scheduled_at', { ascending: true })
@@ -226,9 +226,7 @@ export async function GET(request: NextRequest) {
       const plan = userPlans.get(dbPost.user_id) || 'free'
       const canAutoPublish = isSelfHosted()
         ? !!dbPost.social_account_id
-        : dbPost.social_account_id &&
-          dbPost.platform !== 'reddit' &&
-          PLAN_FEATURES[plan].autoPublish
+        : dbPost.social_account_id && PLAN_FEATURES[plan].autoPublish
       if (canAutoPublish) {
         autoPublishCandidates.push(dbPost)
       } else {

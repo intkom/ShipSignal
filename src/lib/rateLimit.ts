@@ -29,7 +29,7 @@ function getRatelimit(): Ratelimit | null {
     redis: new Redis({ url, token }),
     limiter: Ratelimit.slidingWindow(MAX_REQUESTS, '10 s'),
     analytics: true,
-    prefix: 'bullhorn:ratelimit',
+    prefix: 'ShipSignal:ratelimit',
   })
 
   return ratelimit

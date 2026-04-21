@@ -20,6 +20,8 @@ import { useProjectsStore } from '@/lib/projects'
 import { cn } from '@/lib/utils'
 import { ProjectSelector } from '@/components/projects/ProjectSelector'
 import { CreateProjectModal } from '@/components/projects/CreateProjectModal'
+import { GithubProjectsPanel } from '@/components/projects/GithubProjectsPanel'
+import { GithubDraftsPanel } from '@/components/projects/GithubDraftsPanel'
 import { RemindersList } from '@/components/reminders/RemindersList'
 import { useRemindersStore } from '@/lib/reminders'
 import { CalendarWidget } from './CalendarWidget'
@@ -200,48 +202,71 @@ export default function DashboardPage() {
         )}
 
         {/* Stats bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6 p-4 rounded-md bg-card border-[3px] border-border shadow-sticker">
-          <div className="flex-1 flex items-center gap-4 sm:gap-6 overflow-x-auto">
-            <div className="text-center shrink-0">
+        <div
+          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-6 p-4 bg-card border border-border"
+          style={{ borderRadius: '2px', boxShadow: '2px 2px 0 #000' }}
+        >
+          <div className="flex-1 flex items-center gap-4 sm:gap-8 overflow-x-auto">
+            <div className="shrink-0">
               <div
                 data-testid="stat-scheduled"
-                className="text-2xl font-extrabold text-sticker-blue"
+                className="text-2xl font-bold text-foreground"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {stats.scheduled}
               </div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-                📅 Scheduled
+              <div
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5"
+                style={{ fontFamily: 'var(--font-mono)' }}
+              >
+                Scheduled
               </div>
             </div>
             <div className="w-px h-8 bg-border shrink-0" />
-            <div className="text-center shrink-0">
+            <div className="shrink-0">
               <div
                 data-testid="stat-drafts"
-                className="text-2xl font-extrabold text-sticker-orange"
+                className="text-2xl font-bold text-foreground"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {stats.drafts}
               </div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-                📝 Drafts
+              <div
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5"
+                style={{ fontFamily: 'var(--font-mono)' }}
+              >
+                Drafts
               </div>
             </div>
             <div className="w-px h-8 bg-border shrink-0" />
-            <div className="text-center shrink-0">
+            <div className="shrink-0">
               <div
                 data-testid="stat-published"
-                className="text-2xl font-extrabold text-sticker-green"
+                className="text-2xl font-bold text-foreground"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 {stats.published}
               </div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-                ✅ Published
+              <div
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5"
+                style={{ fontFamily: 'var(--font-mono)' }}
+              >
+                Published
               </div>
             </div>
             <div className="w-px h-8 bg-border hidden sm:block shrink-0" />
-            <div className="text-center hidden sm:block shrink-0">
-              <div className="text-2xl font-extrabold text-sticker-purple">{stats.projects}</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-                📁 Projects
+            <div className="hidden sm:block shrink-0">
+              <div
+                className="text-2xl font-bold text-foreground"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {stats.projects}
+              </div>
+              <div
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mt-0.5"
+                style={{ fontFamily: 'var(--font-mono)' }}
+              >
+                Projects
               </div>
             </div>
           </div>
@@ -257,13 +282,11 @@ export default function DashboardPage() {
             <Link
               href="/new"
               className={cn(
-                'hidden md:flex items-center gap-2 px-4 py-2.5 rounded-md',
-                'bg-primary text-primary-foreground font-bold text-sm',
-                'border-[3px] border-border',
-                'shadow-sticker-sm',
-                'hover:translate-y-[-2px] hover:shadow-[5px_5px_0_hsl(var(--border))]',
-                'transition-all duration-200'
+                'hidden md:flex items-center gap-2 px-4 py-2.5',
+                'bg-foreground text-card font-bold text-sm uppercase tracking-wider',
+                'transition-all duration-150'
               )}
+              style={{ borderRadius: '2px', boxShadow: '2px 2px 0 #FF4F00' }}
             >
               <Plus className="w-4 h-4" />
               New Post
@@ -271,30 +294,39 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        <GithubProjectsPanel />
+        <GithubDraftsPanel />
+
         {/* Empty state when no posts at all */}
         {hasNoPosts ? (
           <div className="text-center py-16 px-4 animate-fade-in">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-lg bg-primary/10 flex items-center justify-center border-[3px] border-border shadow-sticker text-4xl">
-              🎉
+            <div
+              className="w-16 h-16 mx-auto mb-6 bg-secondary flex items-center justify-center border border-border"
+              style={{ borderRadius: '2px', boxShadow: '2px 2px 0 #000' }}
+            >
+              <Plus className="w-8 h-8 text-muted-foreground" />
             </div>
-            <h2 className="text-2xl font-extrabold mb-2">Welcome to Bullhorn</h2>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Create your first post to get started. Schedule content for Twitter, LinkedIn, and
-              Reddit all in one place.
+            <h2
+              className="text-2xl font-bold mb-2 uppercase tracking-tight"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Welcome to ShipSignal
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm">
+              Create your first post to get started. Schedule content for X and LinkedIn in one
+              place.
             </p>
             <Link
               href="/new"
               className={cn(
-                'inline-flex items-center gap-2 px-6 py-3.5 rounded-md',
-                'bg-primary text-primary-foreground font-bold',
-                'border-[3px] border-border',
-                'shadow-sticker',
-                'hover:translate-y-[-2px] hover:shadow-[6px_6px_0_hsl(var(--border))]',
-                'transition-all duration-200'
+                'inline-flex items-center gap-2 px-6 py-3',
+                'bg-foreground text-card font-bold uppercase tracking-wider text-sm',
+                'transition-all duration-150'
               )}
+              style={{ borderRadius: '2px', boxShadow: '2px 2px 0 #FF4F00' }}
             >
-              <Plus className="w-5 h-5" />
-              Create Your First Post
+              <Plus className="w-4 h-4" />
+              Create First Post
             </Link>
           </div>
         ) : (

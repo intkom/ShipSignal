@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 
-const STORAGE_PREFIX = 'bullhorn-draft-'
+const STORAGE_PREFIX = 'ShipSignal-draft-'
 const DRAFT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
 const DEBOUNCE_MS = 1000
 

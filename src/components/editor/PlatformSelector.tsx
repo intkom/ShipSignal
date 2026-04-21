@@ -18,7 +18,7 @@ export const PlatformSelector = ({
 }: PlatformSelectorProps) => {
   return (
     <div className={cn('flex flex-wrap gap-2', className)}>
-      {(['twitter', 'linkedin', 'reddit'] as Platform[]).map((platform) => {
+      {(['twitter', 'linkedin'] as const).map((platform) => {
         const isActive = activePlatform === platform
         const info = PLATFORM_INFO[platform]
         return (
@@ -32,9 +32,7 @@ export const PlatformSelector = ({
               isActive
                 ? platform === 'twitter'
                   ? 'bg-twitter/10 text-twitter shadow-[3px_3px_0_hsl(var(--twitter))]'
-                  : platform === 'linkedin'
-                    ? 'bg-linkedin/10 text-linkedin shadow-[3px_3px_0_hsl(var(--linkedin))]'
-                    : 'bg-reddit/10 text-reddit shadow-[3px_3px_0_hsl(var(--reddit))]'
+                  : 'bg-linkedin/10 text-linkedin shadow-[3px_3px_0_hsl(var(--linkedin))]'
                 : 'bg-card text-muted-foreground shadow-sticker-hover hover:-translate-y-px hover:shadow-sticker-sm'
             )}
           >

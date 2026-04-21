@@ -1,6 +1,6 @@
 // Post type definitions and utilities
 
-export type Platform = 'twitter' | 'linkedin' | 'reddit'
+export type Platform = 'twitter' | 'linkedin'
 export type PostStatus =
   | 'draft'
   | 'scheduled'
@@ -38,6 +38,29 @@ export interface Project {
   updatedAt: string
 }
 
+/** Connected GitHub repository */
+export interface GithubProject {
+  id: string
+  githubRepoUrl: string
+  changelogUrl?: string
+  documentationUrl?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type GithubActivitySourceType = 'release' | 'prs' | 'commits'
+
+/** Latest fetched activity for a connected GitHub project */
+export interface GithubActivity {
+  id: string
+  githubProjectId: string
+  sourceType: GithubActivitySourceType
+  rawText: string
+  fetchedAt: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface ProjectAnalytics {
   totalCampaigns: number
   totalPosts: number
@@ -58,16 +81,6 @@ export interface LinkedInContent {
   launchedUrl?: string // URL of the published LinkedIn post
 }
 
-export interface RedditContent {
-  subreddit: string // Single target subreddit
-  title: string
-  body?: string
-  url?: string
-  flairId?: string
-  flairText?: string
-  launchedUrl?: string // URL of the published Reddit post
-}
-
 export interface PublishResult {
   success: boolean
   platform?: Platform
@@ -76,7 +89,6 @@ export interface PublishResult {
   postUrl?: string // URL to the published post
   postUrn?: string // LinkedIn URN (urn:li:share:xxx)
   threadIds?: string[] // Twitter thread tweet IDs
-  subreddit?: string // Reddit subreddit posted to
   // Error tracking
   error?: string
   retryable?: boolean
@@ -85,10 +97,10 @@ export interface PublishResult {
   publishedAt?: string
 }
 
-export type GroupType = 'reddit-crosspost'
+export type GroupType = 'reddit-crosspost' | 'twitter-thread'
 
 // Platform-specific content type based on selected platform
-export type PlatformContent = TwitterContent | LinkedInContent | RedditContent
+export type PlatformContent = TwitterContent | LinkedInContent
 
 export interface Post {
   id: string
@@ -111,7 +123,6 @@ export interface Post {
 export const CHAR_LIMITS: Record<Platform, number> = {
   twitter: 280,
   linkedin: 3000,
-  reddit: 40000, // For self-post body
 }
 
 // Platform display info
@@ -131,25 +142,15 @@ export const PLATFORM_INFO: Record<
     color: 'text-linkedin',
     bgColor: 'bg-linkedin/10',
   },
-  reddit: {
-    name: 'Reddit',
-    label: 'Reddit',
-    color: 'text-reddit',
-    bgColor: 'bg-reddit/10',
-  },
 }
 
 // Type guards for platform content
 export function isTwitterContent(content: PlatformContent): content is TwitterContent {
-  return 'text' in content && !('visibility' in content) && !('subreddit' in content)
+  return 'text' in content && !('visibility' in content)
 }
 
 export function isLinkedInContent(content: PlatformContent): content is LinkedInContent {
   return 'text' in content && 'visibility' in content
-}
-
-export function isRedditContent(content: PlatformContent): content is RedditContent {
-  return 'subreddit' in content && 'title' in content
 }
 
 // Helper to create a new post
@@ -176,8 +177,6 @@ function getDefaultContent(platform: Platform): PlatformContent {
       return { text: '' }
     case 'linkedin':
       return { text: '', visibility: 'public' }
-    case 'reddit':
-      return { subreddit: '', title: '', body: '' }
   }
 }
 
@@ -190,17 +189,11 @@ export function getPostPreviewText(post: Post): string {
   if (isLinkedInContent(content)) {
     return content.text
   }
-  if (isRedditContent(content)) {
-    return content.body || content.title
-  }
   return ''
 }
 
 // Extract the main text content from platform-specific content JSON
 export function getTextFromContent(content: PlatformContent, platform: Platform): string {
-  if (platform === 'reddit' && isRedditContent(content)) {
-    return content.body || ''
-  }
   if (
     (platform === 'twitter' && isTwitterContent(content)) ||
     (platform === 'linkedin' && isLinkedInContent(content))

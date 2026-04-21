@@ -32,7 +32,6 @@ test.describe('Launch Posts', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Launch Posts List', () => {
-     
     test('should show empty state when no launch posts exist', async ({ page }) => {
       await goToLaunchPosts(page)
 
@@ -42,7 +41,6 @@ test.describe('Launch Posts', () => {
       ).toBeVisible()
     })
 
-     
     test('should navigate to new launch post from empty state', async ({ page }) => {
       await goToLaunchPosts(page)
 
@@ -50,7 +48,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByRole('heading', { name: /new launch post/i })).toBeVisible()
     })
 
-     
     test('should navigate to new launch post from header button', async ({ page }) => {
       await goToLaunchPosts(page)
 
@@ -58,7 +55,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByRole('heading', { name: /new launch post/i })).toBeVisible()
     })
 
-     
     test('should display launch posts after creation', async ({ page }) => {
       // Create a launch post via API
       await createLaunchPostViaAPI(page, {
@@ -72,7 +68,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByText('Show HN: Test Product')).toBeVisible()
     })
 
-     
     test('should filter launch posts by platform', async ({ page }) => {
       // Create posts for different platforms
       await createLaunchPostViaAPI(page, {
@@ -100,7 +95,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByText('Show HN: Test 1')).not.toBeVisible()
     })
 
-     
     test('should filter launch posts by status', async ({ page }) => {
       // Create a draft post
       await createLaunchPostViaAPI(page, {
@@ -124,9 +118,7 @@ test.describe('Launch Posts', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Create Launch Posts', () => {
-     
     test.describe('Show HN', () => {
-       
       test('should create a Show HN launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -146,7 +138,6 @@ test.describe('Launch Posts', () => {
         expect(createdPost?.platform).toBe('hacker_news_show')
       })
 
-       
       test('should show character limit for title', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -157,9 +148,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('Ask HN', () => {
-       
       test('should create an Ask HN launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -183,7 +172,6 @@ test.describe('Launch Posts', () => {
         expect(createdPost?.platformFields).toHaveProperty('text')
       })
 
-       
       test('should show Ask HN specific fields', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -195,9 +183,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('Product Hunt', () => {
-       
       test('should create a Product Hunt launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -225,7 +211,6 @@ test.describe('Launch Posts', () => {
         expect(createdPost?.platformFields).toHaveProperty('pricing', 'freemium')
       })
 
-       
       test('should show Product Hunt specific fields', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -237,7 +222,6 @@ test.describe('Launch Posts', () => {
         await expect(page.getByLabel(/first comment/i)).toBeVisible()
       })
 
-       
       test('should show tagline character limit', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -249,9 +233,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('Dev Hunt', () => {
-       
       test('should create a Dev Hunt launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -279,7 +261,6 @@ test.describe('Launch Posts', () => {
         )
       })
 
-       
       test('should show Dev Hunt specific fields', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -291,9 +272,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('BetaList', () => {
-       
       test('should create a BetaList launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -320,7 +299,6 @@ test.describe('Launch Posts', () => {
         )
       })
 
-       
       test('should show BetaList specific fields', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -330,7 +308,6 @@ test.describe('Launch Posts', () => {
         await expect(page.getByLabel(/one-sentence pitch/i)).toBeVisible()
       })
 
-       
       test('should show pitch character limit', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -342,9 +319,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('Indie Hackers', () => {
-       
       test('should create an Indie Hackers launch post', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -369,7 +344,6 @@ test.describe('Launch Posts', () => {
         expect(createdPost?.platformFields).toHaveProperty('revenue', '$1,000/mo')
       })
 
-       
       test('should show Indie Hackers specific fields', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -381,9 +355,7 @@ test.describe('Launch Posts', () => {
       })
     })
 
-     
     test.describe('Common Fields', () => {
-       
       test('should save internal notes', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -400,7 +372,6 @@ test.describe('Launch Posts', () => {
         expect(createdPost?.notes).toBe('Remember to post at 9am PST')
       })
 
-       
       test('should require title', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -412,7 +383,6 @@ test.describe('Launch Posts', () => {
         await expect(saveButton).toBeDisabled()
       })
 
-       
       test('should require URL for most platforms', async ({ page }) => {
         await goToNewLaunchPost(page)
 
@@ -427,7 +397,6 @@ test.describe('Launch Posts', () => {
 
   // eslint-disable-next-line max-lines-per-function
   test.describe('Edit Launch Posts', () => {
-     
     test('should edit an existing launch post', async ({ page }) => {
       // Create a post first
       const created = await createLaunchPostViaAPI(page, {
@@ -450,7 +419,6 @@ test.describe('Launch Posts', () => {
       expect(updated?.title).toBe('Updated Title')
     })
 
-     
     test('should navigate to edit from list', async ({ page }) => {
       await createLaunchPostViaAPI(page, {
         platform: 'hacker_news_show',
@@ -465,7 +433,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByLabel(/^title/i)).toHaveValue('Edit Test Post', { timeout: 15000 })
     })
 
-     
     test('should change platform when editing', async ({ page }) => {
       const created = await createLaunchPostViaAPI(page, {
         platform: 'hacker_news_show',
@@ -489,7 +456,6 @@ test.describe('Launch Posts', () => {
       expect(updated?.platform).toBe('product_hunt')
     })
 
-     
     test('should update status', async ({ page }) => {
       const created = await createLaunchPostViaAPI(page, {
         platform: 'hacker_news_show',
@@ -510,9 +476,7 @@ test.describe('Launch Posts', () => {
     })
   })
 
-   
   test.describe('Delete Launch Posts', () => {
-     
     test('should delete a launch post from list', async ({ page }) => {
       await createLaunchPostViaAPI(page, {
         platform: 'hacker_news_show',
@@ -537,9 +501,7 @@ test.describe('Launch Posts', () => {
     })
   })
 
-   
   test.describe('Platform Links', () => {
-     
     test('should show link to platform submission page', async ({ page }) => {
       await goToNewLaunchPost(page)
 
@@ -548,7 +510,6 @@ test.describe('Launch Posts', () => {
       await expect(link).toHaveAttribute('href', 'https://news.ycombinator.com/submit')
     })
 
-     
     test('should update platform link when switching platforms', async ({ page }) => {
       await goToNewLaunchPost(page)
 
@@ -559,9 +520,7 @@ test.describe('Launch Posts', () => {
     })
   })
 
-   
   test.describe('Platform Switching', () => {
-     
     test('should switch between platforms', async ({ page }) => {
       await goToNewLaunchPost(page)
 
@@ -582,7 +541,6 @@ test.describe('Launch Posts', () => {
       await expect(page.getByText('Product Hunt Fields')).not.toBeVisible()
     })
 
-     
     test('should preserve common fields when switching platforms', async ({ page }) => {
       await goToNewLaunchPost(page)
 
@@ -601,9 +559,7 @@ test.describe('Launch Posts', () => {
     })
   })
 
-   
   test.describe('Copy to Clipboard', () => {
-     
     test('should have copy button in launch post dropdown menu', async ({ page }) => {
       await createLaunchPostViaAPI(page, {
         platform: 'hacker_news_show',

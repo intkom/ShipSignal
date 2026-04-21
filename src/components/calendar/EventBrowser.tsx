@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import type { CommunityEvent, EventSubscription } from '@/lib/communityEvents'
 import { EventCard } from './EventCard'
 
-type PlatformFilter = 'all' | 'twitter' | 'linkedin' | 'reddit'
+type PlatformFilter = 'all' | 'twitter' | 'linkedin'
 
 interface EventBrowserProps {
   events: CommunityEvent[]
@@ -19,14 +19,12 @@ const FILTER_TABS: { value: PlatformFilter; label: string }[] = [
   { value: 'all', label: 'All' },
   { value: 'twitter', label: 'Twitter' },
   { value: 'linkedin', label: 'LinkedIn' },
-  { value: 'reddit', label: 'Reddit' },
 ]
 
 const TAB_ACTIVE_STYLES: Record<PlatformFilter, string> = {
   all: 'bg-primary text-primary-foreground',
   twitter: 'bg-twitter text-white',
   linkedin: 'bg-linkedin text-white',
-  reddit: 'bg-reddit text-white',
 }
 
 // eslint-disable-next-line max-lines-per-function -- component JSX rendering, extraction would fragment UI

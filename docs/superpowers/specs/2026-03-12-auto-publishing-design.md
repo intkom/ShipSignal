@@ -12,13 +12,13 @@ This design adds automatic publishing: scheduled posts with a linked social acco
 
 ## Decisions
 
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Auto-publish scope | All scheduled posts with a `social_account_id` | Scheduling IS intent to publish. No per-post or per-account toggle needed. |
-| Supabase client | Inject into `publishPost()` | Cron uses service role client; manual publish uses session client. One function, two callers. |
-| Concurrency | `Promise.allSettled` with limit of 8 posts per cron run | Conservative limit for Vercel timeout safety. Worst case: 8 posts with media at ~6s each = 48s, leaving headroom for DB queries. The 5-min cron interval handles overflow. |
-| Media upload | Included in this work | Twitter chunked upload + LinkedIn Images API. Both platforms. |
-| Reddit | Deferred | Reddit API requires pre-approval since Nov 2025. Will revisit later. |
+| Decision           | Choice                                                  | Rationale                                                                                                                                                                  |
+| ------------------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Auto-publish scope | All scheduled posts with a `social_account_id`          | Scheduling IS intent to publish. No per-post or per-account toggle needed.                                                                                                 |
+| Supabase client    | Inject into `publishPost()`                             | Cron uses service role client; manual publish uses session client. One function, two callers.                                                                              |
+| Concurrency        | `Promise.allSettled` with limit of 8 posts per cron run | Conservative limit for Vercel timeout safety. Worst case: 8 posts with media at ~6s each = 48s, leaving headroom for DB queries. The 5-min cron interval handles overflow. |
+| Media upload       | Included in this work                                   | Twitter chunked upload + LinkedIn Images API. Both platforms.                                                                                                              |
+| Reddit             | Deferred                                                | Reddit API requires pre-approval since Nov 2025. Will revisit later.                                                                                                       |
 
 ## Architecture
 
@@ -70,6 +70,7 @@ Retry cron runs every hour
 **New behavior**: Find due posts -> split into auto-publish vs notify-only -> process each group.
 
 Key changes:
+
 - Reduce limit from 50 to 8 (timeout safety with media uploads)
 - Posts with `social_account_id`: atomically set `status=publishing` (check affected rows to prevent duplicate processing by concurrent crons), call `publishPost()`, on failure send notification
 - Posts without `social_account_id`: keep current behavior (set `status=ready`, send notification)
@@ -81,11 +82,13 @@ Key changes:
 ### 2. Publisher Refactor: `src/lib/publishers/index.ts`
 
 **Current signature**:
+
 ```typescript
 publishPost(post: Post, accountId: string): Promise<PublishOutput>
 ```
 
 **New signature**:
+
 ```typescript
 publishPost(
   post: Post,
@@ -95,6 +98,7 @@ publishPost(
 ```
 
 Changes:
+
 - Accept optional `options` object with `supabaseClient` and `userId`
 - If `supabaseClient` provided, use it for all DB operations; otherwise fall back to `await createClient()`
 - `userId` is needed for media storage path (`{userId}/{filename}`). The cron has this from the DB row. Manual publish can look it up from the session.
@@ -104,16 +108,19 @@ Changes:
 ### 3. Token Refresh Refactor: `src/lib/tokenRefresh.ts`
 
 **Current signature**:
+
 ```typescript
 getValidAccessToken(accountId: string): Promise<string>
 ```
 
 **New signature**:
+
 ```typescript
 getValidAccessToken(accountId: string, supabaseClient?: SupabaseClient): Promise<string>
 ```
 
 Changes:
+
 - Accept optional `supabaseClient` parameter
 - If provided, use it instead of `await createClient()`. Resolve client at top of each function: `const supabase = supabaseClient || await createClient()`
 - Same change for `refreshTokenIfNeeded()` which also needs a client for DB writes (currently creates its own client on line 178, which must use the injected one instead)
@@ -142,6 +149,7 @@ STATUS (GET https://upload.x.com/2/media/upload/{media_id}) [async media only]
 ```
 
 Exports:
+
 ```typescript
 uploadTwitterMedia(
   accessToken: string,
@@ -152,6 +160,7 @@ uploadTwitterMedia(
 ```
 
 Platform limits:
+
 - Images: 5MB, formats: JPEG, PNG, GIF, WEBP
 - Videos: 512MB, formats: MP4. Async processing required.
 - GIFs: 15MB. Async processing required.
@@ -174,6 +183,7 @@ Reference in Post
 ```
 
 Exports:
+
 ```typescript
 uploadLinkedInImage(
   accessToken: string,
@@ -184,6 +194,7 @@ uploadLinkedInImage(
 ```
 
 Platform limits:
+
 - Images: 10MB, formats: JPEG, PNG, GIF
 - Video support deferred (uses separate Videos API with more complex flow)
 
@@ -200,6 +211,7 @@ downloadMediaFromStorage(
 ```
 
 Flow:
+
 1. Extract filename from the URL/path. The media system stores paths in 3 formats that must all be handled:
    - Bare filename: `abc123.jpg` → use directly
    - API path: `/api/media/abc123.jpg` → extract last segment
@@ -209,6 +221,7 @@ Flow:
 4. Return buffer + content type
 
 Error handling:
+
 - If the file doesn't exist in storage (deleted by user, storage cleanup, etc.), throw a descriptive error: `Media file not found: {filename}`
 - The caller (`publishToTwitter`/`publishToLinkedIn`) catches this and can choose to publish text-only or fail the entire publish. Default behavior: fail with `retryable: false` and a clear error message.
 
@@ -225,7 +238,9 @@ if (content.mediaUrls?.length && input.supabase && input.userId) {
   mediaIds = []
   for (const mediaUrl of content.mediaUrls) {
     const { buffer, contentType } = await downloadMediaFromStorage(
-      input.supabase, input.userId, mediaUrl
+      input.supabase,
+      input.userId,
+      mediaUrl
     )
     const category = inferMediaCategory(contentType)
     const mediaId = await uploadTwitterMedia(input.accessToken, buffer, contentType, category)
@@ -252,17 +267,22 @@ let imageUrn: string | undefined
 
 if (content.mediaUrl && input.supabase && input.userId) {
   const { buffer, contentType } = await downloadMediaFromStorage(
-    input.supabase, input.userId, content.mediaUrl
+    input.supabase,
+    input.userId,
+    content.mediaUrl
   )
   imageUrn = await uploadLinkedInImage(
-    input.accessToken, input.providerAccountId, buffer, contentType
+    input.accessToken,
+    input.providerAccountId,
+    buffer,
+    contentType
   )
 }
 
 // In post body, add media content if image was uploaded:
 if (imageUrn) {
   postBody.content = {
-    media: { title: '', id: imageUrn }
+    media: { title: '', id: imageUrn },
   }
 }
 ```
@@ -284,8 +304,8 @@ export interface PublishInput {
   post: Post
   accessToken: string
   providerAccountId: string
-  supabase?: SupabaseClient  // For media download
-  userId?: string             // For media storage path
+  supabase?: SupabaseClient // For media download
+  userId?: string // For media storage path
 }
 ```
 
@@ -307,17 +327,17 @@ No code change needed. Users will need to manually reconnect LinkedIn every 60 d
 
 ## Files Changed
 
-| File | Action | Description |
-|------|--------|-------------|
-| `src/app/api/cron/publish/route.ts` | Modify | Add auto-publishing for posts with social accounts |
-| `src/lib/publishers/index.ts` | Modify | Inject Supabase client, update `PublishInput` interface |
-| `src/lib/tokenRefresh.ts` | Modify | Accept optional Supabase client |
-| `src/lib/publishers/twitter.ts` | Modify | Add media attachment to tweets |
-| `src/lib/publishers/linkedin.ts` | Modify | Add media attachment to posts |
-| `src/lib/publishers/twitterMedia.ts` | Create | Twitter v2 chunked media upload |
-| `src/lib/publishers/linkedinMedia.ts` | Create | LinkedIn Images API upload |
-| `src/lib/publishers/mediaDownload.ts` | Create | Download media from Supabase storage |
-| `src/app/api/cron/retry-failed/route.ts` | Modify | Reactivate failed post retry |
+| File                                     | Action | Description                                             |
+| ---------------------------------------- | ------ | ------------------------------------------------------- |
+| `src/app/api/cron/publish/route.ts`      | Modify | Add auto-publishing for posts with social accounts      |
+| `src/lib/publishers/index.ts`            | Modify | Inject Supabase client, update `PublishInput` interface |
+| `src/lib/tokenRefresh.ts`                | Modify | Accept optional Supabase client                         |
+| `src/lib/publishers/twitter.ts`          | Modify | Add media attachment to tweets                          |
+| `src/lib/publishers/linkedin.ts`         | Modify | Add media attachment to posts                           |
+| `src/lib/publishers/twitterMedia.ts`     | Create | Twitter v2 chunked media upload                         |
+| `src/lib/publishers/linkedinMedia.ts`    | Create | LinkedIn Images API upload                              |
+| `src/lib/publishers/mediaDownload.ts`    | Create | Download media from Supabase storage                    |
+| `src/app/api/cron/retry-failed/route.ts` | Modify | Reactivate failed post retry                            |
 
 ## Test Plan
 
@@ -335,13 +355,13 @@ Each new/modified file gets a corresponding `.test.ts`:
 
 ## Risks
 
-| Risk | Mitigation |
-|------|------------|
-| Vercel function timeout (10s hobby, 60s pro) | Limit to 8 posts/run, concurrent publishing, 5-min cron interval |
-| Twitter rate limits (Free: ~500 posts/mo) | Track rate limit headers, respect 429 responses, retryable flag |
-| LinkedIn token expiry (60 days) | Existing error handling marks account as expired with reconnect message |
-| Media download from Supabase adds latency | Signed URLs are fast; media is typically small (< 10MB). 300s signed URL expiry provides headroom. |
-| Twitter media processing (async for video) | Poll with backoff; timeout after 60s and mark as failed+retryable |
-| Concurrent cron runs processing same post | Atomic status transition: `UPDATE ... WHERE status=scheduled` + check affected rows. If 0 rows affected, another cron already grabbed it. |
-| Deleted media files causing publish failure | `downloadMediaFromStorage` throws descriptive error; publish fails with `retryable: false` and clear message |
-| Supabase signed URL expiry during upload | 300s expiry (5 min) provides ample headroom for even large video uploads |
+| Risk                                         | Mitigation                                                                                                                                |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Vercel function timeout (10s hobby, 60s pro) | Limit to 8 posts/run, concurrent publishing, 5-min cron interval                                                                          |
+| Twitter rate limits (Free: ~500 posts/mo)    | Track rate limit headers, respect 429 responses, retryable flag                                                                           |
+| LinkedIn token expiry (60 days)              | Existing error handling marks account as expired with reconnect message                                                                   |
+| Media download from Supabase adds latency    | Signed URLs are fast; media is typically small (< 10MB). 300s signed URL expiry provides headroom.                                        |
+| Twitter media processing (async for video)   | Poll with backoff; timeout after 60s and mark as failed+retryable                                                                         |
+| Concurrent cron runs processing same post    | Atomic status transition: `UPDATE ... WHERE status=scheduled` + check affected rows. If 0 rows affected, another cron already grabbed it. |
+| Deleted media files causing publish failure  | `downloadMediaFromStorage` throws descriptive error; publish fails with `retryable: false` and clear message                              |
+| Supabase signed URL expiry during upload     | 300s expiry (5 min) provides ample headroom for even large video uploads                                                                  |

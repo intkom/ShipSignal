@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 // eslint-disable-next-line react-refresh/only-export-components -- Next.js metadata export
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'Bullhorn Privacy Policy',
+  description: 'ShipSignal Privacy Policy',
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -42,8 +42,8 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-3">2. How We Use Your Data</h2>
           <p>
-            We use your data solely to provide and improve the Bullhorn service. We do not sell user
-            data. We do not use your data for advertising.
+            We use your data solely to provide and improve the ShipSignal service. We do not sell
+            user data. We do not use your data for advertising.
           </p>
         </section>
 
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-3">8. Children</h2>
           <p>
-            Bullhorn is not intended for users under the age of 13. We do not knowingly collect
+            ShipSignal is not intended for users under the age of 13. We do not knowingly collect
             information from children.
           </p>
         </section>
@@ -140,8 +140,11 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-bold text-foreground mb-3">10. Contact</h2>
           <p>
             For privacy-related questions, contact us at{' '}
-            <a href="mailto:privacy@bullhorn.to" className="text-primary font-bold hover:underline">
-              privacy@bullhorn.to
+            <a
+              href="mailto:privacy@shipsignal.app"
+              className="text-primary font-bold hover:underline"
+            >
+              privacy@shipsignal.app
             </a>
             .
           </p>

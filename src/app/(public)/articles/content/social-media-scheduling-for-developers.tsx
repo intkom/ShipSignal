@@ -66,7 +66,7 @@ export const article: ArticleWithContent = {
       <p>
         This is where{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         does something no other scheduler does. Through{' '}
         <Link href="/docs/mcp" className="text-[hsl(var(--gold))] font-bold hover:underline">
@@ -77,8 +77,8 @@ export const article: ArticleWithContent = {
       </p>
       <p>
         Imagine this: you are pair-programming with Claude and just solved a tricky bug. You say
-        &quot;save a post about this fix for Twitter and LinkedIn&quot; and it lands in Bullhorn as
-        a draft, tagged to the right campaign. No context switch. No forgetting.
+        &quot;save a post about this fix for Twitter and LinkedIn&quot; and it lands in ShipSignal
+        as a draft, tagged to the right campaign. No context switch. No forgetting.
       </p>
       <p>
         This is not a gimmick — it is a fundamentally different workflow. Instead of scheduling
@@ -87,10 +87,10 @@ export const article: ArticleWithContent = {
 
       <h2>Built for How Developers Work</h2>
       <p>
-        Bullhorn is built around the way developers already work. It supports Twitter, LinkedIn, and
-        Reddit — the platforms your audience is on. It organizes content into campaigns and projects
-        — the same mental model you use for code. And it has dedicated launch workflows for Product
-        Hunt, Hacker News, and other launch platforms.
+        ShipSignal is built around the way developers already work. It supports Twitter, LinkedIn,
+        and Reddit — the platforms your audience is on. It organizes content into campaigns and
+        projects — the same mental model you use for code. And it has dedicated launch workflows for
+        Product Hunt, Hacker News, and other launch platforms.
       </p>
       <p>
         The free tier gives you 50 posts, 5 campaigns, and 3 projects. Enough to ship a product
@@ -101,7 +101,7 @@ export const article: ArticleWithContent = {
       <p>
         If you are a developer tired of social media tools built for someone else,{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          try Bullhorn free
+          try ShipSignal free
         </Link>
         . Capture ideas from your AI tools, organize by project, and schedule across the platforms
         that matter.

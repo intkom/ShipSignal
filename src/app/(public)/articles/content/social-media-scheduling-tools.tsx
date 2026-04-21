@@ -6,7 +6,7 @@ export const article: ArticleWithContent = {
   slug: 'social-media-scheduling-tools',
   title: 'Best Social Media Scheduling Tools Compared (2026)',
   description:
-    'Compare the best social media scheduling tools for 2026. Honest review of Buffer, Hootsuite, Later, and Bullhorn with pros, cons, and pricing.',
+    'Compare the best social media scheduling tools for 2026. Honest review of Buffer, Hootsuite, Later, and ShipSignal with pros, cons, and pricing.',
   publishedAt: '2026-03-16',
   keywords: [
     'social media scheduling tools',
@@ -96,10 +96,10 @@ export const article: ArticleWithContent = {
         <strong>Best for:</strong> Visual brands and Instagram-first creators.
       </p>
 
-      <h2>Bullhorn</h2>
+      <h2>ShipSignal</h2>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         is a social media scheduler built specifically for developers, indie hackers, and teams who
         ship fast. It focuses on Twitter, LinkedIn, and Reddit — the platforms technical audiences
@@ -128,7 +128,7 @@ export const article: ArticleWithContent = {
             <th>Buffer</th>
             <th>Hootsuite</th>
             <th>Later</th>
-            <th>Bullhorn</th>
+            <th>ShipSignal</th>
           </tr>
         </thead>
         <tbody>
@@ -190,7 +190,7 @@ export const article: ArticleWithContent = {
         it becoming a full-time job, the choice depends on your audience. For technical audiences on
         Twitter, LinkedIn, and Reddit,{' '}
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         is purpose-built for the job. For visual-first brands on Instagram, Later is strong. For
         enterprise teams with budget, Hootsuite covers everything.
@@ -198,7 +198,7 @@ export const article: ArticleWithContent = {
 
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Try Bullhorn free
+          Try ShipSignal free
         </Link>{' '}
         — 50 posts, 5 campaigns, no credit card required.
       </p>

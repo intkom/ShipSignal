@@ -1,8 +1,8 @@
 import { Resend } from 'resend'
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY || ''
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Bullhorn <notifications@bullhorn.to>'
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://bullhorn.to'
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'ShipSignal <notifications@shipsignal.app>'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://shipsignal.app'
 
 interface ReadyPost {
   id: string
@@ -42,7 +42,7 @@ export async function sendPostReadyEmail(userEmail: string, post: ReadyPost): Pr
             Open Post
           </a>
           <p style="color: #999; font-size: 12px; margin: 24px 0 0;">
-            Sent by <a href="${APP_URL}" style="color: #ce9a08;">Bullhorn</a>
+            Sent by <a href="${APP_URL}" style="color: #ce9a08;">ShipSignal</a>
           </p>
         </div>
       `,
@@ -97,7 +97,7 @@ export async function sendPostsReadyEmail(userEmail: string, posts: ReadyPost[])
             View All Ready Posts
           </a>
           <p style="color: #999; font-size: 12px; margin: 24px 0 0;">
-            Sent by <a href="${APP_URL}" style="color: #ce9a08;">Bullhorn</a>
+            Sent by <a href="${APP_URL}" style="color: #ce9a08;">ShipSignal</a>
           </p>
         </div>
       `,
@@ -138,14 +138,14 @@ export async function sendWaitlistConfirmation(
         <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 24px;">
           <h2 style="color: #ce9a08; margin: 0 0 16px;">You're on the list!</h2>
           <p style="color: #333; margin: 0 0 12px;">
-            Thanks for your interest in <strong>${featureLabel}</strong> on Bullhorn.
+            Thanks for your interest in <strong>${featureLabel}</strong> on ShipSignal.
           </p>
           <p style="color: #333; margin: 0 0 12px;">
             We'll notify you as soon as it's available. In the meantime, keep scheduling
             your posts — we'll let you know when they can go out automatically.
           </p>
           <p style="color: #999; font-size: 12px; margin: 24px 0 0;">
-            Sent by <a href="${APP_URL}" style="color: #ce9a08;">Bullhorn</a>
+            Sent by <a href="${APP_URL}" style="color: #ce9a08;">ShipSignal</a>
           </p>
         </div>
       `,

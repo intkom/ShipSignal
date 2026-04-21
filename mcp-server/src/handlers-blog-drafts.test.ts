@@ -137,7 +137,6 @@ async function handleSearchBlogDrafts(args: {
 
 // eslint-disable-next-line max-lines-per-function
 describe('Blog Draft Tool Handlers', () => {
-   
   beforeEach(() => {
     mockGet.mockReset()
     mockPost.mockReset()
@@ -148,7 +147,6 @@ describe('Blog Draft Tool Handlers', () => {
 
   // eslint-disable-next-line max-lines-per-function
   describe('create_blog_draft', () => {
-     
     it('should create a blog draft with valid title', async () => {
       const mockDraft = { id: 'draft-1', title: 'My Post', status: 'draft', content: '' }
       mockPost.mockResolvedValueOnce({ draft: mockDraft })
@@ -160,7 +158,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.draft).toEqual(mockDraft)
     })
 
-     
     it('should create a blog draft with all fields', async () => {
       const mockDraft = { id: 'draft-2', title: 'Full Post', status: 'draft' }
       mockPost.mockResolvedValueOnce({ draft: mockDraft })
@@ -186,28 +183,24 @@ describe('Blog Draft Tool Handlers', () => {
       })
     })
 
-     
     it('should return error when title is missing', async () => {
       const result = await handleCreateBlogDraft({})
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('title is required')
     })
 
-     
     it('should return error when title is empty', async () => {
       const result = await handleCreateBlogDraft({ title: '' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('title is required')
     })
 
-     
     it('should return error when title is whitespace', async () => {
       const result = await handleCreateBlogDraft({ title: '   ' })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('title is required')
     })
 
-     
     it('should trim the title', async () => {
       const mockDraft = { id: 'draft-3', title: 'Trimmed', status: 'draft' }
       mockPost.mockResolvedValueOnce({ draft: mockDraft })
@@ -220,9 +213,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('get_blog_draft', () => {
-     
     it('should return draft when found', async () => {
       const mockDraft = { id: 'draft-1', title: 'My Post', content: '# Hello' }
       mockGet.mockResolvedValueOnce({ draft: mockDraft })
@@ -234,7 +225,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.draft).toEqual(mockDraft)
     })
 
-     
     it('should return error when draft not found', async () => {
       mockGet.mockRejectedValueOnce(new Error('Not found'))
 
@@ -244,9 +234,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('update_blog_draft', () => {
-     
     it('should update draft with valid data', async () => {
       const mockDraft = { id: 'draft-1', title: 'Updated Title' }
       mockPatch.mockResolvedValueOnce({ draft: mockDraft })
@@ -258,7 +246,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.draft).toEqual(mockDraft)
     })
 
-     
     it('should return error when draft not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -268,9 +255,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('delete_blog_draft', () => {
-     
     it('should delete draft when confirmed', async () => {
       mockDelete.mockResolvedValueOnce({})
 
@@ -281,14 +266,12 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.message).toContain('Blog draft draft-1 permanently deleted')
     })
 
-     
     it('should return error when not confirmed', async () => {
       const result = await handleDeleteBlogDraft({ id: 'draft-1', confirmed: false })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Deletion not confirmed')
     })
 
-     
     it('should return error when draft not found', async () => {
       mockDelete.mockRejectedValueOnce(new Error('Not found'))
 
@@ -298,9 +281,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('archive_blog_draft', () => {
-     
     it('should archive draft when confirmed', async () => {
       const mockDraft = { id: 'draft-1', status: 'archived' }
       mockPatch.mockResolvedValueOnce({ draft: mockDraft })
@@ -312,14 +293,12 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.draft.status).toBe('archived')
     })
 
-     
     it('should return error when not confirmed', async () => {
       const result = await handleArchiveBlogDraft({ id: 'draft-1', confirmed: false })
       expect(result.isError).toBe(true)
       expect(result.content[0].text).toContain('Archive not confirmed')
     })
 
-     
     it('should return error when draft not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -329,9 +308,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('restore_blog_draft', () => {
-     
     it('should restore archived draft', async () => {
       const mockDraft = { id: 'draft-1', status: 'draft' }
       mockPatch.mockResolvedValueOnce({ draft: mockDraft })
@@ -343,7 +320,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.draft.status).toBe('draft')
     })
 
-     
     it('should return error when draft not found', async () => {
       mockPatch.mockRejectedValueOnce(new Error('Not found'))
 
@@ -353,9 +329,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('list_blog_drafts', () => {
-     
     it('should list drafts with no filter', async () => {
       const mockDrafts = [
         {
@@ -383,7 +357,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.count).toBe(2)
     })
 
-     
     it('should pass status filter', async () => {
       mockGet.mockResolvedValueOnce({ drafts: [] })
 
@@ -394,7 +367,6 @@ describe('Blog Draft Tool Handlers', () => {
       )
     })
 
-     
     it('should use default limit of 50', async () => {
       mockGet.mockResolvedValueOnce({ drafts: [] })
 
@@ -403,9 +375,7 @@ describe('Blog Draft Tool Handlers', () => {
     })
   })
 
-   
   describe('search_blog_drafts', () => {
-     
     it('should return matching drafts', async () => {
       const mockDrafts = [{ id: 'd1', title: 'React Guide' }]
       mockGet.mockResolvedValueOnce({ drafts: mockDrafts })
@@ -417,7 +387,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.drafts).toEqual(mockDrafts)
     })
 
-     
     it('should return empty results', async () => {
       mockGet.mockResolvedValueOnce({ drafts: [] })
 
@@ -428,7 +397,6 @@ describe('Blog Draft Tool Handlers', () => {
       expect(response.drafts).toEqual([])
     })
 
-     
     it('should return error when query is empty', async () => {
       const result = await handleSearchBlogDrafts({ query: '' })
       expect(result.isError).toBe(true)

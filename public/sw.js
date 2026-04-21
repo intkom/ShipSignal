@@ -1,5 +1,5 @@
 self.addEventListener('push', (event) => {
-  const data = event.data?.json() ?? { title: 'Bullhorn', body: 'You have a notification' }
+  const data = event.data?.json() ?? { title: 'ShipSignal', body: 'You have a notification' }
   event.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,

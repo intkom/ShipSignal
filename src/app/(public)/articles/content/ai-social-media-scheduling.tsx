@@ -82,7 +82,7 @@ export const article: ArticleWithContent = {
       </p>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Bullhorn
+          ShipSignal
         </Link>{' '}
         provides an{' '}
         <Link href="/docs/mcp" className="text-[hsl(var(--gold))] font-bold hover:underline">
@@ -116,12 +116,12 @@ export const article: ArticleWithContent = {
       <ol>
         <li>
           <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-            Create a Bullhorn account
+            Create a ShipSignal account
           </Link>{' '}
           and generate an API key in Settings
         </li>
         <li>
-          Add the Bullhorn MCP server to your AI tool (see{' '}
+          Add the ShipSignal MCP server to your AI tool (see{' '}
           <Link href="/docs/mcp" className="text-[hsl(var(--gold))] font-bold hover:underline">
             MCP documentation
           </Link>
@@ -136,7 +136,7 @@ export const article: ArticleWithContent = {
       </p>
       <p>
         <Link href="/signup" className="text-[hsl(var(--gold))] font-bold hover:underline">
-          Try Bullhorn free
+          Try ShipSignal free
         </Link>{' '}
         — MCP integration included on every plan.
       </p>

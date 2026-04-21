@@ -21,37 +21,25 @@ beforeEach(() => {
 describe('AutoPublishIndicator', () => {
   it('returns null when hasAccount is false', () => {
     mockHasFeature.mockReturnValue(true)
-    const { container } = render(
-      <AutoPublishIndicator hasAccount={false} hasSchedule={true} platform="twitter" />
-    )
-    expect(container.innerHTML).toBe('')
-  })
-
-  it('returns null for reddit platform', () => {
-    mockHasFeature.mockReturnValue(true)
-    const { container } = render(
-      <AutoPublishIndicator hasAccount={true} hasSchedule={true} platform="reddit" />
-    )
+    const { container } = render(<AutoPublishIndicator hasAccount={false} hasSchedule={true} />)
     expect(container.innerHTML).toBe('')
   })
 
   it('shows auto-publish badge for Pro user with schedule', () => {
     mockHasFeature.mockReturnValue(true)
-    render(<AutoPublishIndicator hasAccount={true} hasSchedule={true} platform="twitter" />)
+    render(<AutoPublishIndicator hasAccount={true} hasSchedule={true} />)
     expect(screen.getByText(/auto-published/i)).toBeDefined()
   })
 
   it('shows upgrade prompt for Free user', () => {
     mockHasFeature.mockReturnValue(false)
-    render(<AutoPublishIndicator hasAccount={true} hasSchedule={true} platform="twitter" />)
+    render(<AutoPublishIndicator hasAccount={true} hasSchedule={true} />)
     expect(screen.getByText(/upgrade to pro/i)).toBeDefined()
   })
 
   it('returns null for Pro user without schedule', () => {
     mockHasFeature.mockReturnValue(true)
-    const { container } = render(
-      <AutoPublishIndicator hasAccount={true} hasSchedule={false} platform="linkedin" />
-    )
+    const { container } = render(<AutoPublishIndicator hasAccount={true} hasSchedule={false} />)
     expect(container.innerHTML).toBe('')
   })
 })

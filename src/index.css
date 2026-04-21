@@ -32,43 +32,49 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
 
-  --color-sticker-yellow: #ce9a08;
-  --color-sticker-pink: #ec4899;
-  --color-sticker-purple: #8b5cf6;
-  --color-sticker-green: #22c55e;
-  --color-sticker-blue: #0ea5e9;
-  --color-sticker-orange: #f97316;
-  --color-sticker-black: #1f2937;
+  /* Semantic status colors */
+  --color-sticker-yellow: #b45309;
+  --color-sticker-pink: #be185d;
+  --color-sticker-purple: #7c3aed;
+  --color-sticker-green: #15803d;
+  --color-sticker-blue: #1d4ed8;
+  --color-sticker-orange: #ff4f00;
+  --color-sticker-black: #121212;
 
+  /* Platform colors */
   --color-twitter: #1da1f2;
-  --color-twitter-soft: #e8f6fe;
-  --color-twitter-border: #1da1f2;
+  --color-twitter-soft: #f0f9ff;
+  --color-twitter-border: #bfdbfe;
 
   --color-linkedin: #0a66c2;
-  --color-linkedin-soft: #e6f0f9;
-  --color-linkedin-border: #0a66c2;
+  --color-linkedin-soft: #eff6ff;
+  --color-linkedin-border: #bfdbfe;
 
   --color-reddit: #ff4500;
-  --color-reddit-soft: #fff0eb;
-  --color-reddit-border: #ff4500;
+  --color-reddit-soft: #fff7ed;
+  --color-reddit-border: #fed7aa;
 
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --radius-sm: 10px;
-  --radius-pill: 50px;
+  /* Sharp corners — Swiss minimalist */
+  --radius-lg: 2px;
+  --radius-md: 2px;
+  --radius-sm: 0px;
+  --radius-xl: 2px;
+  --radius-pill: 2px;
 
-  --font-sans: Nunito, system-ui, sans-serif;
-  --font-display: Nunito, system-ui, sans-serif;
-  --font-mono: JetBrains Mono, SF Mono, monospace;
+  /* Typography */
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
-  --shadow-sticker: 4px 4px 0 hsl(var(--border));
-  --shadow-sticker-sm: 3px 3px 0 hsl(var(--border));
-  --shadow-sticker-hover: 2px 2px 0 hsl(var(--border));
+  /* Hard shadows — brutalist/technical */
+  --shadow-sticker: 2px 2px 0 #000;
+  --shadow-sticker-sm: 2px 2px 0 #000;
+  --shadow-sticker-hover: 3px 3px 0 #000;
 
-  --animate-fade-in: fade-in 0.2s ease-out;
-  --animate-slide-up: slide-up 0.3s ease-out;
-  --animate-slide-in: slide-in 0.3s ease-out;
-  --animate-bounce-in: bounce-in 0.3s ease-out;
+  --animate-fade-in: fade-in 0.15s ease-out;
+  --animate-slide-up: slide-up 0.2s ease-out;
+  --animate-slide-in: slide-in 0.2s ease-out;
+  --animate-bounce-in: bounce-in 0.15s ease-out;
 
   @keyframes fade-in {
     0% {
@@ -81,7 +87,7 @@
   @keyframes slide-up {
     0% {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(8px);
     }
     100% {
       opacity: 1;
@@ -91,7 +97,7 @@
   @keyframes slide-in {
     0% {
       opacity: 0;
-      transform: translateX(-10px);
+      transform: translateX(-8px);
     }
     100% {
       opacity: 1;
@@ -101,10 +107,7 @@
   @keyframes bounce-in {
     0% {
       opacity: 0;
-      transform: scale(0.9);
-    }
-    50% {
-      transform: scale(1.02);
+      transform: scale(0.97);
     }
     100% {
       opacity: 1;
@@ -131,107 +134,113 @@
   }
 }
 
-/* Sticker utility classes */
+/* Swiss Minimalist utility classes */
 @utility sticker-card {
-  @apply bg-card border-[3px] border-border rounded-lg;
-  box-shadow: 4px 4px 0 hsl(var(--border));
+  @apply bg-card border border-border;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
 }
 @utility sticker-card-hover {
-  @apply sticker-card transition-all duration-200;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 6px 6px 0 hsl(var(--border));
-  }
-}
-@utility sticker-button {
-  @apply border-[3px] border-border rounded-md font-bold;
-  box-shadow: 3px 3px 0 hsl(var(--border));
+  @apply sticker-card transition-all duration-150;
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 4px 4px 0 hsl(var(--border));
+    box-shadow: 3px 3px 0 #000;
+  }
+}
+@utility sticker-button {
+  @apply border border-border font-bold uppercase tracking-wider text-sm;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 0 #000;
   }
 
   &:active {
     transform: translateY(1px);
-    box-shadow: 2px 2px 0 hsl(var(--border));
+    box-shadow: 1px 1px 0 #000;
   }
 }
 @utility sticker-input {
-  @apply border-[3px] border-border rounded-md bg-card;
-  box-shadow: 3px 3px 0 hsl(var(--border));
+  @apply border border-border bg-card;
+  border-radius: 2px;
 
   &:focus {
-    @apply ring-2 ring-primary ring-offset-2;
-    box-shadow: 2px 2px 0 hsl(var(--border));
+    @apply ring-1 ring-primary ring-offset-1;
+    outline: none;
   }
 }
 @utility sticker-badge {
-  @apply inline-flex items-center px-3 py-1 rounded-pill font-bold text-sm border-2 border-border;
+  @apply inline-flex items-center px-2 py-0.5 font-mono text-xs uppercase tracking-widest border border-border;
+  border-radius: 2px;
 }
+
+/* Thin orange accent bar — replaces rainbow gradient */
 @utility gradient-bar {
-  background: linear-gradient(90deg, #ce9a08, #ec4899, #8b5cf6, #22c55e, #0ea5e9, #f97316);
+  background: hsl(var(--primary));
+  height: 2px;
 }
 
 @layer base {
-  /* Light mode - Sticker Bomb Theme */
+  /* Light mode — Swiss Minimalist / Premium Engineering */
   :root {
-    /* Warm yellow-tinted background */
-    --background: 48 100% 96%;
-    --foreground: 220 20% 15%;
-    /* Clean white card surfaces */
+    /* Ghost White background */
+    --background: 0 0% 97.6%;
+    /* Deep Charcoal */
+    --foreground: 0 0% 7%;
+    /* Pure White card surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
+    --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
-    /* Deep amber primary — improved WCAG contrast on cream background */
-    --primary: 35 95% 34%;
+    --popover-foreground: 0 0% 7%;
+    /* International Orange — #FF4F00 */
+    --primary: 19 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 15%;
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 10% 45%;
-    /* Pink accent */
-    --accent: 330 80% 60%;
+    /* Subtle gray secondary */
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
+    /* Orange accent */
+    --accent: 19 100% 50%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    /* Strong black borders */
-    --border: 220 20% 20%;
-    --input: 220 20% 20%;
-    --ring: 35 95% 34%;
-    --radius: 12px;
-    --gold: 35 95% 34%;
-    --gold-dark: 30 95% 24%;
+    /* Thin 1px Light Gray borders */
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 19 100% 50%;
+    --radius: 2px;
+    /* Gold maps to orange primary */
+    --gold: 19 100% 50%;
+    --gold-dark: 19 100% 35%;
   }
 
-  /* Dark mode - Sticker Bomb Dark */
+  /* Dark mode — forced to light for consistent Swiss minimalist experience */
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 0 0% 95%;
-    --card: 220 18% 14%;
-    --card-foreground: 0 0% 95%;
-    --popover: 220 18% 14%;
-    --popover-foreground: 0 0% 95%;
-    /* Vibrant gold — visible on dark backgrounds, white text readable */
-    --primary: 43 96% 50%;
-    --primary-foreground: 220 20% 10%;
-    --secondary: 220 18% 20%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 220 18% 18%;
-    --muted-foreground: 220 10% 60%;
-    /* Pink accent */
-    --accent: 330 80% 60%;
+    --background: 0 0% 97.6%;
+    --foreground: 0 0% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 19 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 19 100% 50%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 62% 50%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    /* Lighter borders for dark mode */
-    --border: 220 15% 35%;
-    --input: 220 15% 35%;
-    --ring: 43 96% 50%;
-    --gold: 43 96% 50%;
-    --gold-dark: 36 92% 30%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 19 100% 50%;
+    --gold: 19 100% 50%;
+    --gold-dark: 19 100% 35%;
   }
 
   * {
@@ -240,103 +249,146 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-weight: 500;
+    font-weight: 400;
+    /* Subtle light gray grid — technical blueprint aesthetic */
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Normalize thick borders — convert to Swiss 1px style */
+  .border-\[3px\] {
+    border-width: 1px;
+  }
+  .border-b-\[3px\] {
+    border-bottom-width: 1px;
+  }
+  .border-t-\[3px\] {
+    border-top-width: 1px;
+  }
+  .border-l-\[3px\] {
+    border-left-width: 1px;
+  }
+  .border-r-\[3px\] {
+    border-right-width: 1px;
+  }
+  .border-2 {
+    border-width: 1px;
+  }
+
+  /* Normalize pill/full radius — keep square aesthetic */
+  .rounded-full,
+  .rounded-pill {
+    border-radius: 2px;
+  }
+
+  /* Section headers — Technical Blueprint typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — minimal */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-muted rounded-full;
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-border rounded-full border-2 border-muted;
+  background: hsl(var(--border));
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-foreground/50;
+  background: hsl(var(--foreground) / 0.4);
 }
 
-/* Selection - Pink highlight */
+/* Selection — orange highlight */
 ::selection {
-  @apply bg-sticker-pink text-white;
+  background: hsl(var(--primary) / 0.15);
+  color: hsl(var(--foreground));
 }
 
-/* Focus visible - Yellow ring */
+/* Focus visible — orange ring */
 :focus-visible {
-  @apply outline-hidden ring-2 ring-primary ring-offset-2 ring-offset-background;
+  @apply outline-hidden ring-1 ring-primary ring-offset-2 ring-offset-background;
 }
 
-/* FullCalendar overrides - Sticker style */
+/* FullCalendar overrides — Swiss style */
 .fc {
   --fc-border-color: hsl(var(--border));
   --fc-page-bg-color: transparent;
   --fc-neutral-bg-color: hsl(var(--muted));
-  --fc-list-event-hover-bg-color: hsl(var(--primary) / 0.2);
-  --fc-today-bg-color: hsl(var(--primary) / 0.15);
+  --fc-list-event-hover-bg-color: hsl(var(--primary) / 0.08);
+  --fc-today-bg-color: hsl(var(--primary) / 0.06);
 }
 
 .fc .fc-button-primary {
-  @apply bg-card text-foreground border-[3px] border-border font-bold rounded-md;
-  box-shadow: 3px 3px 0 hsl(var(--border));
+  @apply bg-card text-foreground border border-border font-bold uppercase tracking-wider text-xs;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
 }
 
 .fc .fc-button-primary:hover {
-  @apply bg-primary text-primary-foreground;
+  @apply bg-foreground text-card;
   transform: translateY(-1px);
+  box-shadow: 3px 3px 0 #000;
 }
 
 .fc .fc-button-primary:disabled {
-  @apply opacity-50;
+  @apply opacity-40;
 }
 
 .fc .fc-button-primary:not(:disabled).fc-button-active {
   @apply bg-primary text-primary-foreground;
-  box-shadow: 2px 2px 0 hsl(var(--border));
+  box-shadow: 1px 1px 0 #000;
 }
 
 .fc-theme-standard td,
 .fc-theme-standard th {
-  @apply border-border border-2;
+  border: 1px solid hsl(var(--border));
 }
 
 .fc .fc-daygrid-day-number {
-  @apply text-foreground p-2 font-bold;
+  @apply text-foreground p-2 font-bold font-mono text-xs;
 }
 
 .fc .fc-col-header-cell-cushion {
-  @apply text-foreground uppercase text-xs tracking-wider py-3 font-extrabold;
+  @apply text-foreground uppercase text-xs tracking-widest py-3 font-bold font-mono;
 }
 
 .fc .fc-daygrid-day.fc-day-today {
-  @apply bg-primary/20;
+  background: hsl(var(--primary) / 0.06);
 }
 
 .fc .fc-daygrid-day:hover {
-  @apply bg-primary/10;
+  background: hsl(var(--primary) / 0.04);
 }
 
 /* Date and time input styling */
 input[type='date'],
 input[type='time'] {
-  color-scheme: light dark;
-  /* iOS Safari fix: ensure inputs are tappable */
+  color-scheme: light;
   min-height: 44px;
   -webkit-appearance: none;
   appearance: none;
   position: relative;
 }
 
-/* iOS Safari: make the entire input area tappable */
 @supports (-webkit-touch-callout: none) {
   input[type='date'],
   input[type='time'] {
-    /* On iOS, the input needs to cover the full tap area */
     min-width: 100%;
     padding-right: 2rem;
   }
@@ -345,9 +397,8 @@ input[type='time'] {
 input[type='date']::-webkit-calendar-picker-indicator,
 input[type='time']::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 0.5;
   filter: invert(0);
-  /* iOS Safari fix: make picker indicator larger and easier to tap */
   padding: 0.5rem;
   margin: 0;
   position: absolute;
@@ -356,12 +407,6 @@ input[type='time']::-webkit-calendar-picker-indicator {
   transform: translateY(-50%);
   width: 2rem;
   height: 2rem;
-}
-
-.dark input[type='date']::-webkit-calendar-picker-indicator,
-.dark input[type='time']::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.8;
 }
 
 input[type='date']::-webkit-calendar-picker-indicator:hover,
@@ -423,23 +468,29 @@ input[type='time']::-webkit-calendar-picker-indicator:hover {
 }
 
 .markdown-preview blockquote {
-  @apply border-l-4 border-[hsl(var(--gold))] pl-4 py-1 my-3 text-muted-foreground italic bg-muted/30 rounded-r-md;
+  @apply border-l-4 border-primary pl-4 py-1 my-3 text-muted-foreground bg-muted/40;
+  border-radius: 0;
 }
 
 .markdown-preview code {
-  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-[hsl(var(--accent))];
+  @apply bg-muted px-1.5 py-0.5 text-sm font-mono text-foreground;
+  border-radius: 2px;
+  border: 1px solid hsl(var(--border));
 }
 
 .markdown-preview pre {
-  @apply bg-muted rounded-lg p-4 my-3 overflow-x-auto;
+  @apply bg-muted p-4 my-3 overflow-x-auto;
+  border-radius: 2px;
+  border: 1px solid hsl(var(--border));
+  box-shadow: 2px 2px 0 #000;
 }
 
 .markdown-preview pre code {
-  @apply bg-transparent px-0 py-0 text-foreground;
+  @apply bg-transparent px-0 py-0 text-foreground border-0;
 }
 
 .markdown-preview a {
-  @apply text-[hsl(var(--gold))] underline underline-offset-2 hover:text-[hsl(var(--gold-dark))] transition-colors;
+  @apply text-primary underline underline-offset-2 hover:opacity-75 transition-opacity;
 }
 
 .markdown-preview hr {
@@ -447,7 +498,8 @@ input[type='time']::-webkit-calendar-picker-indicator:hover {
 }
 
 .markdown-preview img {
-  @apply max-w-full rounded-lg my-3;
+  @apply max-w-full my-3;
+  border-radius: 2px;
 }
 
 .markdown-preview table {
@@ -455,11 +507,11 @@ input[type='time']::-webkit-calendar-picker-indicator:hover {
 }
 
 .markdown-preview th {
-  @apply border-2 border-border bg-muted px-3 py-2 text-left font-bold text-sm;
+  @apply border border-border bg-muted px-3 py-2 text-left font-bold text-xs uppercase tracking-wider font-mono;
 }
 
 .markdown-preview td {
-  @apply border-2 border-border px-3 py-2 text-sm;
+  @apply border border-border px-3 py-2 text-sm;
 }
 
 .markdown-preview strong {
