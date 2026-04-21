@@ -59,7 +59,8 @@ assets/*.png
 assets/*.svg
 ios/App/App/Assets.xcassets/**/*.png
 
-# Claude session plans and internal thinking (ephemeral)
+# Claude config — secrets and user-specific overrides must never be committed
+.claude/settings.local.json
 .claude/plans/
 .claude/thinking/
 
