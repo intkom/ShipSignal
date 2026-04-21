@@ -183,6 +183,93 @@
   height: 2px;
 }
 
+/* ─── Auth form utilities ────────────────────────────────────────────────── */
+
+/* Auth card — elevated card used on login/signup/forgot-password */
+@utility auth-card {
+  @apply bg-card border border-border;
+  border-radius: 2px;
+  box-shadow: 6px 6px 0 hsl(var(--border));
+  padding: 2rem;
+}
+
+/* Auth text input — consistent height, focus ring, shadow */
+@utility auth-input {
+  @apply w-full px-4 py-3 bg-card text-foreground border border-border;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.2s;
+
+  &::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  &:focus {
+    outline: none;
+    @apply ring-2 ring-primary/50;
+  }
+}
+
+/* Auth primary button — full-width, primary color */
+@utility auth-btn {
+  @apply w-full px-4 py-3.5 bg-primary text-primary-foreground font-bold border border-border;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 hsl(var(--border));
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* Auth ghost button — full-width, card background (e.g. Google OAuth) */
+@utility auth-btn-ghost {
+  @apply w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-card text-foreground font-bold border border-border;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #000;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 hsl(var(--border));
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 3px 3px 0 #000;
+  }
+}
+
+/* Auth error/alert box */
+@utility auth-error {
+  @apply p-4 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/30;
+  border-radius: 2px;
+}
+
+/* ─── Section rhythm ─────────────────────────────────────────────────────── */
+
+/* Full section — main landing/docs sections */
+@utility section-full {
+  @apply px-4 py-16 sm:px-6 sm:py-24;
+}
+
+/* Tight section — denser spacing for secondary sections */
+@utility section-tight {
+  @apply px-4 py-8 sm:px-6 sm:py-12;
+}
+
 @layer base {
   /* Light mode — Swiss Minimalist / Premium Engineering */
   :root {
