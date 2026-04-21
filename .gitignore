@@ -59,10 +59,8 @@ assets/*.png
 assets/*.svg
 ios/App/App/Assets.xcassets/**/*.png
 
-# Claude config — secrets and user-specific overrides must never be committed
-.claude/settings.local.json
-.claude/plans/
-.claude/thinking/
+# Claude config — contains secrets and user-specific overrides
+.claude/
 
 # Temp scripts
 scripts/seed-*.ts
