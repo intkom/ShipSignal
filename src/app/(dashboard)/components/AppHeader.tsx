@@ -12,6 +12,7 @@ import {
   Rocket,
   Calendar,
   Radio,
+  Brain,
 } from 'lucide-react'
 import { UserMenu } from './UserMenu'
 import { UsageBanner } from '@/components/ui/UsageBanner'
@@ -136,6 +137,19 @@ export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
               aria-label="Launch Posts"
             >
               <Rocket className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/ai-founder-voice"
+              className={cn(
+                'p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-muted-foreground transition-all',
+                'hover:text-foreground hover:bg-secondary',
+                'border-2 border-transparent hover:border-border',
+                pathname?.startsWith('/ai-founder-voice') &&
+                  'bg-secondary text-foreground border-border'
+              )}
+              aria-label="AI Voice"
+            >
+              <Brain className="w-5 h-5" />
             </Link>
             <Link
               href="/settings"

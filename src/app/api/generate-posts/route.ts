@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { requireAuth, parseJsonBody } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
-import { generatePostsFromActivity, type AiPersona } from '@/lib/aiTransformer'
+import { generatePostsFromActivity } from '@/lib/aiTransformer'
 import { transformPostFromDb, type DbPost } from '@/lib/utils'
 import { logger } from '@/lib/logger'
 import type { Post } from '@/lib/posts'
@@ -62,29 +62,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Fetch user's AI persona (best-effort — fall back to defaults if missing)
-    let persona: AiPersona = {}
-    const profileRes = await supabase
-      .from('user_profiles')
-      .select('founder_bio, tone_of_voice, default_hashtags')
-      .eq('id', userId)
-      .single()
-    if (!profileRes.error && profileRes.data) {
-      persona = {
-        founderBio: profileRes.data.founder_bio,
-        toneOfVoice: profileRes.data.tone_of_voice,
-        defaultHashtags: profileRes.data.default_hashtags,
-      }
-    }
-
     // Generate content via AI
     let generated: Awaited<ReturnType<typeof generatePostsFromActivity>>
     try {
-      generated = await generatePostsFromActivity(
-        activity.raw_text,
-        project.github_repo_url,
-        persona
-      )
+      generated = await generatePostsFromActivity(activity.raw_text, project.github_repo_url)
     } catch (err) {
       logger.error('AI generation error:', err)
       return NextResponse.json(

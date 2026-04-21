@@ -4,7 +4,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Home, Calendar, Plus, Settings, FileText } from 'lucide-react'
+import { Home, Calendar, Plus, Settings, FileText, Brain } from 'lucide-react'
 
 interface NavItem {
   icon: typeof Home
@@ -18,6 +18,7 @@ const navItems: NavItem[] = [
   { icon: Calendar, label: 'Calendar', path: '/calendar' },
   { icon: Plus, label: 'New', path: '/new', isAction: true },
   { icon: FileText, label: 'Blog', path: '/blog' },
+  { icon: Brain, label: 'AI Voice', path: '/ai-founder-voice' },
   { icon: Settings, label: 'More', path: '/settings' },
 ]
 

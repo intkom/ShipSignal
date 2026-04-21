@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { createClient } from '@/lib/supabase/server'
 import { logger } from './logger'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
@@ -13,15 +14,16 @@ const BASE_RULES = `Rules:
 - Newsletter summary: 2-3 punchy paragraphs suitable for a "what shipped this week" section.
 - Never invent features not present in the raw text.
 - Keep Twitter tweets under 280 characters each.
-- Append the default hashtags (if any) to the end of the twitter thread's last tweet and the linkedin post.
+- Append the default hashtags (if any) to the end of the twitter thread's last tweet and the linkedin post.`
 
-Respond ONLY with valid JSON matching this exact schema (no markdown fences, no extra keys):
+const JSON_OUTPUT_RULES = `Respond ONLY with valid JSON matching this exact schema (no markdown fences, no extra keys):
 {
   "thread": ["tweet1", "tweet2", "tweet3"],
   "linkedin": "full linkedin post text",
   "newsletter": "full newsletter/blog summary text"
 }
-The "thread" array must have 1–5 strings.`
+The "thread" array must have 1-5 strings.
+CRITICAL: You must output ONLY raw JSON. Do NOT wrap it in markdown blockquotes (\`\`\`json). Do NOT add any conversational text before or after the JSON. Start your response strictly with '{' and end with '}'.`
 
 export interface AiPersona {
   founderBio?: string | null
@@ -37,25 +39,78 @@ export interface GeneratedContent {
 
 function buildSystemPrompt(persona: AiPersona): string {
   const bio = persona.founderBio?.trim()
-  const tone = persona.toneOfVoice?.trim() || 'Authentic'
+  const tone = persona.toneOfVoice?.trim()
   const hashtags = persona.defaultHashtags?.trim()
 
-  const personaBlock = [
-    bio ? `About the founder: ${bio}` : null,
-    `Tone of voice: ${tone} — every post should reflect this tone consistently.`,
-    hashtags ? `Default hashtags to append: ${hashtags}` : null,
-  ]
-    .filter(Boolean)
-    .join('\n')
+  const personalizationBlock = bio || tone || hashtags
+    ? `
+CRITICAL PERSONALIZATION INSTRUCTIONS:
+Founder Context/Bio: ${bio || 'Not provided'}
+Tone of Voice: ${tone || 'Authentic'}
+Mandatory Hashtags: ${hashtags || 'None'}
+You must strictly adopt this persona and tone.`
+    : ''
 
   return `You are a Founder Ghostwriter specializing in "Building in Public" content.
 Your job is to transform raw GitHub activity (release notes, merged PRs, or recent commits) into
 compelling social content that is authentic, slightly technical but accessible, and focused on
-value and progress — never hype or fluff.
+value and progress - never hype or fluff.
+${personalizationBlock}
 
-${personaBlock}
+${BASE_RULES}
 
-${BASE_RULES}`
+${JSON_OUTPUT_RULES}`
+}
+
+async function getFounderVoiceSettings(): Promise<AiPersona> {
+  try {
+    const supabase = await createClient()
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) return {}
+
+    const aiSettingsResult = await supabase
+      .from('ai_settings')
+      .select('founder_bio, voice_tone, tone_of_voice, default_hashtags')
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    if (!aiSettingsResult.error && aiSettingsResult.data) {
+      return {
+        founderBio: aiSettingsResult.data.founder_bio,
+        toneOfVoice: aiSettingsResult.data.voice_tone ?? aiSettingsResult.data.tone_of_voice,
+        defaultHashtags: aiSettingsResult.data.default_hashtags,
+      }
+    }
+
+    const profileResult = await supabase
+      .from('user_profiles')
+      .select('founder_bio, tone_of_voice, default_hashtags')
+      .eq('id', user.id)
+      .maybeSingle()
+
+    if (profileResult.error || !profileResult.data) return {}
+
+    return {
+      founderBio: profileResult.data.founder_bio,
+      toneOfVoice: profileResult.data.tone_of_voice,
+      defaultHashtags: profileResult.data.default_hashtags,
+    }
+  } catch (error) {
+    logger.warn('[aiTransformer] failed to load founder voice settings:', error)
+    return {}
+  }
+}
+
+function mergePersonaSettings(base: AiPersona, override: AiPersona): AiPersona {
+  return {
+    founderBio: override.founderBio ?? base.founderBio ?? null,
+    toneOfVoice: override.toneOfVoice ?? base.toneOfVoice ?? null,
+    defaultHashtags: override.defaultHashtags ?? base.defaultHashtags ?? null,
+  }
 }
 
 export async function generatePostsFromActivity(
@@ -68,11 +123,13 @@ export async function generatePostsFromActivity(
   }
 
   const repoName = repoUrl.replace(/^https?:\/\/(www\.)?github\.com\//i, '')
-  const systemPrompt = buildSystemPrompt(persona)
+  const founderVoice = await getFounderVoiceSettings()
+  const resolvedPersona = mergePersonaSettings(founderVoice, persona)
+  const systemPrompt = buildSystemPrompt(resolvedPersona)
 
   logger.log(
     '[aiTransformer] calling API | model=claude-haiku-4-5-20251001 | tone:',
-    persona.toneOfVoice ?? 'Authentic',
+    resolvedPersona.toneOfVoice ?? 'Authentic',
     '| rawText snippet:',
     rawText.slice(0, 100)
   )
@@ -96,7 +153,7 @@ export async function generatePostsFromActivity(
   } catch (err) {
     const isTimeout = err instanceof Error && err.message.toLowerCase().includes('timeout')
     if (isTimeout) {
-      throw new Error('AI request timed out — please retry.')
+      throw new Error('AI request timed out - please retry.')
     }
     logger.error('[aiTransformer] Anthropic API call FAILED:', err)
     throw err
@@ -110,7 +167,6 @@ export async function generatePostsFromActivity(
 
   logger.log('[aiTransformer] raw response (first 300):', raw.slice(0, 300))
 
-  // Strip markdown code fences if the model wrapped the JSON
   const stripped = raw
     .replace(/^```(?:json)?\s*/i, '')
     .replace(/\s*```\s*$/, '')
@@ -119,17 +175,19 @@ export async function generatePostsFromActivity(
   let parsed: GeneratedContent
   try {
     parsed = JSON.parse(stripped) as GeneratedContent
-  } catch {
+  } catch (parseError) {
+    logger.error('[aiTransformer] JSON.parse failed on raw response:', raw)
     const match = stripped.match(/\{[\s\S]*\}/)
     if (!match) {
-      logger.error('[aiTransformer] unparseable response:', raw)
-      throw new Error('AI returned malformed JSON — please retry.')
+      logger.error('[aiTransformer] unparseable response after cleanup:', raw)
+      throw new Error('AI returned malformed JSON - please retry.')
     }
     try {
       parsed = JSON.parse(match[0]) as GeneratedContent
     } catch (e2) {
       logger.error('[aiTransformer] JSON.parse failed on extracted block:', match[0].slice(0, 300))
-      throw e2
+      logger.error('[aiTransformer] original parse error:', parseError)
+      throw new Error('AI returned invalid JSON format - please retry.')
     }
   }
 
@@ -139,7 +197,7 @@ export async function generatePostsFromActivity(
     typeof parsed.linkedin !== 'string' ||
     typeof parsed.newsletter !== 'string'
   ) {
-    throw new Error('AI response missing required fields — please retry.')
+    throw new Error('AI response missing required fields - please retry.')
   }
 
   parsed.thread = parsed.thread.slice(0, 5)
