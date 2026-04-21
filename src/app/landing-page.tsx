@@ -26,63 +26,6 @@ const steps = [
   },
 ]
 
-function TacticalRuler({ label }: { label?: string }) {
-  const ticks = 80
-  return (
-    <div className="mx-auto max-w-6xl px-4 py-1 sm:px-6">
-      <div className="relative flex items-center" style={{ height: '28px' }}>
-        {/* baseline */}
-        <div
-          className="absolute inset-x-0 top-1/2"
-          style={{ height: '0.5px', background: 'hsl(var(--border))' }}
-        />
-        {/* tick marks */}
-        {Array.from({ length: ticks + 1 }).map((_, i) => {
-          const isMajor = i % 20 === 0
-          const isMid = i % 10 === 0
-          const h = isMajor ? 14 : isMid ? 9 : 4
-          return (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${(i / ticks) * 100}%`,
-                top: `calc(50% - ${h / 2}px)`,
-                width: '0.5px',
-                height: `${h}px`,
-                background: isMajor ? 'hsl(var(--foreground) / 0.25)' : 'hsl(var(--border))',
-              }}
-            />
-          )
-        })}
-        {/* major position labels */}
-        {[0, 25, 50, 75, 100].map((pct, i) => (
-          <span
-            key={pct}
-            className="absolute font-mono text-[7px] text-muted-foreground"
-            style={{
-              left: `${pct}%`,
-              top: '1px',
-              transform: 'translateX(-50%)',
-              letterSpacing: '0.05em',
-            }}
-          >
-            {String(i * 250).padStart(4, '0')}
-          </span>
-        ))}
-        {label && (
-          <span
-            className="absolute right-0 font-mono text-[8px] uppercase tracking-widest text-muted-foreground"
-            style={{ top: '1px' }}
-          >
-            {label}
-          </span>
-        )}
-      </div>
-    </div>
-  )
-}
-
 // eslint-disable-next-line max-lines-per-function
 export function LandingPage() {
   return (
@@ -393,100 +336,78 @@ export function LandingPage() {
         </div>
       </section>
 
-      <TacticalRuler label="PROC-SEQ" />
-
       {/* How it Works */}
-      <section className="border-y border-border bg-card px-4 py-16 sm:px-6 sm:py-24">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-4xl">
-          <div className="mb-12">
-            <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
-              OPERATIONAL / SEQUENCE
-            </p>
-            <h2 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
               How it works
             </h2>
-            <p className="max-w-2xl font-mono text-sm text-muted-foreground">
+            <p className="mx-auto max-w-2xl text-sm text-neutral-600 sm:text-base">
               Three steps from draft to published. No complicated setup required.
             </p>
           </div>
 
-          <div className="grid gap-0 sm:grid-cols-3">
-            {steps.map((step, idx) => (
-              <div
-                key={step.number}
-                className="relative border border-border p-6"
-                style={idx > 0 ? { borderLeft: 'none' } : {}}
-              >
-                <span className="absolute right-3 top-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                  [STEP-{step.number}]
-                </span>
-                <div className="mb-4 font-mono text-3xl font-extrabold text-primary">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {steps.map((step) => (
+              <div key={step.number} className="card-clean p-6 text-center">
+                <div className="mb-4 text-3xl font-extrabold text-primary">
                   {step.number}
                 </div>
-                <step.icon className="mb-3 h-5 w-5 text-foreground" strokeWidth={1.5} />
-                <h3 className="mb-2 text-base font-bold uppercase tracking-wide">{step.title}</h3>
-                <p className="text-xs leading-relaxed text-muted-foreground">{step.description}</p>
+                <step.icon className="mx-auto mb-3 h-5 w-5 text-foreground" strokeWidth={1.5} />
+                <h3 className="mb-2 text-base font-bold text-black">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-neutral-600">{step.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <TacticalRuler label="TGT-AUD" />
-
       {/* Target Audience */}
-      <section className="px-4 py-16 sm:px-6 sm:py-24">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-4xl">
-          <div
-            className="relative border border-border p-8 sm:p-12"
-            style={{ boxShadow: '3px 3px 0 #000' }}
-          >
-            <span className="absolute right-3 top-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              [REF-USR]
-            </span>
-            <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
-              TARGET / USERS
-            </p>
-            <h2 className="mb-4 text-2xl font-extrabold tracking-tight sm:text-3xl">
+          <div className="card-clean p-8 text-center sm:p-12">
+            <h2 className="mb-4 text-2xl font-extrabold tracking-tight text-black sm:text-3xl">
               Built for people who ship
             </h2>
-            <p className="mb-6 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-neutral-600 sm:text-base">
               ShipSignal is built for developers, indie hackers, and early-stage teams who ship
               fast. Whether you are launching a side project, growing an open-source community, or
               running content for a startup, ShipSignal keeps your social presence consistent
               without becoming a full-time job.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <span className="sticker-badge font-mono text-sticker-green">INDIE HACKERS</span>
-              <span className="sticker-badge font-mono text-sticker-blue">DEVELOPERS</span>
-              <span className="sticker-badge font-mono text-sticker-purple">OSS MAINTAINERS</span>
-              <span className="sticker-badge font-mono text-sticker-orange">EARLY-STAGE</span>
+            <div className="flex flex-wrap justify-center gap-3">
+              <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
+                Indie Hackers
+              </span>
+              <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
+                Developers
+              </span>
+              <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
+                OSS Maintainers
+              </span>
+              <span className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-700">
+                Early-Stage Teams
+              </span>
             </div>
           </div>
         </div>
       </section>
 
-      <TacticalRuler label="CTA-MAIN" />
-
       {/* CTA Footer */}
-      <section className="border-t border-border bg-card px-4 py-16 sm:px-6 sm:py-24">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">
-            INITIATE / DEPLOYMENT
-          </p>
-          <h2 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Start scheduling for free
-          </h2>
-          <p className="mb-8 font-mono text-sm text-muted-foreground">
-            50 posts · 5 campaigns · 3 projects — no credit card required.
-          </p>
-          <Link
-            href="/signup"
-            className="sticker-button inline-block bg-primary px-12 py-4 text-sm text-primary-foreground"
-            style={{ boxShadow: '4px 4px 0 #000' }}
-          >
-            Get started free
-          </Link>
+          <div className="card-clean p-8 sm:p-12">
+            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
+              Start scheduling for free
+            </h2>
+            <p className="mb-8 text-sm text-neutral-600 sm:text-base">
+              50 posts · 5 campaigns · 3 projects with no credit card required.
+            </p>
+            <Link href="/signup" className="btn-accent inline-flex px-8 py-3">
+              Get started free
+            </Link>
+          </div>
         </div>
       </section>
 
