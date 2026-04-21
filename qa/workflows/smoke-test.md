@@ -2,13 +2,13 @@
 
 **Fixture:** `qa/fixtures/default.yaml`
 **Seed command:** `make qa-seed`
-**Browser prep:** Clear localStorage (especially `bullhorn-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
+**Browser prep:** Clear localStorage (especially `shipsignal-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
 
 Walk through all major features and verify the app renders correctly with seeded data.
 
 ## Expected Data After Seeding
 
-- 2 projects: "Bullhorn Product Launch", "Q2 Content Calendar"
+- 2 projects: "shipsignal Product Launch", "Q2 Content Calendar"
 - 4 campaigns: "Launch Week", "Pre-Launch Teasers", "Weekly Tips Series", "Beta Feedback Round"
 - 10 posts: 3 Twitter draft (1 teaser, 1 tip, 1 with media), 1 Twitter scheduled, 1 Twitter published, 1 Twitter archived, 1 LinkedIn scheduled, 1 LinkedIn draft, 1 Reddit scheduled, 1 Reddit draft
 - 4 blog drafts: 1 draft with "Blog Post" tag, 1 published with "Blog Post" tag, 1 draft WIP, 1 archived
@@ -39,7 +39,7 @@ Walk through all major features and verify the app renders correctly with seeded
 
 ### 3. Post Detail
 
-1. Click on the scheduled Twitter post ("We're live! Bullhorn is now available...")
+1. Click on the scheduled Twitter post ("We're live! shipsignal is now available...")
 2. Verify the edit form loads with the correct content
 3. Verify the scheduled date/time is set (should be tomorrow at 10:00 UTC)
 4. Verify the campaign selector shows "Launch Week"
@@ -56,8 +56,8 @@ Walk through all major features and verify the app renders correctly with seeded
 ### 5. Projects
 
 1. Navigate to `/projects`
-2. Verify 2 projects are listed: "Bullhorn Product Launch" and "Q2 Content Calendar"
-3. Click on "Bullhorn Product Launch"
+2. Verify 2 projects are listed: "shipsignal Product Launch" and "Q2 Content Calendar"
+3. Click on "shipsignal Product Launch"
 4. Verify the project detail shows campaigns: "Launch Week" and "Pre-Launch Teasers"
 5. Navigate back to projects list
 
@@ -66,7 +66,7 @@ Walk through all major features and verify the app renders correctly with seeded
 1. Navigate to `/blog`
 2. Verify blog drafts are listed
 3. Verify status tabs work (draft, published, archived)
-4. Click on "Introducing Bullhorn" draft
+4. Click on "Introducing shipsignal" draft
 5. Verify the markdown content loads in the editor
 6. Verify the "Blog Post" tag is selected
 7. Navigate back to blog list

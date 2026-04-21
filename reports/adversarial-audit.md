@@ -1,6 +1,6 @@
 # Adversarial Audit Report
 
-**App:** Bullhorn — Social media post scheduler
+**App:** shipsignal — Social media post scheduler
 **Date:** 2026-03-14
 **Scope:** Full audit (all 7 categories)
 **Base URL:** N/A — static analysis only

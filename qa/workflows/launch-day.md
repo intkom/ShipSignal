@@ -2,16 +2,16 @@
 
 **Fixture:** `qa/fixtures/default.yaml`
 **Seed command:** `make qa-seed`
-**Browser prep:** Clear localStorage (especially `bullhorn-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
+**Browser prep:** Clear localStorage (especially `shipsignal-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
 
 Test launch post CRUD for all supported platforms.
 
 ## Expected Data
 
-- Show HN (hacker_news_show): "Show HN: Bullhorn - Social media scheduler for indie hackers"
-- Product Hunt: "Bullhorn - Schedule social posts across Twitter, LinkedIn & Reddit"
-- BetaList: "Bullhorn"
-- Dev Hunt: "Bullhorn"
+- Show HN (hacker_news_show): "Show HN: shipsignal - Social media scheduler for indie hackers"
+- Product Hunt: "shipsignal - Schedule social posts across Twitter, LinkedIn & Reddit"
+- BetaList: "shipsignal"
+- Dev Hunt: "shipsignal"
 
 All in "Launch Week" campaign, all draft status.
 
@@ -28,8 +28,8 @@ All in "Launch Week" campaign, all draft status.
 
 1. Click on the Product Hunt post
 2. Verify all fields are populated:
-   - Title: "Bullhorn - Schedule social posts across Twitter, LinkedIn & Reddit"
-   - URL: "https://bullhorn.to"
+   - Title: "shipsignal - Schedule social posts across Twitter, LinkedIn & Reddit"
+   - URL: "https://shipsignal.to"
    - Description is present
    - Platform fields: tagline, pricing, firstComment
    - Notes: "Launch at 12:01am PT"
@@ -39,8 +39,8 @@ All in "Launch Week" campaign, all draft status.
 
 1. Navigate to `/launch-posts/new` (or click "New Launch Post")
 2. Select platform: Indie Hackers
-3. Fill in title: "Bullhorn - Schedule your indie hacker content"
-4. Fill in URL: "https://bullhorn.to"
+3. Fill in title: "shipsignal - Schedule your indie hacker content"
+4. Fill in URL: "https://shipsignal.to"
 5. Fill in description: "Built for indie hackers who need to manage social media across platforms"
 6. Save the launch post
 7. Verify it appears in the launch posts list (now 5 total)
@@ -58,7 +58,7 @@ All in "Launch Week" campaign, all draft status.
 
 1. Navigate to `/launch-posts`
 2. Click on the Show HN post
-3. Modify the title: "Show HN: Bullhorn – Open source social media scheduler"
+3. Modify the title: "Show HN: shipsignal – Open source social media scheduler"
 4. Update notes: "Submit Tuesday at 9am ET"
 5. Save changes
 6. Verify the updates persist

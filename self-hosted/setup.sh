@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-echo "=== Bullhorn Self-Hosted Supabase Setup ==="
+echo "=== shipsignal Self-Hosted Supabase Setup ==="
 
 # Clone official Supabase Docker setup if not present
 if [ ! -d "supabase-docker" ]; then

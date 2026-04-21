@@ -8,7 +8,7 @@ const mockDelete = vi.fn()
 
 // Mock the HTTP client before importing storage
 vi.mock('./client.js', () => ({
-  BullhornClient: class {
+  shipsignalClient: class {
     get = mockGet
     post = mockPost
     patch = mockPatch

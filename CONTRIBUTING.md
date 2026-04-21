@@ -1,6 +1,6 @@
-# Contributing to Bullhorn
+# Contributing to shipsignal
 
-Thanks for your interest in contributing to Bullhorn! This guide will help you get set up.
+Thanks for your interest in contributing to shipsignal! This guide will help you get set up.
 
 ## Prerequisites
 
@@ -84,7 +84,7 @@ See `CLAUDE.md` for a detailed architecture overview including:
 
 ## Forking — Values You Must Change
 
-If you're forking Bullhorn to run your own instance, update these project-specific values:
+If you're forking shipsignal to run your own instance, update these project-specific values:
 
 | Value                  | Location                        | What to set                                         |
 | ---------------------- | ------------------------------- | --------------------------------------------------- |

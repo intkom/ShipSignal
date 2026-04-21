@@ -1,13 +1,13 @@
-# Bullhorn
+# shipsignal
 
-[![CI](https://github.com/mean-weasel/bullhorn/actions/workflows/ci.yml/badge.svg)](https://github.com/mean-weasel/bullhorn/actions/workflows/ci.yml)
+[![CI](https://github.com/intkom/shipsignal/actions/workflows/ci.yml/badge.svg)](https://github.com/intkom/shipsignal/actions/workflows/ci.yml)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
 
 Social media post scheduler for Twitter, LinkedIn, and Reddit.
 
 Plan, draft, and schedule your social media content. Organize posts into campaigns and projects, set publish dates, and manage your content pipeline from idea to published.
 
-**[bullhorn.to](https://bullhorn.to)**
+**[shipsignal.to](https://shipsignal.to)**
 
 <!-- TODO: add screenshot or GIF of dashboard -->
 
@@ -26,7 +26,7 @@ Plan, draft, and schedule your social media content. Organize posts into campaig
 
 ## Deploy Your Own
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmean-weasel%2Fbullhorn&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY&envDescription=Required%20Supabase%20credentials&envLink=https%3A%2F%2Fgithub.com%2Fmean-weasel%2Fbullhorn%2Fblob%2Fmain%2Fdocs%2Fenvironment-variables.md)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fintkom%shipsignal&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY&envDescription=Required%20Supabase%20credentials&envLink=https%3A%2F%2Fgithub.com%2Fintkom%shipsignal%2Fblob%2Fmain%2Fdocs%2Fenvironment-variables.md)
 
 See the [Self-Hosting Guide](docs/self-hosting.md) for detailed setup instructions.
 
@@ -81,6 +81,6 @@ See [docs/architecture.md](docs/architecture.md) for app structure, API patterns
 
 ## License
 
-[AGPL-3.0](LICENSE) — You can use, modify, and self-host Bullhorn freely. If you distribute a modified version or run it as a network service, you must make your source code available under the same license.
+[AGPL-3.0](LICENSE) — You can use, modify, and self-host shipsignal freely. If you distribute a modified version or run it as a network service, you must make your source code available under the same license.
 
 Copyright (C) 2026 Mean Weasel LLC

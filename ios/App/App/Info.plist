@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Bullhorn</string>
+        <string>shipsignal</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -50,7 +50,7 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Bullhorn uses Face ID to protect your account</string>
+	<string>shipsignal uses Face ID to protect your account</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -58,7 +58,7 @@
 			<array>
 				<string>com.googleusercontent.apps.95354811469-3hvu64aje2dnp1oj3fiv4cqd2ajcr0qc</string>
 				<!-- Custom URL scheme for share extension deep links -->
-				<string>bullhorn</string>
+				<string>shipsignal</string>
 			</array>
 		</dict>
 	</array>

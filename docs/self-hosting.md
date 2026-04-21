@@ -1,6 +1,6 @@
 # Self-Hosting Guide
 
-Run Bullhorn entirely on your own infrastructure — no Vercel account, no cloud Supabase project, no third-party dependencies beyond the social platform APIs you want to use.
+Run shipsignal entirely on your own infrastructure — no Vercel account, no cloud Supabase project, no third-party dependencies beyond the social platform APIs you want to use.
 
 ## Prerequisites
 
@@ -12,8 +12,8 @@ Run Bullhorn entirely on your own infrastructure — no Vercel account, no cloud
 ## Quick Start
 
 ```bash
-git clone https://github.com/neonwatty/bullhorn.git
-cd bullhorn
+git clone https://github.com/neonwatty/shipsignal.git
+cd shipsignal
 npm install
 make self-host-init    # Clones Supabase Docker, creates env files
 # Edit self-hosted/.env with generated secrets
@@ -29,7 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) and sign up for your first a
 
 ## Platform App Setup
 
-Bullhorn needs OAuth apps registered with each social platform you want to publish to. Complete only the platforms you intend to use.
+shipsignal needs OAuth apps registered with each social platform you want to publish to. Complete only the platforms you intend to use.
 
 ### Twitter / X
 
@@ -80,7 +80,7 @@ REDDIT_CLIENT_ID=your-client-id
 REDDIT_CLIENT_SECRET=your-client-secret
 REDDIT_USERNAME=your-reddit-username
 REDDIT_PASSWORD=your-reddit-password
-REDDIT_USER_AGENT=web:bullhorn-scheduler:v1.0.0 (by /u/your-reddit-username)
+REDDIT_USER_AGENT=web:shipsignal-scheduler:v1.0.0 (by /u/your-reddit-username)
 ```
 
 > With script auth, connecting Reddit in the Settings page auto-authenticates immediately without any OAuth redirect.

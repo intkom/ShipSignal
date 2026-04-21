@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // reliably include cookies set via document.cookie.
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
            let url = userActivity.webpageURL,
-           url.host == "bullhorn.to" {
+           url.host == "shipsignal.to" {
             DispatchQueue.main.async { [weak self] in
                 let safeUrl = url.absoluteString
                     .replacingOccurrences(of: "\\", with: "\\\\")

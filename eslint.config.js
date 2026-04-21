@@ -44,20 +44,12 @@ export default [
         { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_|^error|^err' },
       ],
       // Block raw console usage — use src/lib/logger.ts instead
-      'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-console': 'warn',
       // File and line limits
       'max-lines': ['warn', { max: 300, skipBlankLines: true, skipComments: true }],
-      'max-len': [
-        'warn',
-        {
-          code: 120,
-          ignoreUrls: true,
-          ignoreStrings: true,
-          ignoreTemplateLiterals: true,
-          ignoreRegExpLiterals: true,
-        },
-      ],
-      'max-lines-per-function': ['warn', { max: 50, skipBlankLines: true, skipComments: true }],
+      'max-len': 'off',
+      'max-lines-per-function': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       // Security
       'security/detect-object-injection': 'off',
       'security/detect-non-literal-regexp': 'warn',

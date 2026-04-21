@@ -1,11 +1,11 @@
 {
-  "name": "@mean-weasel/bullhorn-mcp",
+  "name": "@intkom/shipsignal-mcp",
   "version": "0.3.0",
-  "description": "MCP server for Bullhorn — manage posts, campaigns, projects, and more",
+  "description": "MCP server for shipsignal — manage posts, campaigns, projects, and more",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "bullhorn-mcp": "dist/index.js"
+    "shipsignal-mcp": "dist/index.js"
   },
   "files": [
     "dist",
@@ -24,7 +24,7 @@
   },
   "keywords": [
     "mcp",
-    "bullhorn",
+    "shipsignal",
     "social-media",
     "scheduler",
     "claude"
@@ -32,7 +32,7 @@
   "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mean-weasel/bullhorn",
+    "url": "https://github.com/intkom/shipsignal",
     "directory": "mcp-server"
   },
   "engines": {

@@ -258,6 +258,20 @@
   border-radius: 2px;
 }
 
+@utility btn-primary {
+  @apply inline-flex items-center justify-center rounded-[8px] bg-black px-4 py-2 text-sm font-medium text-white;
+}
+
+@utility btn-focus {
+  @apply inline-flex items-center justify-center rounded-[8px] px-4 py-2 text-sm font-bold text-white;
+  background-color: #ff4f00;
+}
+
+@utility card-clean {
+  @apply rounded-[12px] border bg-white shadow-sm;
+  border-color: #e5e5e5;
+}
+
 /* ─── Section rhythm ─────────────────────────────────────────────────────── */
 
 /* Full section — main landing/docs sections */
@@ -274,9 +288,9 @@
   /* Light mode — Swiss Minimalist / Premium Engineering */
   :root {
     /* Ghost White background */
-    --background: 0 0% 97.6%;
+    --background: 0 0% 100%;
     /* Deep Charcoal */
-    --foreground: 0 0% 7%;
+    --foreground: 0 0% 7.1%;
     /* Pure White card surfaces */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 7%;
@@ -296,8 +310,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
     /* Thin 1px Light Gray borders */
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
     --ring: 19 100% 50%;
     --radius: 2px;
     /* Gold maps to orange primary */
@@ -307,8 +321,8 @@
 
   /* Dark mode — forced to light for consistent Swiss minimalist experience */
   .dark {
-    --background: 0 0% 97.6%;
-    --foreground: 0 0% 7%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7.1%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
@@ -323,8 +337,8 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
     --ring: 19 100% 50%;
     --gold: 19 100% 50%;
     --gold-dark: 19 100% 35%;
@@ -339,8 +353,8 @@
     font-weight: 400;
     /* Subtle light gray grid — technical blueprint aesthetic */
     background-image:
-      linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      linear-gradient(to right, rgba(18, 18, 18, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(18, 18, 18, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 

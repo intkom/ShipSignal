@@ -69,7 +69,7 @@ export async function sendPushToUser(userId: string, payload: PushPayload): Prom
       if (statusCode === 410 || statusCode === 404) {
         // Subscription expired or invalid — clean up
         await supabase.from('web_push_subscriptions').delete().eq('id', sub.id)
-        console.log(`[web-push] Removed expired subscription ${sub.id}`)
+        console.warn(`[web-push] Removed expired subscription ${sub.id}`)
       } else {
         console.error(`[web-push] Failed to send to ${sub.endpoint}:`, err)
       }

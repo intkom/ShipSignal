@@ -7,7 +7,7 @@ const mockPatch = vi.fn()
 const mockDelete = vi.fn()
 
 vi.mock('./client.js', () => ({
-  BullhornClient: class {
+  shipsignalClient: class {
     get = mockGet
     post = mockPost
     patch = mockPatch
@@ -137,14 +137,14 @@ describe('Launch Post Tool Handlers', () => {
       const mockLaunchPost = {
         id: 'lp-1',
         platform: 'product_hunt',
-        title: 'Launch Bullhorn',
+        title: 'Launch shipsignal',
         status: 'draft',
       }
       mockPost.mockResolvedValueOnce({ launchPost: mockLaunchPost })
 
       const result = await handleCreateLaunchPost({
         platform: 'product_hunt',
-        title: 'Launch Bullhorn',
+        title: 'Launch shipsignal',
       })
       expect(result.isError).toBeUndefined()
       const response = JSON.parse(result.content[0].text)
@@ -156,15 +156,15 @@ describe('Launch Post Tool Handlers', () => {
       const mockLaunchPost = {
         id: 'lp-2',
         platform: 'hacker_news_show',
-        title: 'Show HN: Bullhorn',
+        title: 'Show HN: shipsignal',
         status: 'scheduled',
       }
       mockPost.mockResolvedValueOnce({ launchPost: mockLaunchPost })
 
       await handleCreateLaunchPost({
         platform: 'hacker_news_show',
-        title: 'Show HN: Bullhorn',
-        url: 'https://bullhorn.to',
+        title: 'Show HN: shipsignal',
+        url: 'https://shipsignal.to',
         description: 'A social media scheduler',
         platformFields: { tags: ['social', 'productivity'] },
         campaignId: 'camp-1',
@@ -175,8 +175,8 @@ describe('Launch Post Tool Handlers', () => {
 
       expect(mockPost).toHaveBeenCalledWith('/launch-posts', {
         platform: 'hacker_news_show',
-        title: 'Show HN: Bullhorn',
-        url: 'https://bullhorn.to',
+        title: 'Show HN: shipsignal',
+        url: 'https://shipsignal.to',
         description: 'A social media scheduler',
         platformFields: { tags: ['social', 'productivity'] },
         campaignId: 'camp-1',

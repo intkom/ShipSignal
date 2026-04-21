@@ -1,6 +1,6 @@
 # Launch Platform Post Types - Data Model
 
-This document outlines the required fields for each launch platform to support drafting launch campaign content in Bullhorn.
+This document outlines the required fields for each launch platform to support drafting launch campaign content in shipsignal.
 
 ---
 
@@ -175,9 +175,9 @@ Standard link submission.
 
 ---
 
-## Unified Bullhorn Schema
+## Unified shipsignal Schema
 
-For the Bullhorn app, we can create a unified `LaunchPost` type:
+For the shipsignal app, we can create a unified `LaunchPost` type:
 
 ```typescript
 type LaunchPlatform =
@@ -262,7 +262,7 @@ interface LaunchPost {
 
 ## Reminder System
 
-Since these platforms don't have APIs for posting, Bullhorn should support:
+Since these platforms don't have APIs for posting, shipsignal should support:
 
 1. **Scheduled reminders** - Email/push notification when it's time to post
 2. **Launch checklist** - Platform-specific checklist for launch day

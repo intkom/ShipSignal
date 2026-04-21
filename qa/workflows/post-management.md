@@ -2,7 +2,7 @@
 
 **Fixture:** `qa/fixtures/default.yaml`
 **Seed command:** `make qa-seed`
-**Browser prep:** Clear localStorage (especially `bullhorn-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
+**Browser prep:** Clear localStorage (especially `shipsignal-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
 
 Test all post lifecycle operations across Twitter, LinkedIn, and Reddit.
 

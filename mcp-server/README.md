@@ -1,16 +1,16 @@
-# @mean-weasel/bullhorn-mcp
+# @intkom/shipsignal-mcp
 
-MCP server for [Bullhorn](https://bullhorn.to) — manage social media posts, campaigns, projects, blog drafts, and launch posts from Claude Code or any MCP client.
+MCP server for [shipsignal](https://shipsignal.to) — manage social media posts, campaigns, projects, blog drafts, and launch posts from Claude Code or any MCP client.
 
-> **[Full documentation](https://bullhorn.to/docs/mcp)** — setup guide, tool reference, and examples.
+> **[Full documentation](https://shipsignal.to/docs/mcp)** — setup guide, tool reference, and examples.
 
 ## Quick Start
 
 ```bash
-npx @mean-weasel/bullhorn-mcp
+npx @intkom/shipsignal-mcp
 ```
 
-Requires `BULLHORN_API_KEY` in your environment. Create one at **Settings → API Keys** in the Bullhorn app.
+Requires `shipsignal_API_KEY` in your environment. Create one at **Settings → API Keys** in the shipsignal app.
 
 ## Claude Code Setup
 
@@ -19,29 +19,29 @@ Add to your `.mcp.json`:
 ```json
 {
   "mcpServers": {
-    "bullhorn": {
+    "shipsignal": {
       "command": "npx",
-      "args": ["-y", "@mean-weasel/bullhorn-mcp"],
+      "args": ["-y", "@intkom/shipsignal-mcp"],
       "env": {
-        "BULLHORN_API_URL": "https://bullhorn.to"
+        "shipsignal_API_URL": "https://shipsignal.to"
       }
     }
   }
 }
 ```
 
-Set `BULLHORN_API_KEY` in your shell environment or via dotenv.
+Set `shipsignal_API_KEY` in your shell environment or via dotenv.
 
 For local development, point to your dev server:
 
 ```json
 {
   "mcpServers": {
-    "bullhorn": {
+    "shipsignal": {
       "command": "node",
       "args": ["mcp-server/dist/index.js"],
       "env": {
-        "BULLHORN_API_URL": "http://localhost:3000"
+        "shipsignal_API_URL": "http://localhost:3000"
       }
     }
   }
@@ -52,8 +52,8 @@ For local development, point to your dev server:
 
 | Variable           | Required | Default               | Description                      |
 | ------------------ | -------- | --------------------- | -------------------------------- |
-| `BULLHORN_API_KEY` | Yes      | —                     | API key from Settings → API Keys |
-| `BULLHORN_API_URL` | No       | `https://bullhorn.to` | API base URL                     |
+| `shipsignal_API_KEY` | Yes      | —                     | API key from Settings → API Keys |
+| `shipsignal_API_URL` | No       | `https://shipsignal.to` | API base URL                     |
 
 ## Rate Limits
 
@@ -130,7 +130,7 @@ When a limit is reached, creation tools return an error with the current usage.
   "tool": "create_reddit_crossposts",
   "arguments": {
     "subreddits": ["SideProject", "startups", "webdev"],
-    "title": "Show: I built Bullhorn",
+    "title": "Show: I built shipsignal",
     "body": "A social media post scheduler...",
     "status": "draft"
   }
@@ -261,7 +261,7 @@ Each tool requires specific API key scope(s). If your key lacks a required scope
 Your API key is invalid, expired, or revoked.
 
 - Verify the key starts with `bh_` and is at least 20 characters
-- Check that `BULLHORN_API_KEY` is set in your environment
+- Check that `shipsignal_API_KEY` is set in your environment
 - Create a new key at **Settings → API Keys** if the old one was revoked or expired
 
 ### "Forbidden" error
@@ -285,7 +285,7 @@ You've exceeded 10 requests per 10 seconds.
 An internal server error occurred. This is usually transient.
 
 - Retry the operation after a few seconds
-- If it persists, check that the Bullhorn service is available at your `BULLHORN_API_URL`
+- If it persists, check that the shipsignal service is available at your `shipsignal_API_URL`
 - Check your API key hasn't been revoked
 
 ## Development

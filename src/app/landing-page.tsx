@@ -1,190 +1,6 @@
 /* eslint-disable max-lines -- large page component with extracted sub-components */
 import Link from 'next/link'
-import {
-  Bot,
-  Rocket,
-  FileText,
-  FolderKanban,
-  Share2,
-  Radio,
-  PenLine,
-  Send,
-  TrendingUp,
-  Folder,
-} from 'lucide-react'
-import { FeatureCarousel } from '@/components/ui/FeatureCarousel'
-import type { LucideIcon } from 'lucide-react'
-
-const LANDING_IMG = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/landing`
-
-interface Feature {
-  icon: LucideIcon
-  sn: string
-  title: string
-  description: string
-  slides: { src: string; alt: string; caption: string }[]
-}
-
-const features: Feature[] = [
-  {
-    icon: Bot,
-    sn: 'SN-001',
-    title: 'Capture with your AI tooling of choice, anytime',
-    description:
-      'Save post ideas from Claude, Cursor, or whatever AI tool you use. Capture mid-flow via MCP without breaking your work context.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-1/terminal-1.png`,
-        alt: 'MCP create_post in Claude Code',
-        caption: 'Save a tweet draft from Claude Code via MCP',
-      },
-      {
-        src: `${LANDING_IMG}/feature-1/step-2.png`,
-        alt: 'Dashboard overview with stats',
-        caption: 'Your dashboard shows all captured drafts at a glance',
-      },
-      {
-        src: `${LANDING_IMG}/feature-1/step-3.png`,
-        alt: 'Dashboard drafts section',
-        caption: 'Drafts captured via MCP appear instantly',
-      },
-    ],
-  },
-  {
-    icon: PenLine,
-    sn: 'SN-002',
-    title: "Polish and organize when you're ready",
-    description:
-      'Come back later to draft full announcements, refine messaging, and organize into campaigns. Your product context is waiting for you.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-2/step-1.png`,
-        alt: 'Posts list with filter tabs',
-        caption: 'Filter posts by status — drafts, scheduled, or all',
-      },
-      {
-        src: `${LANDING_IMG}/feature-2/step-2.png`,
-        alt: 'Post editor with content',
-        caption: 'Edit content, assign campaigns, and set platforms',
-      },
-      {
-        src: `${LANDING_IMG}/feature-2/step-3.png`,
-        alt: 'Post editor scheduling controls',
-        caption: 'Schedule posts and configure platform-specific settings',
-      },
-      {
-        src: `${LANDING_IMG}/feature-2/step-4.png`,
-        alt: 'Create new post form',
-        caption: 'Create posts for X (Twitter) or LinkedIn',
-      },
-    ],
-  },
-  {
-    icon: Share2,
-    sn: 'SN-003',
-    title: 'Fork your content across formats',
-    description:
-      'Take a blog post and turn it into tweets. Turn a feature idea into a LinkedIn update. Transform your context for any platform.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-3/terminal-1.png`,
-        alt: 'MCP fork blog to tweets in Claude Code',
-        caption: 'Turn a blog post into a tweet thread via MCP',
-      },
-    ],
-  },
-  {
-    icon: FolderKanban,
-    sn: 'SN-004',
-    title: 'Organize launches like you organize code',
-    description:
-      'Group related posts into campaigns. Coordinate product launches, feature drops, and announcements in one place.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-4/step-1.png`,
-        alt: 'Dashboard campaigns section',
-        caption: 'See all campaigns from your dashboard',
-      },
-      {
-        src: `${LANDING_IMG}/feature-4/step-2.png`,
-        alt: 'Campaigns list with filters',
-        caption: 'Filter campaigns by status — active, planning, or completed',
-      },
-      {
-        src: `${LANDING_IMG}/feature-4/step-3.png`,
-        alt: 'Campaign detail with posts',
-        caption: 'Drill into a campaign to see all its posts',
-      },
-    ],
-  },
-  {
-    icon: Rocket,
-    sn: 'SN-005',
-    title: 'Dedicated workflows for launch day',
-    description:
-      'Templates for Product Hunt, Hacker News, and coordinated launches. Keep all your launch communication organized and ready.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-5/step-1.png`,
-        alt: 'Launch posts list',
-        caption: 'Dedicated launch posts for Product Hunt and Hacker News',
-      },
-      {
-        src: `${LANDING_IMG}/feature-5/step-2.png`,
-        alt: 'Launch post creation form',
-        caption: 'Create launch posts with platform-specific fields',
-      },
-      {
-        src: `${LANDING_IMG}/feature-5/step-3.png`,
-        alt: 'Product Hunt specific fields',
-        caption: 'Fill in tagline, pricing, and maker comment for PH',
-      },
-    ],
-  },
-  {
-    icon: FileText,
-    sn: 'SN-006',
-    title: 'Draft long-form alongside your social content',
-    description:
-      'Write blog posts in the same place as your tweets and updates. Keep your full product story in one context-rich workspace.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-6/step-1.png`,
-        alt: 'Blog drafts list',
-        caption: 'Manage blog drafts with word counts and timestamps',
-      },
-      {
-        src: `${LANDING_IMG}/feature-6/step-2.png`,
-        alt: 'Blog editor with markdown',
-        caption: 'Rich markdown editor with live word count',
-      },
-    ],
-  },
-  {
-    icon: Folder,
-    sn: 'SN-007',
-    title: 'Manage multiple products or clients',
-    description:
-      'Organize everything by project. Perfect for teams shipping multiple products or agencies managing client launches.',
-    slides: [
-      {
-        src: `${LANDING_IMG}/feature-7/step-1.png`,
-        alt: 'Dashboard projects section',
-        caption: 'Projects overview right on your dashboard',
-      },
-      {
-        src: `${LANDING_IMG}/feature-7/step-2.png`,
-        alt: 'Projects list page',
-        caption: 'Browse all projects with descriptions and stats',
-      },
-      {
-        src: `${LANDING_IMG}/feature-7/step-3.png`,
-        alt: 'Project detail with campaigns and posts',
-        caption: 'Drill into a project to see campaigns and posts',
-      },
-    ],
-  },
-]
+import { FileText, FolderKanban, Radio, PenLine, Send, TrendingUp } from 'lucide-react'
 
 const steps = [
   {
@@ -305,104 +121,222 @@ export function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-16 pt-20 sm:px-6 sm:pb-24 sm:pt-28">
+      <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-28">
         {/* Accent bar */}
         <div className="gradient-bar absolute left-0 top-0 h-0.5 w-full" />
 
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 inline-flex">
+        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+          <div className="mb-8 inline-flex">
             <span className="sticker-badge bg-primary/5 font-mono text-primary">NOW IN BETA</span>
           </div>
-          <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-black sm:text-5xl md:text-6xl">
             Turn your GitHub activity into <span className="text-primary">social proof</span>
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl font-mono text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
             ShipSignal converts your commits and releases into reviewed X and LinkedIn posts in
             seconds.
           </p>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:mt-12 sm:flex-row">
             <Link
               href="/signup"
-              className="sticker-button bg-primary px-10 py-3 text-sm text-primary-foreground"
-              style={{ boxShadow: '4px 4px 0 #000' }}
+              className="btn-primary px-10 py-3 uppercase tracking-[0.08em]"
             >
-              Get started free
+              GET STARTED FREE
             </Link>
           </div>
 
           {/* Platform badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-            <span className="sticker-badge border-twitter bg-twitter-soft font-mono text-twitter">
-              X / TWITTER
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-3 sm:mt-14">
+            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-neutral-300 text-[9px] font-semibold text-neutral-500">
+                X
+              </span>
+              Twitter
             </span>
-            <span className="sticker-badge border-linkedin bg-linkedin-soft font-mono text-linkedin">
-              LINKEDIN
+            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-neutral-300 text-[8px] font-semibold text-neutral-500">
+                in
+              </span>
+              LinkedIn
             </span>
+          </div>
+
+          <div className="mt-14 w-full max-w-3xl sm:mt-16">
+            <div className="card-clean overflow-hidden bg-white">
+              <div className="border-b border-[#e5e5e5] px-4 py-3 sm:px-5">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
+                      <Radio className="h-4 w-4 text-black" strokeWidth={1.75} />
+                    </div>
+                    <div className="space-y-1 text-left">
+                      <div className="h-2.5 w-24 rounded-full bg-neutral-900/90" />
+                      <div className="h-2 w-16 rounded-full bg-neutral-200" />
+                    </div>
+                  </div>
+                  <div className="rounded-[8px] bg-[#ff4f00] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+                    New Post
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-0 border-t border-[#f1f1f1] md:grid-cols-[1.45fr_0.9fr]">
+                <div className="space-y-4 border-b border-[#e5e5e5] p-4 md:border-b-0 md:border-r md:p-5">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-black" strokeWidth={1.75} />
+                      <div className="h-2.5 w-24 rounded-full bg-neutral-900" />
+                    </div>
+                    <div className="h-6 w-16 rounded-full bg-[#ff4f00]" />
+                  </div>
+
+                  {[
+                    { wide: 'w-full', short: 'w-24' },
+                    { wide: 'w-[92%]', short: 'w-20' },
+                    { wide: 'w-[86%]', short: 'w-16' },
+                  ].map((row, index) => (
+                    <div
+                      key={`post-row-${index}`}
+                      className="rounded-[10px] border border-neutral-200 bg-white p-3"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0 flex-1 space-y-2.5">
+                          <div className={`h-2.5 rounded-full bg-neutral-300 ${row.wide}`} />
+                          <div className={`h-2 rounded-full bg-neutral-200 ${row.short}`} />
+                        </div>
+                        <div className="mt-0.5 h-5 w-5 rounded-full border border-neutral-900 bg-white" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-4 p-4 md:p-5">
+                  <div className="flex items-center gap-2">
+                    <FolderKanban className="h-4 w-4 text-black" strokeWidth={1.75} />
+                    <div className="h-2.5 w-20 rounded-full bg-neutral-900" />
+                  </div>
+
+                  <div className="rounded-[10px] border border-neutral-200 bg-white p-3">
+                    <div className="mb-3 flex items-center justify-between">
+                      <div className="h-2.5 w-[4.5rem] rounded-full bg-neutral-300" />
+                      <div className="h-2.5 w-10 rounded-full bg-[#ff4f00]" />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-2 rounded-full bg-neutral-200" />
+                      <div className="h-2 w-[82%] rounded-full bg-neutral-200" />
+                      <div className="h-2 w-[64%] rounded-full bg-neutral-200" />
+                    </div>
+                  </div>
+
+                  <div className="rounded-[10px] border border-neutral-200 bg-white p-3">
+                    <div className="mb-3 flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-black" strokeWidth={1.75} />
+                      <div className="h-2.5 w-16 rounded-full bg-neutral-900" />
+                    </div>
+                    <div className="flex items-end gap-2">
+                      <div className="h-8 w-6 rounded-t-[6px] bg-neutral-200" />
+                      <div className="h-12 w-6 rounded-t-[6px] bg-neutral-300" />
+                      <div className="h-16 w-6 rounded-t-[6px] bg-[#ff4f00]" />
+                      <div className="h-10 w-6 rounded-t-[6px] bg-neutral-200" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <TacticalRuler label="FEAT-SPEC" />
+      <section className="px-4 py-24 sm:px-6 sm:py-32">
+        <div className="mx-auto max-w-6xl text-center">
+          <h2 className="mx-auto max-w-3xl text-3xl font-extrabold tracking-tight text-black sm:text-4xl md:text-5xl">
+            The scheduling tool built for AI workflows
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-sm text-neutral-600 sm:text-base">
+            Draft, schedule, and organize product storytelling in one clean operational view.
+          </p>
 
-      {/* Features — alternating text + carousel */}
-      <section className="px-4 py-16 sm:px-6 sm:py-24">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16">
-            <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
-              SYSTEM / CAPABILITIES
-            </p>
-            <h2 className="mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              The scheduling tool built for AI workflows
-            </h2>
-            <p className="max-w-2xl font-mono text-sm text-muted-foreground">
-              Capture post ideas from Claude, Cursor, or any AI tool. Organize into campaigns.
-              Schedule across X (Twitter) and LinkedIn — all in one place.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            {features.map((feature, idx) => {
-              const hasSlides = feature.slides.length > 0
-              const isEven = idx % 2 === 0
-
-              return (
-                <div
-                  key={feature.title}
-                  className={`relative border border-border p-6 sm:p-8 ${
-                    hasSlides
-                      ? `flex flex-col items-start gap-8 sm:gap-12 lg:flex-row ${!isEven ? 'lg:flex-row-reverse' : ''}`
-                      : ''
-                  }`}
-                >
-                  {/* Serial number */}
-                  <span className="absolute right-3 top-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                    [{feature.sn}]
-                  </span>
-
-                  {/* Text side */}
-                  <div className={hasSlides ? 'flex-1' : 'max-w-2xl'}>
-                    {/* Icon row */}
-                    <div className="mb-5 flex items-center gap-3 border-l-2 border-primary pl-3">
-                      <feature.icon className="h-5 w-5 text-foreground" strokeWidth={1.5} />
-                      <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                        {feature.sn}
-                      </span>
+          <div className="mt-14 sm:mt-16">
+            <div className="card-clean mx-auto max-w-5xl overflow-hidden px-6 py-8 text-left sm:px-10 sm:py-10 lg:px-14 lg:py-14">
+              <div className="flex flex-col gap-10 lg:gap-12">
+                <div className="flex flex-col gap-6 border-b border-[#e5e5e5] pb-8 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[10px] border border-neutral-200 bg-white">
+                      <Radio className="h-5 w-5 text-black" strokeWidth={1.75} />
                     </div>
-                    <h3 className="mb-3 text-xl font-bold sm:text-2xl">{feature.title}</h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-                      {feature.description}
-                    </p>
+                    <div className="space-y-2">
+                      <div className="h-3 w-28 rounded-full bg-neutral-900" />
+                      <div className="h-2.5 w-40 rounded-full bg-neutral-200" />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 self-start sm:self-auto">
+                    <div className="h-9 w-24 rounded-[8px] bg-[#ff4f00]" />
+                    <div className="h-9 w-9 rounded-[8px] border border-neutral-200 bg-white" />
+                  </div>
+                </div>
+
+                <div className="grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:gap-10">
+                  <div className="space-y-5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <FileText className="h-4 w-4 text-black" strokeWidth={1.75} />
+                        <div className="h-2.5 w-28 rounded-full bg-neutral-900" />
+                      </div>
+                      <div className="h-7 w-20 rounded-[8px] bg-[#ff4f00]" />
+                    </div>
+
+                    {[
+                      { title: 'w-[92%]', meta: 'w-24' },
+                      { title: 'w-[86%]', meta: 'w-20' },
+                      { title: 'w-full', meta: 'w-16' },
+                    ].map((row, index) => (
+                      <div
+                        key={`interface-row-${index}`}
+                        className="rounded-[12px] border border-[#e5e5e5] bg-white p-5"
+                      >
+                        <div className="flex items-start justify-between gap-5">
+                          <div className="min-w-0 flex-1 space-y-3">
+                            <div className={`h-2.5 rounded-full bg-neutral-300 ${row.title}`} />
+                            <div className={`h-2 rounded-full bg-neutral-200 ${row.meta}`} />
+                          </div>
+                          <div className="h-6 w-16 rounded-full bg-[#ff4f00]" />
+                        </div>
+                      </div>
+                    ))}
                   </div>
 
-                  {/* Carousel side */}
-                  {hasSlides && (
-                    <div className="w-full max-w-xs shrink-0 sm:max-w-sm">
-                      <FeatureCarousel slides={feature.slides} />
+                  <div className="space-y-5">
+                    <div className="rounded-[12px] border border-[#e5e5e5] bg-white p-5">
+                      <div className="mb-4 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <FolderKanban className="h-4 w-4 text-black" strokeWidth={1.75} />
+                          <div className="h-2.5 w-20 rounded-full bg-neutral-900" />
+                        </div>
+                        <div className="h-2.5 w-12 rounded-full bg-[#ff4f00]" />
+                      </div>
+                      <div className="space-y-3">
+                        <div className="h-2 rounded-full bg-neutral-200" />
+                        <div className="h-2 w-[82%] rounded-full bg-neutral-200" />
+                        <div className="h-2 w-[70%] rounded-full bg-neutral-200" />
+                      </div>
                     </div>
-                  )}
+
+                    <div className="rounded-[12px] border border-[#e5e5e5] bg-white p-5">
+                      <div className="mb-5 flex items-center gap-3">
+                        <TrendingUp className="h-4 w-4 text-black" strokeWidth={1.75} />
+                        <div className="h-2.5 w-[4.5rem] rounded-full bg-neutral-900" />
+                      </div>
+                      <div className="flex items-end gap-3">
+                        <div className="h-10 w-8 rounded-t-[8px] bg-neutral-200" />
+                        <div className="h-14 w-8 rounded-t-[8px] bg-neutral-300" />
+                        <div className="h-20 w-8 rounded-t-[8px] bg-[#ff4f00]" />
+                        <div className="h-12 w-8 rounded-t-[8px] bg-neutral-200" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              )
-            })}
+              </div>
+            </div>
           </div>
         </div>
       </section>

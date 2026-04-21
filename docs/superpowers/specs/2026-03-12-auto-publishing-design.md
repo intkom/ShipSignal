@@ -6,7 +6,7 @@
 
 ## Context
 
-Bullhorn is a social media post scheduler. Currently, when a post's scheduled time arrives, a cron job (`/api/cron/publish`) transitions the post from `scheduled` to `ready` and sends push/email notifications. The user then publishes manually (via Claude in Chrome, Share Sheet, or copy/paste).
+shipsignal is a social media post scheduler. Currently, when a post's scheduled time arrives, a cron job (`/api/cron/publish`) transitions the post from `scheduled` to `ready` and sends push/email notifications. The user then publishes manually (via Claude in Chrome, Share Sheet, or copy/paste).
 
 This design adds automatic publishing: scheduled posts with a linked social account are published directly to the platform API when they become due.
 

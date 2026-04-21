@@ -1,6 +1,6 @@
 # Architecture
 
-Bullhorn is a Next.js 15 app using the App Router, backed by Supabase (PostgreSQL, Auth, Storage) with Zustand for client state and Tailwind CSS for styling.
+shipsignal is a Next.js 15 app using the App Router, backed by Supabase (PostgreSQL, Auth, Storage) with Zustand for client state and Tailwind CSS for styling.
 
 ## App Router Structure
 

@@ -49,7 +49,7 @@ class ShareViewController: SLComposeServiceViewController {
 
     private func openMainApp(text: String, url: String) {
         var components = URLComponents()
-        components.scheme = "bullhorn"
+        components.scheme = "shipsignal"
         components.host = "share"
         var queryItems: [URLQueryItem] = []
         if !text.isEmpty {

@@ -11,7 +11,7 @@ public class KeychainPlugin: CAPPlugin, CAPBridgedPlugin {
         CAPPluginMethod(name: "remove", returnType: CAPPluginReturnPromise),
     ]
 
-    private let service = "to.bullhorn.app"
+    private let service = "to.shipsignal.app"
 
     @objc func set(_ call: CAPPluginCall) {
         guard let key = call.getString("key"),

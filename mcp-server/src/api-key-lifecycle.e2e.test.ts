@@ -129,8 +129,8 @@ async function createMcpClient(
     cwd: MCP_SERVER_DIR,
     env: {
       ...process.env,
-      BULLHORN_API_KEY: apiKey,
-      BULLHORN_API_URL: API_URL,
+      shipsignal_API_KEY: apiKey,
+      shipsignal_API_URL: API_URL,
     },
     stderr: 'pipe',
   })
@@ -222,7 +222,7 @@ describe('API Key Lifecycle E2E', () => {
     // 2. Create (or reuse) a test user entirely via Management API SQL
     //    GoTrue auth admin API writes are NOT visible from the Management API
     //    SQL endpoint (different connection paths), so we create the user directly.
-    const testEmail = 'lifecycle-test@bullhorn.test'
+    const testEmail = 'lifecycle-test@shipsignal.test'
     const existingRows = (await execSql(
       accessToken,
       `SELECT id FROM auth.users WHERE email = '${testEmail}' LIMIT 1`

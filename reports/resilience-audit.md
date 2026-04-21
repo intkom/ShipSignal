@@ -1,8 +1,8 @@
-# Resilience Audit Report — Bullhorn
+# Resilience Audit Report — shipsignal
 
 **Date:** 2026-03-14
 **Scope:** Full audit (all 8 categories)
-**App:** Bullhorn — Social media post scheduler
+**App:** shipsignal — Social media post scheduler
 **Stack:** Next.js 15 (App Router), Supabase, Zustand, Tailwind CSS, Vercel
 
 ---
@@ -246,7 +246,7 @@ Set `isSubmitting` state to `true` on first click, disable the button, show a sp
 1. Save draft to localStorage on every content change (debounced 1s):
    ```typescript
    useEffect(() => {
-     localStorage.setItem('bullhorn-draft-new-post', JSON.stringify(formData))
+     localStorage.setItem('shipsignal-draft-new-post', JSON.stringify(formData))
    }, [formData])
    ```
 2. On `/new` mount, check for existing draft and offer to restore: "You have an unsaved draft from [time]. [Restore] [Discard]"
@@ -333,7 +333,7 @@ On post deletion, query the post's media URLs and delete them from Supabase Stor
 
 **Scenario:**
 
-1. User has Bullhorn open in tabs A and B
+1. User has shipsignal open in tabs A and B
 2. User logs out in tab A
 3. Tab B still shows full authenticated UI
 4. User clicks "Create Post" in tab B → API call returns 401
@@ -356,7 +356,7 @@ Listen for Supabase `onAuthStateChange` events with `SIGNED_OUT` and redirect to
 
 **Scenario:**
 
-1. User logs into Bullhorn iOS app (Capacitor, remote URL mode)
+1. User logs into shipsignal iOS app (Capacitor, remote URL mode)
 2. User force-quits the app
 3. WKWebView cookies are lost (iOS doesn't persist cookies in remote URL mode)
 4. User reopens app — must log in again every time
@@ -378,7 +378,7 @@ Complete the `sessionBridge.ts` integration: save tokens to iOS Keychain on auth
 
 **Scenario:**
 
-1. User has Bullhorn open on desktop and phone
+1. User has shipsignal open on desktop and phone
 2. Creates a campaign on desktop
 3. Phone still shows old campaign list indefinitely
 4. No polling, no WebSocket, no SSE to push updates
@@ -670,7 +670,7 @@ scopes: z.array(z.enum(['posts:read', 'posts:write', 'campaigns:read', ...]))
 **User Type:** External Attacker (social engineering)
 
 **Scenario:**
-An attacker crafts a link: `https://bullhorn.to/new?text=Buy+crypto+at+scam.com&url=https://scam.com`. If shared with a Bullhorn user, the post editor opens pre-filled with the attacker's content. A careless user might publish without reviewing.
+An attacker crafts a link: `https://shipsignal.to/new?text=Buy+crypto+at+scam.com&url=https://scam.com`. If shared with a shipsignal user, the post editor opens pre-filled with the attacker's content. A careless user might publish without reviewing.
 
 **Code Location:**
 

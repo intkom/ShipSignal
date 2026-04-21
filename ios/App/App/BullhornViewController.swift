@@ -2,7 +2,7 @@ import UIKit
 import Capacitor
 import WebKit
 
-class BullhornViewController: CAPBridgeViewController {
+class shipsignalViewController: CAPBridgeViewController {
 
     private var offlineVC: OfflineViewController?
 

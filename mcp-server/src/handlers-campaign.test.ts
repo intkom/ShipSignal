@@ -6,7 +6,7 @@ const mockPatch = vi.fn()
 const mockDelete = vi.fn()
 
 vi.mock('./client.js', () => ({
-  BullhornClient: class {
+  shipsignalClient: class {
     get = mockGet
     post = mockPost
     patch = mockPatch

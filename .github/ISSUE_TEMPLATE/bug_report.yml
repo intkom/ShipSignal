@@ -25,7 +25,7 @@ body:
     attributes:
       label: Environment
       options:
-        - bullhorn.to (hosted)
+        - shipsignal.to (hosted)
         - Self-hosted
         - Local development
     validations:

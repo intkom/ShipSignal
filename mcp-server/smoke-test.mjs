@@ -2,7 +2,7 @@
 /**
  * MCP Server Smoke Test
  *
- * Tests the MCP server against the Bullhorn API by sending JSON-RPC
+ * Tests the MCP server against the shipsignal API by sending JSON-RPC
  * messages over stdio and verifying responses.
  *
  * Covers: protocol, posts CRUD, campaigns CRUD + linking, projects CRUD,
@@ -11,7 +11,7 @@
  *
  * All test data uses a [SMOKE] prefix and is cleaned up after each run.
  *
- * Usage: BULLHORN_API_KEY=bh_xxx node smoke-test.mjs
+ * Usage: shipsignal_API_KEY=bh_xxx node smoke-test.mjs
  */
 
 import { spawn } from 'child_process'
@@ -20,9 +20,9 @@ import { dirname, join } from 'path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-if (!process.env.BULLHORN_API_KEY) {
-  console.error('Error: BULLHORN_API_KEY is required')
-  console.error('Usage: BULLHORN_API_KEY=bh_xxx node smoke-test.mjs')
+if (!process.env.shipsignal_API_KEY) {
+  console.error('Error: shipsignal_API_KEY is required')
+  console.error('Usage: shipsignal_API_KEY=bh_xxx node smoke-test.mjs')
   process.exit(1)
 }
 
@@ -224,7 +224,7 @@ async function testProtocol() {
   try {
     const init = await waitFor(initId)
     const info = init.result?.serverInfo
-    if (info?.name === 'bullhorn') {
+    if (info?.name === 'shipsignal') {
       pass('Initialize', `${info.name} v${info.version}`)
     } else {
       fail('Initialize', `unexpected: ${JSON.stringify(info)}`)
@@ -765,7 +765,7 @@ async function testConfirmationGuards() {
 // --- Main ---
 
 async function run() {
-  console.log('=== Bullhorn MCP Smoke Test ===')
+  console.log('=== shipsignal MCP Smoke Test ===')
 
   try {
     await testProtocol()

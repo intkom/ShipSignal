@@ -28,7 +28,7 @@ public class BiometricPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func authenticate(_ call: CAPPluginCall) {
-        let reason = call.getString("reason") ?? "Unlock Bullhorn"
+        let reason = call.getString("reason") ?? "Unlock shipsignal"
         let context = LAContext()
         context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, error in
             DispatchQueue.main.async {

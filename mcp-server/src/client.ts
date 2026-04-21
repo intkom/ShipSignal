@@ -7,11 +7,11 @@ function resolveApiKey(): string {
   const primary = process.env.SHIPSIGNAL_API_KEY
   if (primary) return primary
 
-  // Deprecated: BULLHORN_API_KEY is supported as a fallback until the next major release
-  const legacy = process.env.BULLHORN_API_KEY
+  // Deprecated: shipsignal_API_KEY is supported as a fallback until the next major release
+  const legacy = process.env.shipsignal_API_KEY
   if (legacy) {
     console.warn(
-      '[shipsignal-mcp] BULLHORN_API_KEY is deprecated — rename it to SHIPSIGNAL_API_KEY. ' +
+      '[shipsignal-mcp] shipsignal_API_KEY is deprecated — rename it to SHIPSIGNAL_API_KEY. ' +
         'The old name will be removed in a future release.'
     )
     return legacy
@@ -26,11 +26,11 @@ function resolveApiUrl(): string {
   const primary = process.env.SHIPSIGNAL_API_URL
   if (primary) return primary.replace(/\/$/, '')
 
-  // Deprecated: BULLHORN_API_URL is supported as a fallback until the next major release
-  const legacy = process.env.BULLHORN_API_URL
+  // Deprecated: shipsignal_API_URL is supported as a fallback until the next major release
+  const legacy = process.env.shipsignal_API_URL
   if (legacy) {
     console.warn(
-      '[shipsignal-mcp] BULLHORN_API_URL is deprecated — rename it to SHIPSIGNAL_API_URL. ' +
+      '[shipsignal-mcp] shipsignal_API_URL is deprecated — rename it to SHIPSIGNAL_API_URL. ' +
         'The old name will be removed in a future release.'
     )
     return legacy.replace(/\/$/, '')
@@ -128,4 +128,4 @@ export class ShipSignalClient {
 }
 
 /** @deprecated Use ShipSignalClient */
-export const BullhornClient = ShipSignalClient
+export const shipsignalClient = ShipSignalClient

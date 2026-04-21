@@ -383,7 +383,7 @@ export default function McpDocsPage() {
                   <p className="text-sm text-muted-foreground">
                     <strong className="text-foreground">Note:</strong> Set{' '}
                     <code className="rounded bg-[#1e1e2e] px-1.5 py-0.5 font-mono text-xs text-[#cdd6f4]">
-                      BULLHORN_API_KEY
+                      shipsignal_API_KEY
                     </code>{' '}
                     in your shell environment or{' '}
                     <code className="rounded bg-[#1e1e2e] px-1.5 py-0.5 font-mono text-xs text-[#cdd6f4]">

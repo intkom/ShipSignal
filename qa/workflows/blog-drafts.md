@@ -2,7 +2,7 @@
 
 **Fixture:** `qa/fixtures/default.yaml`
 **Seed command:** `make qa-seed`
-**Browser prep:** Clear localStorage (especially `bullhorn-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
+**Browser prep:** Clear localStorage (especially `shipsignal-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
 
 Test blog draft CRUD, search, status filtering, and tag management.
 
@@ -16,7 +16,7 @@ Test blog draft CRUD, search, status filtering, and tag management.
 
 ### 2. Filter by Status
 
-1. Click "Drafts" tab — should show 2 drafts ("Introducing Bullhorn", "How to Plan a Product Launch")
+1. Click "Drafts" tab — should show 2 drafts ("Introducing shipsignal", "How to Plan a Product Launch")
 2. Click "Published" tab — should show 1 ("5 Tips for Effective Social Media Scheduling")
 3. Click "Archived" tab — should show 1 ("Old Beta Announcement")
 4. Click "All" tab — should show 3 (all non-archived)
@@ -25,8 +25,8 @@ Test blog draft CRUD, search, status filtering, and tag management.
 
 1. Type "scheduling" in the search bar
 2. Verify results include "5 Tips for Effective Social Media Scheduling"
-3. Clear search, type "Bullhorn"
-4. Verify results include "Introducing Bullhorn"
+3. Clear search, type "shipsignal"
+4. Verify results include "Introducing shipsignal"
 5. Clear search
 
 ### 4. Create a New Blog Draft
@@ -53,7 +53,7 @@ Test blog draft CRUD, search, status filtering, and tag management.
 ### 5. Edit a Blog Draft
 
 1. Navigate to `/blog`
-2. Click on "Introducing Bullhorn"
+2. Click on "Introducing shipsignal"
 3. Verify the full markdown content loads in the editor
 4. Verify the "Blog Post" tag is selected
 5. Append a paragraph to the content

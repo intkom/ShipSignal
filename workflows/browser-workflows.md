@@ -64,7 +64,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - At least one post and one campaign exist for full testing
 
 1. Navigate to the dashboard
@@ -202,7 +202,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - Test image file available for upload
 
 1. Navigate to post editor
@@ -275,7 +275,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 
 1. Navigate to post editor
    - Click FAB or "+" button
@@ -329,7 +329,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 
 1. Navigate to post editor
    - Click FAB or "+" button
@@ -972,12 +972,12 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - A registered user account exists with known email and password
 
 1. Navigate to login page
-   - Open https://bullhorn.to/login in browser
-   - Verify the login card loads with Bullhorn logo and "Sign in to manage your social posts" subtitle
+   - Open https://shipsignal.to/login in browser
+   - Verify the login card loads with shipsignal logo and "Sign in to manage your social posts" subtitle
    - Verify the gold gradient bar appears at the top of the page
 
 2. Verify form elements
@@ -1024,11 +1024,11 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - Google OAuth is configured in Supabase
 
 1. Navigate to login page
-   - Open https://bullhorn.to/login in browser
+   - Open https://shipsignal.to/login in browser
    - Verify the login card loads
 
 2. Initiate Google OAuth
@@ -1058,13 +1058,13 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - An email address that is not yet registered
 
 1. Navigate to sign up page
-   - Open https://bullhorn.to/signup in browser
+   - Open https://shipsignal.to/signup in browser
    - Verify the sign-up card loads with "Create an account" heading
-   - Verify "Get started with Bullhorn" subtitle appears
+   - Verify "Get started with shipsignal" subtitle appears
 
 2. Verify form elements
    - Verify Email input field with placeholder "you@example.com"
@@ -1114,11 +1114,11 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - A registered user account exists
 
 1. Navigate to forgot password page
-   - Open https://bullhorn.to/forgot-password in browser
+   - Open https://shipsignal.to/forgot-password in browser
    - Verify the card loads with "Reset password" heading and key icon
    - Verify "Enter your email and we'll send you a reset link" subtitle
 
@@ -1196,7 +1196,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - ALLOWED_EMAILS environment variable is set with a comma-separated list of allowed emails
 - A user account exists with an email NOT in the allowed list
 
@@ -1229,7 +1229,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - User is authenticated
 
 1. Navigate to launch posts
@@ -1403,7 +1403,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - User is authenticated
 
 1. Navigate to Projects page
@@ -1621,7 +1621,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - User is authenticated
 
 1. Navigate to blog drafts
@@ -1835,7 +1835,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - Google Analytics OAuth is configured (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET env vars)
 - User is authenticated
 
@@ -1949,7 +1949,7 @@
 
 **Prerequisites:**
 
-- App running at https://bullhorn.to (or configured URL)
+- App running at https://shipsignal.to (or configured URL)
 - User is authenticated
 
 1. Navigate to profile page

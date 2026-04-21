@@ -1,18 +1,18 @@
 /**
- * Storage layer — thin HTTP wrappers around the Bullhorn API.
+ * Storage layer — thin HTTP wrappers around the shipsignal API.
  * All data transforms and auth are handled server-side.
  */
 
 import { readFile, stat } from 'node:fs/promises'
 import path from 'node:path'
-import { BullhornClient } from './client.js'
+import { shipsignalClient } from './client.js'
 
 // Singleton client
-let client: BullhornClient | null = null
+let client: shipsignalClient | null = null
 
-function getClient(): BullhornClient {
+function getClient(): shipsignalClient {
   if (!client) {
-    client = new BullhornClient()
+    client = new shipsignalClient()
   }
   return client
 }
@@ -538,7 +538,7 @@ export async function uploadMedia(filePath: string): Promise<{ filename: string;
   // Construct full public URL from relative path
   const baseUrl = (
     process.env.SHIPSIGNAL_API_URL ||
-    process.env.BULLHORN_API_URL ||
+    process.env.shipsignal_API_URL ||
     'https://shipsignal.app'
   ).replace(/\/$/, '')
   const url = `${baseUrl}${res.url}`

@@ -1,6 +1,6 @@
 # Roadmap
 
-Planned features and improvements for Bullhorn.
+Planned features and improvements for shipsignal.
 
 ## In Progress
 
@@ -33,4 +33,4 @@ Planned features and improvements for Bullhorn.
 
 ## Contributing
 
-Have a feature idea? [Open an issue](https://github.com/mean-weasel/bullhorn/issues/new?template=feature_request.yml) to start the discussion.
+Have a feature idea? [Open an issue](https://github.com/intkom/shipsignal/issues/new?template=feature_request.yml) to start the discussion.

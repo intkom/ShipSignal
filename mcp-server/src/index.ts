@@ -2755,7 +2755,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     } else if (message === 'Forbidden') {
       const scopes = TOOL_SCOPES[name]
       safeMessage = scopes
-        ? `Forbidden. The "${name}" tool requires scope(s): ${scopes.join(', ')}. Update your API key permissions at https://bullhorn.to/settings.`
+        ? `Forbidden. The "${name}" tool requires scope(s): ${scopes.join(', ')}. Update your API key permissions at https://shipsignal.to/settings.`
         : 'Forbidden. Your API key lacks the required permissions for this operation.'
     } else {
       safeMessage = 'Operation failed. Please try again or check your API key permissions.'
@@ -2777,7 +2777,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Start server
 async function main() {
-  if (!process.env.SHIPSIGNAL_API_KEY && !process.env.BULLHORN_API_KEY) {
+  if (!process.env.SHIPSIGNAL_API_KEY && !process.env.shipsignal_API_KEY) {
     console.error(
       'Error: SHIPSIGNAL_API_KEY is required.\n' +
         'Create one at https://shipsignal.app/settings → API Keys.'

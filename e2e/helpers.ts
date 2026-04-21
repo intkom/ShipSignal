@@ -51,8 +51,8 @@ export async function enterDemoMode(page: Page) {
 
   await page.goto('/')
   // Wait for the dashboard to load - look for the header
-  // The link contains emoji + text, so use regex to match "Bullhorn"
-  await expect(page.getByRole('link', { name: /Bullhorn/ })).toBeVisible()
+  // The link contains emoji + text, so use regex to match "shipsignal"
+  await expect(page.getByRole('link', { name: /shipsignal/ })).toBeVisible()
 }
 
 /**

@@ -4,11 +4,11 @@
 # Timestamps use "+Nd HH:MM" (days from now at HH:MM UTC).
 
 projects:
-  - _name: bullhorn-launch
-    name: 'Bullhorn Product Launch'
-    description: 'Coordinating the public launch of Bullhorn across all channels'
+  - _name: shipsignal-launch
+    name: 'shipsignal Product Launch'
+    description: 'Coordinating the public launch of shipsignal across all channels'
     hashtags:
-      - bullhorn
+      - shipsignal
       - launch
       - socialmedia
     brandColors:
@@ -25,13 +25,13 @@ campaigns:
     name: 'Launch Week'
     description: 'All posts for the launch week across platforms'
     status: active
-    ref:projectId: bullhorn-launch
+    ref:projectId: shipsignal-launch
 
   - _name: pre-launch-teasers
     name: 'Pre-Launch Teasers'
     description: 'Building anticipation before the big day'
     status: active
-    ref:projectId: bullhorn-launch
+    ref:projectId: shipsignal-launch
 
   - _name: weekly-tips
     name: 'Weekly Tips Series'
@@ -49,7 +49,7 @@ posts:
   - _name: launch-tweet
     platform: twitter
     content:
-      text: "We're live! Bullhorn is now available for everyone. Schedule your social media posts across Twitter, LinkedIn, and Reddit from one place. #bullhorn #launch"
+      text: "We're live! shipsignal is now available for everyone. Schedule your social media posts across Twitter, LinkedIn, and Reddit from one place. #shipsignal #launch"
     status: scheduled
     scheduledAt: '+1d 10:00'
     ref:campaignId: launch-week
@@ -86,7 +86,7 @@ posts:
   - _name: launch-linkedin
     platform: linkedin
     content:
-      text: "Excited to announce the launch of Bullhorn — a social media scheduler built for indie hackers and small teams.\n\nAfter months of building in public, we're ready to share it with the world.\n\nKey features:\n- Schedule posts across Twitter, LinkedIn, and Reddit\n- Organize with campaigns and projects\n- Launch day coordination\n\nTry it free at bullhorn.to"
+      text: "Excited to announce the launch of shipsignal — a social media scheduler built for indie hackers and small teams.\n\nAfter months of building in public, we're ready to share it with the world.\n\nKey features:\n- Schedule posts across Twitter, LinkedIn, and Reddit\n- Organize with campaigns and projects\n- Launch day coordination\n\nTry it free at shipsignal.to"
     status: scheduled
     scheduledAt: '+1d 11:00'
     ref:campaignId: launch-week
@@ -103,8 +103,8 @@ posts:
     platform: reddit
     content:
       subreddit: 'SideProject'
-      title: 'I built Bullhorn - a social media scheduler for indie hackers'
-      body: "Hey everyone! After 6 months of building in public, I'm launching Bullhorn today.\n\nIt's a social media scheduler that lets you plan posts across Twitter, LinkedIn, and Reddit from one dashboard.\n\nWould love your feedback!"
+      title: 'I built shipsignal - a social media scheduler for indie hackers'
+      body: "Hey everyone! After 6 months of building in public, I'm launching shipsignal today.\n\nIt's a social media scheduler that lets you plan posts across Twitter, LinkedIn, and Reddit from one dashboard.\n\nWould love your feedback!"
     status: scheduled
     scheduledAt: '+2d 14:00'
     ref:campaignId: launch-week
@@ -129,11 +129,11 @@ posts:
 
 blogDrafts:
   - _name: launch-blog
-    title: 'Introducing Bullhorn: Social Media Scheduling for Indie Hackers'
+    title: 'Introducing shipsignal: Social Media Scheduling for Indie Hackers'
     content: |
-      # Introducing Bullhorn
+      # Introducing shipsignal
 
-      Today we're launching Bullhorn, a social media scheduler designed specifically for indie hackers and small teams.
+      Today we're launching shipsignal, a social media scheduler designed specifically for indie hackers and small teams.
 
       ## Why we built this
 
@@ -179,28 +179,28 @@ blogDrafts:
 launchPosts:
   - _name: show-hn
     platform: hacker_news_show
-    title: 'Show HN: Bullhorn - Social media scheduler for indie hackers'
-    url: 'https://bullhorn.to'
+    title: 'Show HN: shipsignal - Social media scheduler for indie hackers'
+    url: 'https://shipsignal.to'
     description: 'Built with Next.js + Supabase. Open source.'
     notes: 'Submit at 9am ET on launch day'
     ref:campaignId: launch-week
 
   - _name: product-hunt
     platform: product_hunt
-    title: 'Bullhorn - Schedule social posts across Twitter, LinkedIn & Reddit'
-    url: 'https://bullhorn.to'
+    title: 'shipsignal - Schedule social posts across Twitter, LinkedIn & Reddit'
+    url: 'https://shipsignal.to'
     description: 'Plan your social media content across multiple platforms from one dashboard'
     platformFields:
       tagline: 'Social scheduling for indie hackers'
       pricing: free
-      firstComment: "Hey Product Hunt! I've been building Bullhorn for the past 6 months..."
+      firstComment: "Hey Product Hunt! I've been building shipsignal for the past 6 months..."
     notes: 'Launch at 12:01am PT'
     ref:campaignId: launch-week
 
   - _name: beta-list
     platform: beta_list
-    title: 'Bullhorn'
-    url: 'https://bullhorn.to'
+    title: 'shipsignal'
+    url: 'https://shipsignal.to'
     description: 'Social media scheduling for indie hackers'
     platformFields:
       oneSentencePitch: 'Schedule posts across Twitter, LinkedIn, and Reddit from one dashboard'
@@ -208,9 +208,9 @@ launchPosts:
 
   - _name: dev-hunt
     platform: dev_hunt
-    title: 'Bullhorn'
-    url: 'https://bullhorn.to'
+    title: 'shipsignal'
+    url: 'https://shipsignal.to'
     description: 'Open source social media scheduler'
     platformFields:
-      githubUrl: 'https://github.com/neonwatty/bullhorn'
+      githubUrl: 'https://github.com/neonwatty/shipsignal'
     ref:campaignId: launch-week

@@ -1,6 +1,6 @@
 # Environment Variables
 
-This document lists all environment variables used by Bullhorn, their purpose, and whether they're required or optional.
+This document lists all environment variables used by shipsignal, their purpose, and whether they're required or optional.
 
 ## Required Variables
 
@@ -127,7 +127,7 @@ APNS_ENVIRONMENT=production
 
 ```bash
 RESEND_API_KEY=re_your-api-key
-RESEND_FROM_EMAIL=Bullhorn <notifications@bullhorn.to>  # Optional, has default
+RESEND_FROM_EMAIL=shipsignal <notifications@shipsignal.to>  # Optional, has default
 ```
 
 **Purpose**: Email notifications when scheduled posts become ready
@@ -137,7 +137,7 @@ RESEND_FROM_EMAIL=Bullhorn <notifications@bullhorn.to>  # Optional, has default
 **How to set up**:
 
 1. Create free Resend account at https://resend.com/
-2. Configure sending domain `bullhorn.to` (add SPF + DKIM DNS records)
+2. Configure sending domain `shipsignal.to` (add SPF + DKIM DNS records)
 3. Create an API key at https://resend.com/api-keys
 4. Add `RESEND_API_KEY` to Vercel environment variables
 5. Optionally set `RESEND_FROM_EMAIL` to customize the sender

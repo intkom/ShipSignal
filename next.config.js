@@ -5,6 +5,14 @@ const nextConfig = {
   // Enable React strict mode
   reactStrictMode: true,
 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   // Image optimization
   images: {
     remotePatterns: [

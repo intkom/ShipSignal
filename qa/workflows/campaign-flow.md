@@ -2,7 +2,7 @@
 
 **Fixture:** `qa/fixtures/default.yaml`
 **Seed command:** `make qa-seed`
-**Browser prep:** Clear localStorage (especially `bullhorn-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
+**Browser prep:** Clear localStorage (especially `shipsignal-draft-new-post`) before running — stale draft state from prior runs causes phantom redirects to `/new`.
 
 Test the organizational hierarchy: projects contain campaigns, campaigns group posts.
 
@@ -14,7 +14,7 @@ Test the organizational hierarchy: projects contain campaigns, campaigns group p
 
 1. Navigate to `/projects`
 2. Verify 2 projects visible
-3. Click "Bullhorn Product Launch"
+3. Click "shipsignal Product Launch"
 4. Verify 2 campaigns shown: "Launch Week" and "Pre-Launch Teasers"
 5. Click "Q2 Content Calendar" (navigate back first)
 6. Verify 1 campaign shown: "Weekly Tips Series"
@@ -36,10 +36,10 @@ Test the organizational hierarchy: projects contain campaigns, campaigns group p
 2. Click "New Campaign" button
 3. Fill in name: "Social Proof Collection"
 4. Fill in description: "Gathering testimonials and user feedback"
-5. Assign to project: "Bullhorn Product Launch"
+5. Assign to project: "shipsignal Product Launch"
 6. Click "Create"
 7. Verify the campaign appears in the list (now 5 — the free plan limit)
-8. Navigate to `/projects`, click "Bullhorn Product Launch"
+8. Navigate to `/projects`, click "shipsignal Product Launch"
 9. Verify "Social Proof Collection" now appears under the project
 
 ### 4. Edit Campaign Details
