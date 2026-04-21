@@ -536,7 +536,11 @@ export async function uploadMedia(filePath: string): Promise<{ filename: string;
   )
 
   // Construct full public URL from relative path
-  const baseUrl = (process.env.BULLHORN_API_URL || 'https://bullhorn.to').replace(/\/$/, '')
+  const baseUrl = (
+    process.env.SHIPSIGNAL_API_URL ||
+    process.env.BULLHORN_API_URL ||
+    'https://shipsignal.app'
+  ).replace(/\/$/, '')
   const url = `${baseUrl}${res.url}`
 
   return { filename: res.filename, url }

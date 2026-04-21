@@ -1,4 +1,5 @@
 import cron from 'node-cron'
+import { logger } from './logger'
 
 export function startScheduler(): void {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
@@ -30,5 +31,5 @@ export function startScheduler(): void {
     })
   }
 
-  console.log('[scheduler] Internal cron started (publish + token refresh every 5 min)')
+  logger.log('[scheduler] Internal cron started (publish + token refresh every 5 min)')
 }

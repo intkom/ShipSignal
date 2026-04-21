@@ -15,6 +15,7 @@ export default [
       'ios/**',
       'coverage/**',
       '.claude/**',
+      'mcp-server/**',
     ],
   },
   {
@@ -42,6 +43,8 @@ export default [
         'error',
         { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_|^error|^err' },
       ],
+      // Block raw console usage — use src/lib/logger.ts instead
+      'no-console': ['error', { allow: ['warn', 'error'] }],
       // File and line limits
       'max-lines': ['warn', { max: 300, skipBlankLines: true, skipComments: true }],
       'max-len': [
@@ -64,6 +67,20 @@ export default [
       'security/detect-no-csrf-before-method-override': 'error',
       'security/detect-possible-timing-attacks': 'warn',
       'security/detect-pseudoRandomBytes': 'warn',
+    },
+  },
+  // logger.ts is the one file allowed to call console.* directly
+  {
+    files: ['src/lib/logger.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  // Test files may use console freely
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx', 'e2e/**/*.ts'],
+    rules: {
+      'no-console': 'off',
     },
   },
 ]

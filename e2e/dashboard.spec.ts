@@ -151,7 +151,7 @@ test.describe('Dashboard', () => {
   test.describe.serial('Empty State', () => {
     test('should show welcome message when no posts exist', async ({ page }) => {
       await expect(
-        page.getByRole('heading', { name: /welcome to bullhorn/i }).first()
+        page.getByRole('heading', { name: /welcome to shipsignal/i }).first()
       ).toBeVisible()
       await expect(page.getByText('Create your first post to get started')).toBeVisible()
     })
@@ -169,7 +169,7 @@ test.describe('Dashboard', () => {
       await gotoDashboard(page)
 
       await expect(
-        page.getByRole('heading', { name: /welcome to bullhorn/i }).first()
+        page.getByRole('heading', { name: /welcome to shipsignal/i }).first()
       ).not.toBeVisible()
     })
   })

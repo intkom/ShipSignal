@@ -3,6 +3,7 @@ import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
 import { verifyCronSecret } from '@/lib/cronAuth'
 import { publishPost } from '@/lib/publishers'
 import { transformPostFromDb } from '@/lib/utils'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
       })
     )
 
-    console.log(`[retry-failed] Attempted: ${toRetry.length}, Succeeded: ${retried}`)
+    logger.log(`[retry-failed] Attempted: ${toRetry.length}, Succeeded: ${retried}`)
 
     return NextResponse.json({
       retried,

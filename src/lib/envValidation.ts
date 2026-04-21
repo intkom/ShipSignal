@@ -81,7 +81,6 @@ export function validateEnv(): void {
   }
 
   if (missing.length === 0) {
-    console.log('[envValidation] ✅ All environment variables configured')
     return
   }
 
@@ -110,8 +109,6 @@ export function validateEnv(): void {
 
   // Self-hosted mode validation
   if (process.env.SELF_HOSTED === 'true') {
-    console.log('[envValidation] ℹ️  Self-hosted mode enabled')
-
     // Check cron scheduler
     if (!process.env.CRON_SECRET) {
       console.warn(

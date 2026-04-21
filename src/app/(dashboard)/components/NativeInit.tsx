@@ -7,6 +7,7 @@ import { onNetworkStatusChange } from '@/lib/networkStatus'
 import { clearBadge, setBadgeCount, calculateBadgeCount } from '@/lib/appBadge'
 import { useRemindersStore } from '@/lib/reminders'
 import { usePostsStore } from '@/lib/storage'
+import { logger } from '@/lib/logger'
 
 // eslint-disable-next-line max-lines-per-function
 export function NativeInit() {
@@ -65,14 +66,14 @@ export function NativeInit() {
 
     async function initPushNotifications() {
       try {
-        console.log('[NativeInit] Starting push registration...')
+        logger.log('[NativeInit] Starting push registration...')
         const { registerPushNotifications, addPushListeners, savePushToken } =
           await import('@/lib/pushNotifications')
         const token = await registerPushNotifications()
-        console.log('[NativeInit] Push registration result:', token ? 'got token' : 'no token')
+        logger.log('[NativeInit] Push registration result:', token ? 'got token' : 'no token')
         if (token) {
           await savePushToken(token)
-          console.log('[NativeInit] Push token saved')
+          logger.log('[NativeInit] Push token saved')
         }
         addPushListeners((url) => {
           router.push(url)
@@ -122,7 +123,7 @@ export function NativeInit() {
 
     // Non-async tasks
     onNetworkStatusChange((status) => {
-      console.log('[NativeInit] Network status:', status.connected ? 'online' : 'offline')
+      logger.log('[NativeInit] Network status:', status.connected ? 'online' : 'offline')
     })
     clearBadge()
   }, [router])

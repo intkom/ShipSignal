@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
 import { verifyCronSecret } from '@/lib/cronAuth'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -104,7 +105,7 @@ export async function GET(request: NextRequest) {
       usersProcessed++
     }
 
-    console.log(
+    logger.log(
       `[cleanup-media] Processed ${usersProcessed} users, removed ${orphansRemoved} orphans, reclaimed ${bytesReclaimed} bytes`
     )
     return NextResponse.json({ usersProcessed, orphansRemoved, bytesReclaimed })

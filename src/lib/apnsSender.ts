@@ -1,6 +1,7 @@
 import { sign, createPrivateKey } from 'crypto'
 import http2 from 'http2'
 import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
+import { logger } from './logger'
 
 const APNS_KEY_ID = process.env.APNS_KEY_ID || ''
 const APNS_TEAM_ID = process.env.APNS_TEAM_ID || ''
@@ -156,10 +157,10 @@ export async function sendApnsToUser(userId: string, payload: ApnsPayload): Prom
 
         if (res.status === 200) {
           sent++
-          console.log(`[apns] Sent to device ${device.id} (apns-id: ${res.apnsId})`)
+          logger.log(`[apns] Sent to device ${device.id} (apns-id: ${res.apnsId})`)
         } else if (res.status === 410 || res.status === 404) {
           await supabase.from('push_device_tokens').delete().eq('id', device.id)
-          console.log(`[apns] Removed invalid device token ${device.id}`)
+          logger.log(`[apns] Removed invalid device token ${device.id}`)
         } else {
           console.error(`[apns] Failed to send to device ${device.id}: ${res.status} ${res.body}`)
         }

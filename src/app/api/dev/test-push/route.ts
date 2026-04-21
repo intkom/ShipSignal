@@ -1,6 +1,7 @@
 import { requireSessionAuth } from '@/lib/auth'
 import { sendApnsToUser } from '@/lib/apnsSender'
 import { createClient } from '@/lib/supabase/server'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,7 +83,7 @@ export async function POST(request: Request) {
       // Use defaults if no body provided
     }
 
-    console.log(`[test-push] Sending to user ${userId}: "${title}" / "${body}"`)
+    logger.log(`[test-push] Sending to user ${userId}: "${title}" / "${body}"`)
 
     const sent = await sendApnsToUser(userId, {
       title,
@@ -90,7 +91,7 @@ export async function POST(request: Request) {
       url: '/dashboard',
     })
 
-    console.log(`[test-push] Result: ${sent} device(s) sent`)
+    logger.log(`[test-push] Result: ${sent} device(s) sent`)
 
     return Response.json({
       success: true,

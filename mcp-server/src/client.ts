@@ -1,21 +1,51 @@
 /**
- * HTTP client for the Bullhorn API.
+ * HTTP client for the ShipSignal API.
  * All requests are authenticated via Bearer API key.
  */
 
-export class BullhornClient {
+function resolveApiKey(): string {
+  const primary = process.env.SHIPSIGNAL_API_KEY
+  if (primary) return primary
+
+  // Deprecated: BULLHORN_API_KEY is supported as a fallback until the next major release
+  const legacy = process.env.BULLHORN_API_KEY
+  if (legacy) {
+    console.warn(
+      '[shipsignal-mcp] BULLHORN_API_KEY is deprecated — rename it to SHIPSIGNAL_API_KEY. ' +
+        'The old name will be removed in a future release.'
+    )
+    return legacy
+  }
+
+  throw new Error(
+    'SHIPSIGNAL_API_KEY is required. Create one at https://shipsignal.app/settings → API Keys.'
+  )
+}
+
+function resolveApiUrl(): string {
+  const primary = process.env.SHIPSIGNAL_API_URL
+  if (primary) return primary.replace(/\/$/, '')
+
+  // Deprecated: BULLHORN_API_URL is supported as a fallback until the next major release
+  const legacy = process.env.BULLHORN_API_URL
+  if (legacy) {
+    console.warn(
+      '[shipsignal-mcp] BULLHORN_API_URL is deprecated — rename it to SHIPSIGNAL_API_URL. ' +
+        'The old name will be removed in a future release.'
+    )
+    return legacy.replace(/\/$/, '')
+  }
+
+  return 'https://shipsignal.app'
+}
+
+export class ShipSignalClient {
   private baseUrl: string
   private apiKey: string
 
   constructor() {
-    const apiKey = process.env.BULLHORN_API_KEY
-    if (!apiKey) {
-      throw new Error(
-        'BULLHORN_API_KEY is required. Create one at https://bullhorn.to/settings → API Keys.'
-      )
-    }
-    this.apiKey = apiKey
-    this.baseUrl = (process.env.BULLHORN_API_URL || 'https://bullhorn.to').replace(/\/$/, '')
+    this.apiKey = resolveApiKey()
+    this.baseUrl = resolveApiUrl()
   }
 
   private async request<T>(
@@ -96,3 +126,6 @@ export class BullhornClient {
     return res.json() as Promise<T>
   }
 }
+
+/** @deprecated Use ShipSignalClient */
+export const BullhornClient = ShipSignalClient

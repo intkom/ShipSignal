@@ -521,7 +521,7 @@ export function LandingPage() {
               Docs
             </Link>
             <a
-              href="https://github.com/mean-weasel/ShipSignal"
+              href="https://github.com/shipsignal/shipsignal"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-foreground"

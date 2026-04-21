@@ -74,7 +74,7 @@ import {
 // Create MCP server
 const server = new Server(
   {
-    name: 'bullhorn',
+    name: 'shipsignal',
     version: '1.0.0',
   },
   {
@@ -2777,17 +2777,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Start server
 async function main() {
-  if (!process.env.BULLHORN_API_KEY) {
+  if (!process.env.SHIPSIGNAL_API_KEY && !process.env.BULLHORN_API_KEY) {
     console.error(
-      'Error: BULLHORN_API_KEY is required.\n' +
-        'Create one at https://bullhorn.to/settings → API Keys.'
+      'Error: SHIPSIGNAL_API_KEY is required.\n' +
+        'Create one at https://shipsignal.app/settings → API Keys.'
     )
     process.exit(1)
   }
 
   const transport = new StdioServerTransport()
   await server.connect(transport)
-  console.error('Bullhorn MCP Server running on stdio')
+  console.error('ShipSignal MCP Server running on stdio')
 }
 
 main().catch(console.error)

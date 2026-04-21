@@ -37,7 +37,7 @@ test.describe('Settings', () => {
       await expect(darkButton).toHaveClass(/bg-primary/)
 
       // Verify localStorage is updated
-      const theme = await page.evaluate(() => localStorage.getItem('bullhorn-theme'))
+      const theme = await page.evaluate(() => localStorage.getItem('ShipSignal-theme'))
       expect(theme).toBe('dark')
     })
 
@@ -60,7 +60,7 @@ test.describe('Settings', () => {
       await expect(lightButton).toHaveClass(/bg-primary/)
 
       // Verify localStorage is updated
-      const theme = await page.evaluate(() => localStorage.getItem('bullhorn-theme'))
+      const theme = await page.evaluate(() => localStorage.getItem('ShipSignal-theme'))
       expect(theme).toBe('light')
     })
 
@@ -75,7 +75,7 @@ test.describe('Settings', () => {
       await expect(systemButton).toHaveClass(/bg-primary/)
 
       // Verify localStorage is updated
-      const theme = await page.evaluate(() => localStorage.getItem('bullhorn-theme'))
+      const theme = await page.evaluate(() => localStorage.getItem('ShipSignal-theme'))
       expect(theme).toBe('system')
 
       // Verify html element has either light or dark class based on system preference
@@ -96,7 +96,7 @@ test.describe('Settings', () => {
 
       // Verify dark theme persists (html class and localStorage)
       await expect(page.locator('html')).toHaveClass(/dark/)
-      const darkTheme = await page.evaluate(() => localStorage.getItem('bullhorn-theme'))
+      const darkTheme = await page.evaluate(() => localStorage.getItem('ShipSignal-theme'))
       expect(darkTheme).toBe('dark')
 
       // Set light theme
@@ -108,7 +108,7 @@ test.describe('Settings', () => {
 
       // Verify light theme persists (html class and localStorage)
       await expect(page.locator('html')).toHaveClass(/light/)
-      const lightTheme = await page.evaluate(() => localStorage.getItem('bullhorn-theme'))
+      const lightTheme = await page.evaluate(() => localStorage.getItem('ShipSignal-theme'))
       expect(lightTheme).toBe('light')
     })
 

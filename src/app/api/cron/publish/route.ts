@@ -8,6 +8,7 @@ import { verifyCronSecret } from '@/lib/cronAuth'
 import { PLAN_LIMITS, PLAN_FEATURES, type PlanType } from '@/lib/limits'
 import { getUserPlan } from '@/lib/planEnforcement'
 import { isSelfHosted } from '@/lib/selfHosted'
+import { logger } from '@/lib/logger'
 import { publishPost } from '@/lib/publishers'
 import { transformPostFromDb } from '@/lib/utils'
 
@@ -300,7 +301,7 @@ export async function GET(request: NextRequest) {
     notified += await sendNotifications(readyByUser, supabase, 'ready')
     notified += await sendNotifications(failedAutoPublish, supabase, 'failed')
 
-    console.log(
+    logger.log(
       `[publish] Processed: ${processed}, Notified: ${notified} users, Auto-published: ${autoPublished}`
     )
     return NextResponse.json({ processed, notified, autoPublished })

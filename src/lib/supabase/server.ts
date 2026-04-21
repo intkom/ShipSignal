@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { getApiKeyFromHeaders } from '../auth'
+import { logger } from '../logger'
 
 // eslint-disable-next-line max-lines-per-function -- borderline, extraction would hurt readability
 export async function createClient() {
@@ -36,7 +37,7 @@ export async function createClient() {
   const apiKey = await getApiKeyFromHeaders()
   if (apiKey && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[supabase] Service role client via API key (prefix: ${apiKey.slice(0, 6)})`)
+      logger.log(`[supabase] Service role client via API key (prefix: ${apiKey.slice(0, 6)})`)
     }
     return createSupabaseJsClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,

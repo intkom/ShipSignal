@@ -6,7 +6,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'MCP Server Documentation',
   description:
-    'Connect Claude Code or any MCP client to manage your ShipSignal content with AI. Uses the @mean-weasel/bullhorn-mcp package against your ShipSignal deployment.',
+    'Connect Claude Code or any MCP client to manage your ShipSignal content with AI. Uses the @shipsignal/mcp package against your ShipSignal deployment.',
 }
 import {
   Radio,
@@ -178,9 +178,10 @@ const mcpConfig = `{
   "mcpServers": {
     "shipsignal": {
       "command": "npx",
-      "args": ["-y", "@mean-weasel/bullhorn-mcp"],
+      "args": ["-y", "@shipsignal/mcp"],
       "env": {
-        "BULLHORN_API_URL": "https://shipsignal.app"
+        "SHIPSIGNAL_API_KEY": "YOUR_API_KEY_HERE",
+        "SHIPSIGNAL_API_URL": "https://shipsignal.app"
       }
     }
   }
@@ -308,13 +309,13 @@ export default function McpDocsPage() {
 
           <div className="inline-flex">
             <a
-              href="https://www.npmjs.com/package/@mean-weasel/bullhorn-mcp"
+              href="https://www.npmjs.com/package/@shipsignal/mcp"
               target="_blank"
               rel="noopener noreferrer"
               className="sticker-badge border-[hsl(var(--gold-dark))] bg-primary/10 font-mono text-sm text-primary transition-colors hover:bg-primary/20"
             >
               <Package className="mr-1.5 h-3.5 w-3.5" />
-              @mean-weasel/bullhorn-mcp
+              @shipsignal/mcp
               <ExternalLink className="ml-1.5 h-3 w-3" />
             </a>
           </div>
@@ -469,7 +470,7 @@ export default function McpDocsPage() {
                 <tr className="border-b-2 border-border/50">
                   <td className="px-4 py-3">
                     <code className="rounded bg-[#1e1e2e] px-2 py-1 font-mono text-sm text-[#cdd6f4]">
-                      BULLHORN_API_KEY
+                      SHIPSIGNAL_API_KEY
                     </code>
                   </td>
                   <td className="px-4 py-3">
@@ -484,7 +485,7 @@ export default function McpDocsPage() {
                 <tr className="border-b-2 border-border/50">
                   <td className="px-4 py-3">
                     <code className="rounded bg-[#1e1e2e] px-2 py-1 font-mono text-sm text-[#cdd6f4]">
-                      BULLHORN_API_URL
+                      SHIPSIGNAL_API_URL
                     </code>
                   </td>
                   <td className="px-4 py-3">
@@ -614,7 +615,7 @@ export default function McpDocsPage() {
           </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <a
-              href="https://www.npmjs.com/package/@mean-weasel/bullhorn-mcp"
+              href="https://www.npmjs.com/package/@shipsignal/mcp"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-foreground"
@@ -622,7 +623,7 @@ export default function McpDocsPage() {
               npm
             </a>
             <a
-              href="https://github.com/mean-weasel/ShipSignal"
+              href="https://github.com/shipsignal/shipsignal"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-foreground"
