@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth, parseJsonBody, validateScopes } from '@/lib/auth'
 import { rateLimit } from '@/lib/rateLimit'
 import { enforceResourceLimit, isPlanLimitError } from '@/lib/planEnforcement'
+import { logger } from '@/lib/logger'
 import { z } from 'zod'
 
 const importPostSchema = z.object({
@@ -161,7 +162,7 @@ export async function POST(request: NextRequest) {
               { status: 403 }
             )
           }
-          console.error('Error importing campaigns:', error)
+          logger.error('Error importing campaigns:', error)
           campaignsSkipped += campaignsToInsert.length
         } else {
           campaignsImported = campaignsToInsert.length
@@ -236,7 +237,7 @@ export async function POST(request: NextRequest) {
           if (isPlanLimitError(error)) {
             return NextResponse.json({ error: 'Post limit reached during import' }, { status: 403 })
           }
-          console.error('Error importing posts:', error)
+          logger.error('Error importing posts:', error)
           postsSkipped += postsToInsert.length
         } else {
           postsImported = postsToInsert.length
@@ -249,7 +250,7 @@ export async function POST(request: NextRequest) {
       skipped: { posts: postsSkipped, campaigns: campaignsSkipped },
     })
   } catch (error) {
-    console.error('Error importing data:', error)
+    logger.error('Error importing data:', error)
     return NextResponse.json({ error: 'Failed to import data' }, { status: 500 })
   }
 }

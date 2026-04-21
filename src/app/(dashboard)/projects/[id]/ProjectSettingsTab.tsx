@@ -50,7 +50,7 @@ export function ProjectSettingsTab({
     <div className="space-y-6">
       {/* Project info */}
       <div className="bg-card border border-border rounded-xl p-4 md:p-6">
-        <h3 className="font-semibold mb-4">Project Information</h3>
+        <h3 className="font-bold mb-4">Project Information</h3>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-2">Name</label>
@@ -100,7 +100,7 @@ export function ProjectSettingsTab({
       <div className="bg-card border border-border rounded-xl p-4 md:p-6">
         <div className="flex items-center gap-2 mb-4">
           <Link2 className="w-5 h-5 text-[hsl(var(--gold-dark))]" />
-          <h3 className="font-semibold">Connected Accounts</h3>
+          <h3 className="font-bold">Connected Accounts</h3>
         </div>
         <AccountPicker
           projectId={project.id}
@@ -115,7 +115,7 @@ export function ProjectSettingsTab({
       <div className="bg-card border border-border rounded-xl p-4 md:p-6">
         <div className="flex items-center gap-2 mb-4">
           <BarChart3 className="w-5 h-5 text-blue-500" />
-          <h3 className="font-semibold">Website Analytics</h3>
+          <h3 className="font-bold">Website Analytics</h3>
         </div>
         {analyticsConnections.length > 0 ? (
           <div className="space-y-4">
@@ -162,7 +162,7 @@ export function ProjectSettingsTab({
 
       {/* Danger zone */}
       <div className="bg-card border border-destructive/30 rounded-xl p-4 md:p-6">
-        <h3 className="font-semibold text-destructive mb-2">Danger Zone</h3>
+        <h3 className="font-bold text-destructive mb-2">Danger Zone</h3>
         <p className="text-sm text-muted-foreground mb-4">
           Deleting this project will unassign all campaigns. The campaigns and their posts will not
           be deleted.
@@ -200,7 +200,7 @@ function BrandKitSection({
 }) {
   return (
     <div className="bg-card border border-border rounded-xl p-4 md:p-6">
-      <h3 className="font-semibold mb-4">Brand Kit</h3>
+      <h3 className="font-bold mb-4">Brand Kit</h3>
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-2">

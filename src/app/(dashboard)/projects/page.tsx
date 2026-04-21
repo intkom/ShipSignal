@@ -107,7 +107,7 @@ export default function ProjectsPage() {
           <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-destructive/10 flex items-center justify-center">
             <AlertCircle className="w-6 h-6 text-destructive" />
           </div>
-          <h3 className="font-semibold mb-2 text-destructive">Failed to load projects</h3>
+          <h3 className="font-bold mb-2 text-destructive">Failed to load projects</h3>
           <p className="text-sm text-muted-foreground mb-4">{error}</p>
           <button
             onClick={() => fetchProjects()}
@@ -125,7 +125,7 @@ export default function ProjectsPage() {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[hsl(var(--gold))]/10 flex items-center justify-center">
             <FolderKanban className="w-8 h-8 text-[hsl(var(--gold-dark))]" />
           </div>
-          <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
+          <h3 className="text-lg font-bold mb-2">No projects yet</h3>
           <p className="text-muted-foreground mb-6 max-w-sm mx-auto px-4">
             Create projects to organize campaigns and maintain brand consistency across different
             products or initiatives.

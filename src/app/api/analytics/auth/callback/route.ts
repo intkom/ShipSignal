@@ -64,19 +64,33 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(`${baseUrl}/settings?error=not_configured`)
     }
 
-    const tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        code,
-        client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: redirectUri,
-        grant_type: 'authorization_code',
-      }),
-    })
+    const tokenAbort = new AbortController()
+    const tokenTimeout = setTimeout(() => tokenAbort.abort(), 15_000)
+
+    let tokenResponse: Response
+    try {
+      tokenResponse = await fetch(GOOGLE_TOKEN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          code,
+          client_id: clientId,
+          client_secret: clientSecret,
+          redirect_uri: redirectUri,
+          grant_type: 'authorization_code',
+        }),
+        signal: tokenAbort.signal,
+      })
+    } catch (fetchErr) {
+      clearTimeout(tokenTimeout)
+      const isTimeout = fetchErr instanceof Error && fetchErr.name === 'AbortError'
+      return NextResponse.redirect(
+        `${baseUrl}/settings?error=${isTimeout ? 'token_exchange_timeout' : 'token_exchange_failed'}`
+      )
+    }
+    clearTimeout(tokenTimeout)
 
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.json()

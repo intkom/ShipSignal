@@ -260,7 +260,7 @@ function BlogDraftsContent() {
           <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-destructive/10 flex items-center justify-center">
             <AlertCircle className="w-6 h-6 text-destructive" />
           </div>
-          <h3 className="font-semibold mb-2 text-destructive">Failed to load blog drafts</h3>
+          <h3 className="font-bold mb-2 text-destructive">Failed to load blog drafts</h3>
           <p className="text-sm text-muted-foreground mb-4">{error}</p>
           <button
             onClick={() => fetchDrafts()}

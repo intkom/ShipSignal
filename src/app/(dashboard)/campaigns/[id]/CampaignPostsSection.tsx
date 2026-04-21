@@ -26,7 +26,7 @@ export function PostsSection({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Posts in Campaign</h2>
+        <h2 className="text-lg font-bold">Posts in Campaign</h2>
         <div className="flex gap-2">
           {availablePostsCount > 0 && (
             <button
@@ -81,7 +81,7 @@ function EmptyPostsState({ campaignId }: { campaignId: string }) {
       <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-[hsl(var(--gold))]/10 flex items-center justify-center">
         <FileText className="w-6 h-6 text-[hsl(var(--gold-dark))]" />
       </div>
-      <h3 className="font-semibold mb-1">No posts yet</h3>
+      <h3 className="font-bold mb-1">No posts yet</h3>
       <p className="text-sm text-muted-foreground mb-4">
         Add posts to this campaign to track them together.
       </p>
@@ -124,7 +124,7 @@ export function LaunchPostsSection({
   return (
     <div className="space-y-4 mt-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold flex items-center gap-2">
+        <h2 className="text-lg font-bold flex items-center gap-2">
           <Rocket className="w-5 h-5 text-[hsl(var(--gold-dark))]" />
           Launch Posts
         </h2>
@@ -185,7 +185,7 @@ function EmptyLaunchPostsState({ campaignId }: { campaignId: string }) {
       <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-[hsl(var(--gold))]/10 flex items-center justify-center">
         <Rocket className="w-6 h-6 text-[hsl(var(--gold-dark))]" />
       </div>
-      <h3 className="font-semibold mb-1">No launch posts yet</h3>
+      <h3 className="font-bold mb-1">No launch posts yet</h3>
       <p className="text-sm text-muted-foreground mb-4">
         Add launch posts to coordinate your product launch across platforms.
       </p>

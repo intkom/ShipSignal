@@ -313,7 +313,7 @@ export function LandingPage() {
           <div className="mb-6 inline-flex">
             <span className="sticker-badge bg-primary/5 font-mono text-primary">NOW IN BETA</span>
           </div>
-          <h1 className="mb-6 text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
             Turn your GitHub activity into <span className="text-primary">social proof</span>
           </h1>
           <p className="mx-auto mb-10 max-w-2xl font-mono text-sm text-muted-foreground sm:text-base">
@@ -434,7 +434,9 @@ export function LandingPage() {
                 <span className="absolute right-3 top-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   [STEP-{step.number}]
                 </span>
-                <div className="mb-4 font-mono text-3xl font-black text-primary">{step.number}</div>
+                <div className="mb-4 font-mono text-3xl font-extrabold text-primary">
+                  {step.number}
+                </div>
                 <step.icon className="mb-3 h-5 w-5 text-foreground" strokeWidth={1.5} />
                 <h3 className="mb-2 text-base font-bold uppercase tracking-wide">{step.title}</h3>
                 <p className="text-xs leading-relaxed text-muted-foreground">{step.description}</p>

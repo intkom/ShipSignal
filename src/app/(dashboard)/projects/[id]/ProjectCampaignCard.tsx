@@ -36,7 +36,7 @@ export function ProjectCampaignCard({ campaign, index }: { campaign: Campaign; i
           <FolderOpen className="w-5 h-5 text-[hsl(var(--gold-dark))]" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold mb-1 truncate">{campaign.name}</h3>
+          <h3 className="font-bold mb-1 truncate">{campaign.name}</h3>
           {campaign.description && (
             <p className="text-sm text-muted-foreground line-clamp-1 mb-2">
               {campaign.description}

@@ -369,7 +369,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
         <div className="space-y-4">
           {/* Header with new campaign button */}
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Campaigns</h2>
+            <h2 className="text-lg font-bold">Campaigns</h2>
             <button
               onClick={() => setShowNewCampaignModal(true)}
               className={cn(
@@ -390,7 +390,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
               <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-[hsl(var(--gold))]/10 flex items-center justify-center">
                 <FolderOpen className="w-6 h-6 text-[hsl(var(--gold-dark))]" />
               </div>
-              <h3 className="font-semibold mb-1">No campaigns yet</h3>
+              <h3 className="font-bold mb-1">No campaigns yet</h3>
               <p className="text-sm text-muted-foreground mb-4">
                 Create a campaign to start organizing posts in this project.
               </p>

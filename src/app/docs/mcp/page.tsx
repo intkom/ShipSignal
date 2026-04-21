@@ -299,7 +299,7 @@ export default function McpDocsPage() {
             </span>
           </div>
 
-          <h1 className="mb-4 text-4xl font-black leading-tight tracking-tight sm:text-5xl">
+          <h1 className="mb-4 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
             MCP Server <span className="text-primary">Documentation</span>
           </h1>
           <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
@@ -333,7 +333,7 @@ export default function McpDocsPage() {
             {/* Step 1 */}
             <div className="mb-10">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-black text-primary-foreground">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-extrabold text-primary-foreground">
                   1
                 </div>
                 <h3 className="text-lg font-bold">Create an API Key</h3>
@@ -360,7 +360,7 @@ export default function McpDocsPage() {
             {/* Step 2 */}
             <div className="mb-10">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-black text-primary-foreground">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-extrabold text-primary-foreground">
                   2
                 </div>
                 <h3 className="text-lg font-bold">Configure Claude Code</h3>
@@ -397,7 +397,7 @@ export default function McpDocsPage() {
             {/* Step 3 */}
             <div>
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-black text-primary-foreground">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[3px] border-border bg-primary text-sm font-extrabold text-primary-foreground">
                   3
                 </div>
                 <h3 className="text-lg font-bold">Start Using</h3>

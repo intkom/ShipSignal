@@ -4,6 +4,7 @@ import { requireAuth, parseJsonBody } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 import { generatePostsFromActivity, type AiPersona } from '@/lib/aiTransformer'
 import { transformPostFromDb, type DbPost } from '@/lib/utils'
+import { logger } from '@/lib/logger'
 import type { Post } from '@/lib/posts'
 
 export const dynamic = 'force-dynamic'
@@ -85,7 +86,7 @@ export async function POST(request: NextRequest) {
         persona
       )
     } catch (err) {
-      console.error('AI generation error:', err)
+      logger.error('AI generation error:', err)
       return NextResponse.json(
         { error: (err as Error).message || 'Failed to generate posts.' },
         { status: 422 }
@@ -131,14 +132,14 @@ export async function POST(request: NextRequest) {
       .select()
 
     if (insertError) {
-      console.error('Database error:', insertError)
+      logger.error('Database error:', insertError)
       return NextResponse.json({ error: 'Failed to save generated posts.' }, { status: 500 })
     }
 
     const posts: Post[] = (rows as DbPost[]).map(transformPostFromDb)
     return NextResponse.json({ posts }, { status: 201 })
   } catch (error) {
-    console.error('Error generating posts:', error)
+    logger.error('Error generating posts:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

@@ -1,13 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { logger } from './logger'
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
-
-console.log(
-  '[aiTransformer] ANTHROPIC_API_KEY present:',
-  !!ANTHROPIC_API_KEY,
-  '| first 4 chars:',
-  ANTHROPIC_API_KEY ? ANTHROPIC_API_KEY.slice(0, 4) : '(missing)'
-)
 
 const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY })
 
@@ -76,7 +70,7 @@ export async function generatePostsFromActivity(
   const repoName = repoUrl.replace(/^https?:\/\/(www\.)?github\.com\//i, '')
   const systemPrompt = buildSystemPrompt(persona)
 
-  console.log(
+  logger.log(
     '[aiTransformer] calling API | model=claude-haiku-4-5-20251001 | tone:',
     persona.toneOfVoice ?? 'Authentic',
     '| rawText snippet:',
@@ -85,22 +79,26 @@ export async function generatePostsFromActivity(
 
   let message: Anthropic.Message
   try {
-    message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1500,
-      system: systemPrompt,
-      messages: [
-        {
-          role: 'user',
-          content: `Repository: ${repoName}\n\nLatest activity:\n${rawText}`,
-        },
-      ],
-    })
-  } catch (err) {
-    console.error(
-      '[aiTransformer] Anthropic API call FAILED — full error:',
-      JSON.stringify(err, null, 2)
+    message = await client.messages.create(
+      {
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        system: systemPrompt,
+        messages: [
+          {
+            role: 'user',
+            content: `Repository: ${repoName}\n\nLatest activity:\n${rawText}`,
+          },
+        ],
+      },
+      { timeout: 15_000 }
     )
+  } catch (err) {
+    const isTimeout = err instanceof Error && err.message.toLowerCase().includes('timeout')
+    if (isTimeout) {
+      throw new Error('AI request timed out — please retry.')
+    }
+    logger.error('[aiTransformer] Anthropic API call FAILED:', err)
     throw err
   }
 
@@ -110,7 +108,7 @@ export async function generatePostsFromActivity(
     .join('')
     .trim()
 
-  console.log('[aiTransformer] raw response (first 300):', raw.slice(0, 300))
+  logger.log('[aiTransformer] raw response (first 300):', raw.slice(0, 300))
 
   // Strip markdown code fences if the model wrapped the JSON
   const stripped = raw
@@ -124,13 +122,13 @@ export async function generatePostsFromActivity(
   } catch {
     const match = stripped.match(/\{[\s\S]*\}/)
     if (!match) {
-      console.error('[aiTransformer] unparseable response:', raw)
+      logger.error('[aiTransformer] unparseable response:', raw)
       throw new Error('AI returned malformed JSON — please retry.')
     }
     try {
       parsed = JSON.parse(match[0]) as GeneratedContent
     } catch (e2) {
-      console.error('[aiTransformer] JSON.parse failed on extracted block:', match[0].slice(0, 300))
+      logger.error('[aiTransformer] JSON.parse failed on extracted block:', match[0].slice(0, 300))
       throw e2
     }
   }
