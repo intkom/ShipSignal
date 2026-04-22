@@ -13,6 +13,7 @@ import {
   Calendar,
   Radio,
   Brain,
+  Link2,
 } from 'lucide-react'
 import { UserMenu } from './UserMenu'
 import { UsageBanner } from '@/components/ui/UsageBanner'
@@ -22,7 +23,6 @@ interface AppHeaderProps {
   userDisplayName?: string | null
 }
 
-// eslint-disable-next-line max-lines-per-function
 export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
   const pathname = usePathname()
   const isEditorPage =
@@ -150,6 +150,19 @@ export function AppHeader({ userEmail, userDisplayName }: AppHeaderProps) {
               aria-label="AI Voice"
             >
               <Brain className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/integrations"
+              className={cn(
+                'p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-md text-muted-foreground transition-all',
+                'hover:text-foreground hover:bg-secondary',
+                'border-2 border-transparent hover:border-border',
+                pathname?.startsWith('/integrations') &&
+                  'bg-secondary text-foreground border-border'
+              )}
+              aria-label="Integrations"
+            >
+              <Link2 className="w-5 h-5" />
             </Link>
             <Link
               href="/settings"

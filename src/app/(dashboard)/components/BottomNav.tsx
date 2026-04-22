@@ -1,10 +1,9 @@
 'use client'
-/* eslint-disable max-lines-per-function -- inner arrow functions in JSX map() callbacks */
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Home, Calendar, Plus, Settings, FileText, Brain } from 'lucide-react'
+import { Home, Calendar, Plus, Settings, FileText, Brain, Link2 } from 'lucide-react'
 
 interface NavItem {
   icon: typeof Home
@@ -19,6 +18,7 @@ const navItems: NavItem[] = [
   { icon: Plus, label: 'New', path: '/new', isAction: true },
   { icon: FileText, label: 'Blog', path: '/blog' },
   { icon: Brain, label: 'AI Voice', path: '/ai-founder-voice' },
+  { icon: Link2, label: 'Connect', path: '/integrations' },
   { icon: Settings, label: 'More', path: '/settings' },
 ]
 
