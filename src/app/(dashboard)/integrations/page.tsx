@@ -52,11 +52,16 @@ const INTEGRATIONS: IntegrationCard[] = [
 
 function hasTwitterProvider(user: {
   app_metadata?: { providers?: unknown }
+  identities?: Array<{ provider?: string | null }> | null
   user_metadata?: Record<string, unknown> | null
 } | null) {
   const providers = user?.app_metadata?.providers
 
-  if (Array.isArray(providers) && providers.some((provider) => provider === 'twitter')) {
+  if (Array.isArray(providers) && providers.some((provider) => provider === 'x')) {
+    return true
+  }
+
+  if (Array.isArray(user?.identities) && user.identities.some((identity) => identity.provider === 'x')) {
     return true
   }
 
@@ -136,7 +141,7 @@ export default function IntegrationsPage() {
       const { error: signInError } = await supabase.auth.signInWithOAuth({
         provider: 'x',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/integrations`,
+          redirectTo: 'http://localhost:3000/auth/callback?next=/integrations',
         },
       })
 
