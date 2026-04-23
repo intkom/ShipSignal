@@ -135,15 +135,15 @@ export default function IntegrationsPage() {
     setLoadingKey('twitter')
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithOAuth({
+      const { error: linkError } = await supabase.auth.linkIdentity({
         provider: 'x',
         options: {
-          redirectTo: 'http://localhost:3000/auth/callback?next=/integrations',
+          redirectTo: `${window.location.origin}/auth/callback?next=/integrations`,
         },
       })
 
-      if (signInError) {
-        throw signInError
+      if (linkError) {
+        throw linkError
       }
     } catch {
       setError('We could not start the X connection flow. Please try again.')
@@ -156,15 +156,15 @@ export default function IntegrationsPage() {
     setLoadingKey('linkedin')
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithOAuth({
+      const { error: linkError } = await supabase.auth.linkIdentity({
         provider: 'linkedin_oidc',
         options: {
           redirectTo: `${window.location.origin}/auth/callback?next=/integrations`,
         },
       })
 
-      if (signInError) {
-        throw signInError
+      if (linkError) {
+        throw linkError
       }
     } catch {
       setError('We could not start the LinkedIn connection flow. Please try again.')
