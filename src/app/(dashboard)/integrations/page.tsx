@@ -50,56 +50,51 @@ const INTEGRATIONS: IntegrationCard[] = [
   },
 ]
 
-function hasTwitterProvider(user: {
-  app_metadata?: { providers?: unknown }
-  identities?: Array<{ provider?: string | null }> | null
-  user_metadata?: Record<string, unknown> | null
-} | null) {
+function hasProvider(
+  user: {
+    app_metadata?: { providers?: unknown }
+    identities?: Array<{ provider?: string | null }> | null
+  } | null,
+  providerName: string
+) {
   const providers = user?.app_metadata?.providers
 
-  if (Array.isArray(providers) && providers.some((provider) => provider === 'x')) {
-    return true
-  }
+  return (
+    (Array.isArray(providers) && providers.some((provider) => provider === providerName)) ||
+    (Array.isArray(user?.identities) &&
+      user.identities.some((identity) => identity.provider === providerName))
+  )
+}
 
-  if (Array.isArray(user?.identities) && user.identities.some((identity) => identity.provider === 'x')) {
-    return true
-  }
+function isTwitterConnected(user: {
+  app_metadata?: { providers?: unknown }
+  identities?: Array<{ provider?: string | null }> | null
+} | null) {
+  return hasProvider(user, 'x')
+}
 
-  const userMetadata = user?.user_metadata
-  const fallbackValues = [
-    userMetadata?.provider,
-    userMetadata?.providers,
-    userMetadata?.iss,
-    userMetadata?.sub,
-    userMetadata?.user_name,
-    userMetadata?.preferred_username,
-  ]
-
-  return fallbackValues.some((value) => {
-    if (typeof value === 'string') {
-      return value.toLowerCase().includes('twitter')
-    }
-
-    if (Array.isArray(value)) {
-      return value.some((item) => typeof item === 'string' && item.toLowerCase() === 'twitter')
-    }
-
-    return false
-  })
+function isLinkedInConnected(user: {
+  app_metadata?: { providers?: unknown }
+  identities?: Array<{ provider?: string | null }> | null
+} | null) {
+  return hasProvider(user, 'linkedin_oidc')
 }
 
 export default function IntegrationsPage() {
   const supabase = useMemo(() => createClient(), [])
   const [loadingKey, setLoadingKey] = useState<IntegrationKey | null>(null)
   const [isCheckingTwitter, setIsCheckingTwitter] = useState(true)
+  const [isCheckingLinkedIn, setIsCheckingLinkedIn] = useState(true)
   const [twitterConnected, setTwitterConnected] = useState(false)
+  const [linkedInConnected, setLinkedInConnected] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let ignore = false
 
-    async function loadTwitterStatus() {
+    async function loadConnectionStatuses() {
       setIsCheckingTwitter(true)
+      setIsCheckingLinkedIn(true)
       setError(null)
 
       try {
@@ -114,19 +109,21 @@ export default function IntegrationsPage() {
           throw userError
         }
 
-        setTwitterConnected(hasTwitterProvider(user))
+        setTwitterConnected(isTwitterConnected(user))
+        setLinkedInConnected(isLinkedInConnected(user))
       } catch {
         if (!ignore) {
-          setError('We could not check your X connection yet. Please try again.')
+          setError('We could not check your connection status yet. Please try again.')
         }
       } finally {
         if (!ignore) {
           setIsCheckingTwitter(false)
+          setIsCheckingLinkedIn(false)
         }
       }
     }
 
-    void loadTwitterStatus()
+    void loadConnectionStatuses()
 
     return () => {
       ignore = true
@@ -154,13 +151,25 @@ export default function IntegrationsPage() {
     }
   }
 
-  const handlePlaceholderConnect = async (integration: IntegrationKey) => {
+  const handleConnectLinkedIn = async () => {
     setError(null)
-    setLoadingKey(integration)
+    setLoadingKey('linkedin')
 
-    await new Promise((resolve) => window.setTimeout(resolve, 1200))
+    try {
+      const { error: signInError } = await supabase.auth.signInWithOAuth({
+        provider: 'linkedin_oidc',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=/integrations`,
+        },
+      })
 
-    setLoadingKey(null)
+      if (signInError) {
+        throw signInError
+      }
+    } catch {
+      setError('We could not start the LinkedIn connection flow. Please try again.')
+      setLoadingKey(null)
+    }
   }
 
   const twitterStatus = isCheckingTwitter
@@ -175,6 +184,18 @@ export default function IntegrationsPage() {
       ? 'Connected'
       : 'Connect'
 
+  const linkedInStatus = isCheckingLinkedIn
+    ? 'Checking connection...'
+    : linkedInConnected
+      ? 'Connected'
+      : 'Not connected'
+
+  const linkedInButtonLabel = isCheckingLinkedIn
+    ? 'Checking...'
+    : linkedInConnected
+      ? 'Connected'
+      : 'Connect'
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 md:px-6 md:py-8 animate-fade-in">
       <div className="mb-8">
@@ -186,8 +207,8 @@ export default function IntegrationsPage() {
           Manage your connections
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground md:text-base">
-          Connect the channels you publish to most. X now uses real Supabase OAuth, while the
-          LinkedIn action remains a lightweight placeholder until its flow is wired in.
+          Connect the channels you publish to most. X and LinkedIn now use Supabase OAuth so your
+          publishing channels stay tied to your account.
         </p>
       </div>
 
@@ -201,16 +222,15 @@ export default function IntegrationsPage() {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {INTEGRATIONS.map((integration) => {
           const isTwitterCard = integration.key === 'twitter'
+          const isLinkedInCard = integration.key === 'linkedin'
           const isLoading = loadingKey === integration.key
-          const status = isTwitterCard ? twitterStatus : 'Not connected'
+          const isChecking = isTwitterCard ? isCheckingTwitter : isCheckingLinkedIn
+          const isConnected = isTwitterCard ? twitterConnected : linkedInConnected
+          const status = isTwitterCard ? twitterStatus : linkedInStatus
           const buttonLabel = isTwitterCard
             ? twitterButtonLabel
-            : isLoading
-              ? 'Loading...'
-              : 'Connect'
-          const isDisabled = isTwitterCard
-            ? isCheckingTwitter || twitterConnected || isLoading
-            : isLoading
+            : linkedInButtonLabel
+          const isDisabled = isChecking || isConnected || isLoading
 
           return (
             <section
@@ -228,7 +248,7 @@ export default function IntegrationsPage() {
                     <div>
                       <h2 className="text-xl font-semibold text-foreground">{integration.name}</h2>
                       <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                        {(isTwitterCard && (isCheckingTwitter || isLoading)) ? (
+                        {isChecking || isLoading ? (
                           <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
                         ) : (
                           <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground" />
@@ -250,14 +270,18 @@ export default function IntegrationsPage() {
                     ? twitterConnected
                       ? 'X account available in this session'
                       : 'OAuth with Supabase'
-                    : 'Ready when OAuth is wired'}
+                    : linkedInConnected
+                      ? 'LinkedIn account available in this session'
+                      : 'OAuth with Supabase'}
                 </span>
                 <button
                   type="button"
                   onClick={() =>
                     isTwitterCard
                       ? void handleConnectTwitter()
-                      : void handlePlaceholderConnect(integration.key)
+                      : isLinkedInCard
+                        ? void handleConnectLinkedIn()
+                        : undefined
                   }
                   disabled={isDisabled}
                   className={cn(
@@ -266,7 +290,7 @@ export default function IntegrationsPage() {
                     isLoading && 'cursor-wait opacity-80'
                   )}
                 >
-                  {(isTwitterCard && (isCheckingTwitter || isLoading)) || (!isTwitterCard && isLoading) ? (
+                  {isChecking || isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       {buttonLabel}
